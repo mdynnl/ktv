@@ -1,0 +1,18 @@
+
+        // actions checkin edit-inhouse room-transfer adjustments add-transaction checkout room-service
+
+        // separate transaction table
+
+		Inhouse table
+			// commercial tax
+			// service tax
+
+        inhouse-order table
+			// $table->unsignedInteger('order_time');
+			// $table->foreignId('food_id');
+			// $table->float('price');
+			// $table->unsignedInteger('qty');
+			// $table->text('remark')->nullable();
+
+        // table - inhouse-service
+			// id, inhouse-id, service-girl-id, check-in time, check-out time

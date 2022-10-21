@@ -1,0 +1,11 @@
+@import 'flatpickr/dist/flatpickr.min.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* For Alpine JS */
+[x-cloak] { display: none !important; }
+
+.custom-datepickr-styles {
+	@apply text-base cursor-pointer text-left shadow-sm focus-within:ring-transparent focus:ring-primary focus:border-primary w-full text-gray-800 block sm:text-sm border-gray-300 rounded-md  pl-3 py-2 !important;
+}

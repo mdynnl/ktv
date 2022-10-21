@@ -1,0 +1,90 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
+
+return new class () extends Migration {
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        DB::statement($this->dropView());
+        DB::statement($this->createView());
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        DB::statement($this->dropView());
+    }
+
+    protected function createView(): string
+    {
+        return <<<SQL
+			CREATE VIEW `view_information_invoices` as
+			SELECT
+				inhouses.id as inhouse_id,
+				'Room' as description,
+				rt.room_type_name as reference,
+				inhouses.room_rate as price,
+				inhouses.session_hours as qty,
+				inhouses.room_rate * inhouses.session_hours as amount
+			from
+				inhouses
+			left join rooms r on r.room_no = inhouses.room_no
+			left join room_types rt on rt.id = r.room_type_id
+			union
+			SELECT
+				inhouse_id as inhouse_id,
+				'Food' as description,
+				food.food_name as reference,
+				od.price as price,
+				od.qty as qty,
+				od.price * od.qty as amount
+			from
+				orders
+			left join order_details od on od.order_id = orders.id
+			left join food on food.id = od.food_id
+			union
+			SELECT
+				inhouse_id as inhouse_id,
+				'Service Staff' as description,
+				ss.nick_name as reference,
+				service_staff_rates.service_staff_rate as price,
+				inhouse_services.session_hours as qty,
+				inhouse_services.session_hours * service_staff_rates.service_staff_rate as amount
+			from inhouse_services
+			join service_staff_rates
+			left join service_staff ss on ss.id = inhouse_services.service_staff_id
+			union
+			SELECT
+				inhouse_id as inhouse_id,
+				'Adjustment' as description,
+				concat(transactions.transaction_name, ' - ', remark) as reference,
+			null as price,
+			null as qty,
+			case
+				when transactions.isAddition = false then amount * -1
+				else amount
+			end as amount
+			from income_transactions
+			left join transactions on transactions.id = income_transactions.transaction_id
+		SQL;
+    }
+
+    protected function dropView(): string
+    {
+        return <<<SQL
+			DROP VIEW IF EXISTS `view_information_invoices`;
+		SQL;
+    }
+};

@@ -14,11 +14,12 @@ return new class () extends Migration {
     {
         Schema::create('inhouse_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('inhouse_id');
-            $table->foreignId('service_staff_id');
+            $table->foreignId('inhouse_id')->constrained()->restrictOnDelete();
+            $table->foreignId('service_staff_id')->constrained('service_staff')->restrictOnDelete();
             $table->dateTime('checkin_time');
             $table->dateTime('checkout_time');
             $table->float('session_hours');
+            $table->date('operation_date');
             $table->timestamps();
         });
     }

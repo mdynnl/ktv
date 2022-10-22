@@ -47,12 +47,13 @@ class LiveWalkIn extends Component
     protected $listeners = ['createWalkIn', 'checkInAddServiceStaffs'];
 
     protected $rules = [
-        'inhouse.room_no' => 'required|integer',
+        'inhouse.room_id' => 'required|integer',
         'inhouse.room_rate' => 'required|between:0,999999999.99',
         'inhouse.arrival' => 'required|date',
         'inhouse.departure' => 'required|date',
         'inhouse.session_hours' => 'required|between:0,99.99',
         'inhouse.customer_id' => 'nullable|integer',
+        'inhouse.operation_date' => 'required|date',
         'inhouse.created_user_id' => 'required|integer',
     ];
 
@@ -74,6 +75,7 @@ class LiveWalkIn extends Component
                     'checkin_time' => Carbon::parse($staff['arrival']),
                     'checkout_time' => Carbon::parse($staff['departure']),
                     'session_hours' => $staff['sessions'],
+                    'operation_date' => app('OperationDate'),
                 ]);
             }
         }
@@ -118,7 +120,7 @@ class LiveWalkIn extends Component
     {
         $this->editingStaff = true;
         $this->editingStaffId = $id;
-        $this->editingStaffName = $this->staffs[$id]['name'];
+        $this->editingStaffName = $this->staffs[$id]['nick_name'];
 
         $this->editingStaffSessionHours = $this->inhouse->session_hours;
 
@@ -150,7 +152,7 @@ class LiveWalkIn extends Component
             if (!isset($this->staffs[$staff->id])) {
                 $this->staffs[$staff->id] = [
                     'id' => $staff->id,
-                    'name' => $staff->name,
+                    'nick_name' => $staff->nick_name,
                     'arrival' => Carbon::parse($this->arrivalDate.' '.$this->arrivalTime)->format('Y-m-d g:i A'),
                     'departure' => Carbon::parse($this->departureDate.' '.$this->departureTime)->format('Y-m-d g:i A'),
                     'sessions' => $this->inhouse->session_hours
@@ -184,9 +186,10 @@ class LiveWalkIn extends Component
         $this->inhouse = new Inhouse();
 
 
-        $this->inhouse->room_no = $room->room_no;
+        $this->inhouse->room_id = $room->id;
         $this->inhouse->room_rate = $room->type->room_rate;
         $this->inhouse->session_hours = 1;
+        $this->inhouse->operation_date = app('OperationDate');
         // Datetime for formatted for Flatpickr
         $this->arrival = now();
         $this->departure = now()->addHour();

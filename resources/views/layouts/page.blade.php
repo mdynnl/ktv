@@ -147,8 +147,8 @@
                     {{-- <livewire:live-night-audit wire:key="night-audit-component" /> --}}
 
                     {{-- Notifaction Toaster --}}
-                    {{-- <x-success-notification /> --}}
-                    {{-- <x-failure-notification /> --}}
+                    <x-success-notification />
+                    <x-failure-notification />
                 </div>
             </div>
         </main>

@@ -27,9 +27,10 @@ return new class () extends Migration {
             $table->boolean('is_paid')->default(false);
             // $table->boolean('is_occupied')->default(false);
             // $table->unsignedInteger('customer_id')->nullable();
-            $table->unsignedInteger('inhouse_id')->nullable();
+            $table->foreignId('inhouse_id')->nullable()->constrained()->restrictOnDelete();
             $table->unsignedInteger('created_user_id');
             $table->unsignedInteger('updated_user_id')->nullable();
+            $table->date('operation_date');
             $table->timestamps();
         });
     }

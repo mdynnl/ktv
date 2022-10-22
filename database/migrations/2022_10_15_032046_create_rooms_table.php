@@ -14,8 +14,8 @@ return new class () extends Migration {
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_type_id');
-            $table->integer('room_no')->unique();
+            $table->foreignId('room_type_id')->constrained()->restrictOnDelete();
+            $table->string('room_no')->unique();
             $table->string('guest_in_room')->nullable();
             $table->boolean('occupy_status')->default(false);
             $table->unsignedInteger('created_user_id');

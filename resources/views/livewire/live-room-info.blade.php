@@ -63,7 +63,7 @@
         </div>
 
 
-        {{-- <div x-data="{
+        <div x-data="{
             showLegends: false,
         }" class="relative inline-block text-left">
             <div class="flex items-center">
@@ -95,24 +95,27 @@
                  role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                 <div class="px-6 py-4 flex items-start space-x-6" role="none">
                     <ul class="flex flex-col space-y-3">
+
+
                         <li class="flex items-center space-x-2">
-                            <span class="p-3 rounded-md inline-flex bg-departure"></span>
-                            <span class="text-xs inline-flex text-gray-800">Departure</span>
+                            <span class="p-3 rounded-md inline-flex bg-vacant"></span>
+                            <span class="text-xs inline-flex text-gray-800">Vacant</span>
                         </li>
                         <li class="flex items-center space-x-2">
                             <span class="p-3 rounded-md inline-flex bg-occupy"></span>
                             <span class="text-xs inline-flex text-gray-800">Occupy</span>
                         </li>
                         <li class="flex items-center space-x-2">
-                            <span class="p-3 rounded-md inline-flex bg-vacant"></span>
-                            <span class="text-xs inline-flex text-gray-800">Vacant</span>
+                            <span class="p-3 rounded-md inline-flex bg-departure"></span>
+                            <span class="text-xs inline-flex text-gray-800">Departure</span>
+                        </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="p-3 rounded-md inline-flex bg-arrival"></span>
+                            <span class="text-xs inline-flex text-gray-800">Paid</span>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div> --}}
-        <div>
-            {{ now() }}
         </div>
     </x-content-header-section>
 

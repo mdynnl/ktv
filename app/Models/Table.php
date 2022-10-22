@@ -19,6 +19,6 @@ class Table extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'id', 'room_no');
+        return $this->belongsTo(Room::class, 'id', 'id');
     }
 }

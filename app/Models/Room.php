@@ -11,7 +11,7 @@ class Room extends Model
 
     public function inhouses()
     {
-        return $this->hasMany(Inhouse::class, 'room_no', 'room_no');
+        return $this->hasMany(Inhouse::class);
     }
 
     public function type()
@@ -21,6 +21,6 @@ class Room extends Model
 
     public function table()
     {
-        return $this->hasOne(Table::class, 'id', 'room_no');
+        return $this->hasOne(Table::class, 'id', 'id');
     }
 }

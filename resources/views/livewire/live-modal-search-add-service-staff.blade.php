@@ -17,9 +17,8 @@
                             <thead class="bg-gray-50">
                                 <tr class="divide-x">
                                     <x-th-slim></x-th-slim>
-                                    <x-th-slim>Id</x-th-slim>
                                     <x-th-slim>Name</x-th-slim>
-                                    <x-th-slim>Phone</x-th-slim>
+                                    {{-- <x-th-slim>Phone</x-th-slim> --}}
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
@@ -31,9 +30,9 @@
                                                                              wire:model="selectedStaff"
                                                                              value="{{ $staff->id }}" />
                                         </x-td-slim-checkbox>
-                                        <x-td-slim>{{ $staff->id }}</x-td-slim>
-                                        <x-td-slim>{{ $staff->name }}</x-td-slim>
-                                        <x-td-slim>{{ $staff->phone }}</x-td-slim>
+                                        <x-td-image imagePath="{!! $staff->getImage !!}"
+                                                    name="{{ $staff->nick_name }}" />
+                                        {{-- <x-td-slim>{{ $staff->name }}</x-td-slim> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

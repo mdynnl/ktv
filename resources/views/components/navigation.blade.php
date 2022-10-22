@@ -1,7 +1,10 @@
 <div wire:ignore class="flex-1 flex space-x-3">
     {{-- @can('view reservations') --}}
-    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">Room Info</x-nav-link>
+    <x-nav-link :href="route('home')" :active="request()->routeIs('home')">KTV</x-nav-link>
     <x-nav-link :href="route('fnb.menu-view')" :active="request()->routeIs('fnb.menu-view') || request()->routeIs('fnb.*')">F&B</x-nav-link>
+    <x-nav-link :href="route('service-staff.index')" :active="request()->routeIs('service-staff.index') || request()->routeIs('service-staff.*')">Service Staff</x-nav-link>
+    <x-nav-link :href="route('room.index')" :active="request()->routeIs('room.index') || request()->routeIs('room.*')">Rooms</x-nav-link>
+    <x-nav-link :href="route('customer.index')" :active="request()->routeIs('customer.index') || request()->routeIs('customer.*')">Customers</x-nav-link>
     {{-- @endcan --}}
 </div>
 <div class="ml-4 flex items-center md:ml-6">

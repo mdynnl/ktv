@@ -66,7 +66,7 @@ class LiveRoomInfo extends Component
 			  LEFT JOIN (
 				SELECT
 				  inhouses.id,
-				  room_no,
+				  room_id,
 				  customer_name,
 				  checkout_payment_done as checkout_payment_status,
 				  CASE
@@ -80,7 +80,7 @@ class LiveRoomInfo extends Component
 				  LEFT JOIN customers on customers.id = inhouses.id
 				WHERE
 				  checked_out = 0
-			  ) x ON r.room_no = x.room_no
+			  ) x ON r.id = x.room_id
 
 			  LEFT JOIN room_types ON r.room_type_id = room_types.id
 			WHERE
@@ -125,8 +125,8 @@ class LiveRoomInfo extends Component
 					from rooms r
 					join room_types rt on rt.id = r.room_type_id
 					where
-					r.room_no not in (
-						select room_no from inhouses
+					r.id not in (
+						select room_id from inhouses
 						where checked_out = false
 					)
 					group by rt.id, rt.room_type_name order by id
@@ -147,7 +147,7 @@ class LiveRoomInfo extends Component
         			END status
         		FROM rooms r
         		LEFT JOIN (
-        				SELECT room_no,
+        				SELECT room_id,
 						CASE
 							WHEN time_to_sec(TIMEDIFF(departure, now())) / 60 < 15 THEN 1
 							ELSE 2
@@ -155,7 +155,7 @@ class LiveRoomInfo extends Component
         				FROM inhouses
         				WHERE checked_out = 0
         			) x
-        			ON r.room_no = x.room_no
+        			ON r.id = x.room_id
         			LEFT JOIN
         				room_types ON r.room_type_id = room_types.id
         			WHERE room_types.id IN ($roomTypes)

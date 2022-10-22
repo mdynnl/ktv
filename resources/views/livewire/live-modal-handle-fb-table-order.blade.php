@@ -3,7 +3,7 @@
         <x-slot name="modalHeader">
             <h1 class="text-2xl font-semibold flex justify-between items-center w-full">
                 <span>
-                    Room No: {{ $table_id }}
+                    Room No: {{ $room_no }}
                 </span>
                 {{-- @isset($invoice_no)
                     <span>

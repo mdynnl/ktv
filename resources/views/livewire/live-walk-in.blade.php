@@ -51,6 +51,9 @@
                                                          wire:model="arrivalDate"
                                                          label="Checkin Date"
                                                          for="inhouse.arrival" />
+                            {{-- <input type="date" wire:model="arrivalDate"
+                                   disabled
+                                   class="col-span-2 shadow-sm focus:ring-primary focus:border-primary border-gray-300 block w-full sm:text-sm  rounded-md"> --}}
 
                             <x-form-html-timepicker-comp wire:key="1-t" class="sm:col-span-2"
                                                          :isDisabled="true"
@@ -87,9 +90,9 @@
                                         <tbody class="bg-white">
                                             @foreach ($staffs as $key => $staff)
                                                 <tr
-                                                    wire:key="{{ $staff['id'] . '-' . $staff['name'] }}"
+                                                    wire:key="{{ $staff['id'] . '-' . $staff['nick_name'] }}"
                                                     class="divide-x">
-                                                    <x-td-slim>{{ $staff['name'] }}</x-td-slim>
+                                                    <x-td-slim>{{ $staff['nick_name'] }}</x-td-slim>
                                                     <x-td-slim>{{ $staff['arrival'] }}</x-td-slim>
                                                     <x-td-slim>{{ $staff['departure'] }}</x-td-slim>
                                                     <x-td-centered-slim class="text-center">{{ $staff['sessions'] }}</x-td-centered-slim>

@@ -21,7 +21,7 @@ class Inhouse extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class, 'room_no', 'room_no');
+        return $this->belongsTo(Room::class);
     }
 
     public function inhouseServices()
@@ -36,7 +36,7 @@ class Inhouse extends Model
 
     public function table()
     {
-        return $this->hasOneThrough(Table::class, Room::class, 'room_no', 'id', 'room_no', 'room_no');
+        return $this->hasOneThrough(Table::class, Room::class, 'id', 'id', 'room_id', 'id');
     }
 
     public function incomeTransactions()

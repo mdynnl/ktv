@@ -34,13 +34,13 @@ return new class () extends Migration {
 			SELECT
 				inhouses.id as inhouse_id,
 				'Room' as description,
-				rt.room_type_name as reference,
+				r.room_no as reference,
 				inhouses.room_rate as price,
 				inhouses.session_hours as qty,
 				inhouses.room_rate * inhouses.session_hours as amount
 			from
 				inhouses
-			left join rooms r on r.room_no = inhouses.room_no
+			left join rooms r on r.id = inhouses.room_id
 			left join room_types rt on rt.id = r.room_type_id
 			union
 			SELECT

@@ -1,4 +1,4 @@
-@props(['label', 'for'])
+@props(['label', 'for', 'isDisabled' => false])
 
 <div
      wire:ignore
@@ -23,6 +23,7 @@
 
     <div class="mt-1 relative rounded-md shadow-sm">
         <input style="font-size: 1rem; cursor: pointer; text-align: left;" x-ref="arrivalDatePicker"
+               {{ $isDisabled ? 'disabled' : '' }}
                class="shadow-sm focus:ring-primary focus:border-primary border-gray-300 block w-full sm:text-sm py-2 pl-3 rounded-md">
         <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"

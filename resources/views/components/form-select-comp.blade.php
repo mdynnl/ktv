@@ -1,4 +1,4 @@
-@props(['label', 'for', 'options', 'optionValue' => 'name', 'optionDisplay' => 'name', 'hasBlankOption' => true])
+@props(['label', 'for', 'options', 'optionValue' => 'name', 'optionDisplay' => 'name', 'hasBlankOption' => true, 'isDisabled' => false])
 <div {{ $attributes->only('class') }}>
     <div class="flex items-center space-x-3">
         <label for="{{ $for }}" class="block text-sm font-medium text-gray-700"> {{ $label }} </label>
@@ -10,6 +10,7 @@
          ])>
         <div class="flex">
             <select {{ $attributes->wire('model') }} id="{{ $for }}" name="{{ $for }}"
+                    {{ $isDisabled ? 'disabled' : '' }}
                     @class([
                         'block w-full focus:border-primary focus:ring-primary sm:text-sm',
                         'focus-within:z-10 rounded-none rounded-l-md' => isset($labelButton),

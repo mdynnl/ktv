@@ -14,7 +14,7 @@ return new class () extends Migration {
     {
         Schema::create('inhouses', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('room_no');
+            $table->foreignId('room_id')->constrained()->restrictOnDelete();
             $table->float('room_rate')->default(0.00);
             $table->dateTime('arrival');
             $table->dateTime('departure');
@@ -32,6 +32,7 @@ return new class () extends Migration {
             $table->string('remark')->nullable();
             $table->unsignedInteger('created_user_id');
             $table->unsignedInteger('updated_user_id')->nullable();
+            $table->date('operation_date');
             $table->timestamps();
         });
     }

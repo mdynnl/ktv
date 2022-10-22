@@ -166,7 +166,7 @@
 
 
                                         <div class="col-span-1">
-                                            <label class="block text-sm font-medium text-gray-700">CT Amount</label>
+                                            <label class="block text-sm font-medium text-gray-700">Commercial Tax Amt</label>
                                             <div class="mt-1">
                                                 <div
                                                      class="bg-gray-100 block border border-gray-300 py-2 px-3 overflow-hidden rounded-md shadow-sm sm:text-sm text-gray-500 w-full">
@@ -190,7 +190,7 @@
 
 
                                         <div class="col-span-1">
-                                            <label class="block text-sm font-medium text-gray-700">ST Amount</label>
+                                            <label class="block text-sm font-medium text-gray-700">Service Tax Amt</label>
                                             <div class="mt-1">
                                                 <div
                                                      class="bg-gray-100 block border border-gray-300 py-2 px-3 overflow-hidden rounded-md shadow-sm sm:text-sm text-gray-500 w-full">

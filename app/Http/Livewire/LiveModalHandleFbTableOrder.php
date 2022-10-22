@@ -29,6 +29,8 @@ class LiveModalHandleFbTableOrder extends Component
     public $table_type_id;
     public $table_name;
 
+    public $room_no;
+
     // Order table Column Fills
     public $order_id;
     public $invoice_no;
@@ -285,6 +287,7 @@ class LiveModalHandleFbTableOrder extends Component
                 // 'is_occupied' => true,
                 // 'customer_id' => $this->customer_id,
                 'inhouse_id' => $this->inhouse_id,
+                'operation_date' => app('OperationDate'),
                 'created_user_id' => auth()->id()
             ]);
 
@@ -598,6 +601,7 @@ class LiveModalHandleFbTableOrder extends Component
 
         if (!is_null($table->room)) {
             $this->inhouse_id = $table->room->inhouses()->select('id')->where('checked_out', false)->first()->id;
+            $this->room_no = $table->room->room_no;
         };
 
         $this->categories = FoodCategory::all('id', 'food_category_name');

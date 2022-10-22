@@ -24,7 +24,7 @@ class LiveModalAddTransactions extends Component
         'incomeTransaction.inhouse_id' => 'required|integer',
         'incomeTransaction.transaction_id' => 'required|integer',
         // 'incomeTransaction.currency_code' => 'required|string',
-        'incomeTransaction.amount' => 'required|between:0,999999999.99',
+        'incomeTransaction.amount' => 'required|numeric|between:0,999999999.99',
         // 'incomeTransaction.payment' => 'required|string',
         'incomeTransaction.remark' => 'nullable|string',
         'incomeTransaction.created_user_id' => 'required|integer',

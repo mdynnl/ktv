@@ -113,7 +113,8 @@
                                         <x-td-slim-with-align align="center">
                                             <div class="flex gap-x-4 items-center justify-center">
                                                 @if (!isset($orderDetail['id']))
-                                                    <button wire:click="changeQty('{{ $key }}', '{{ $orderDetail['food_id'] }}', false)"
+                                                    {{-- <button wire:click="changeQty('{{ $key }}', '{{ $orderDetail['food_id'] }}', false)" --}}
+                                                    <button wire:click="changeQty('{{ $key }}', false)"
                                                             class="bg-primary border p-1 rounded-md text-white">
                                                         <span class="flex items-center justify-center leading-none px-1 text-xl">&minus;</span>
                                                     </button>
@@ -123,7 +124,7 @@
                                                 </span>
                                                 @if (!isset($orderDetail['id']))
                                                     <button
-                                                            wire:click="changeQty('{{ $key }}', '{{ $orderDetail['food_id'] }}')"
+                                                            wire:click="changeQty('{{ $key }}')"
                                                             class="disabled:bg-gray-300 enabled:bg-primary border p-1 rounded-md text-white">
                                                         <span class="flex items-center justify-center leading-none px-1 text-xl">&plus;</span>
                                                     </button>

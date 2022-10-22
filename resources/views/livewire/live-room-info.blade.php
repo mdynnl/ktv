@@ -172,6 +172,7 @@
     <livewire:live-inhouse-edit />
     <livewire:live-modal-search-add-service-staff />
     <livewire:live-modal-handle-fb-table-order />
+    <livewire:live-room-transfer />
 
     {{-- <livewire:live-modal-search-create-guest wire:key="modal-search-create-guest-component" />
     <livewire:live-reservation-edit wire:key="edit-reservation-component" />

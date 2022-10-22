@@ -54,7 +54,7 @@
                             <div class="flex space-x-4 items-baseline">
                                 <h1 class="text-2xl font-semibold leading-none">Add Adjustments</h1>
                                 {{-- <span class="leading-none">In House ID: {{ $inhouse->id }}</span> --}}
-                                <span class="leading-none">Room No: {{ $inhouse->room_no }}</span>
+                                <span class="leading-none">Room No: {{ $inhouse->room->room_no }}</span>
                             </div>
                         </div>
 
@@ -71,34 +71,6 @@
                                                                 label="Select Transaction"
                                                                 for="incomeTransaction.transaction_id"></x-form-select-comp>
 
-                                            {{-- <x-form-select-comp class="col-span-1" wire:model.defer="incomeTransaction.currency_code"
-                                                                :options="$currencies"
-                                                                optionValue="currency_code"
-                                                                optionDisplay="currency_code"
-                                                                label="Currency"
-                                                                for="incomeTransaction.currency_code"></x-form-select-comp> --}}
-
-                                            {{-- <div class="col-span-1">
-                                                <label for="incomeTransaction.payment" class="block text-sm font-medium text-gray-700">
-                                                    Payment*
-                                                </label>
-                                                <div class="mt-1">
-                                                    <select wire:model.defer="incomeTransaction.payment" id="incomeTransaction.payment"
-                                                            name="incomeTransaction.payment"
-                                                            @class([
-                                                                'block w-full focus:border-primary focus:ring-primary sm:text-sm rounded-md',
-                                                                'border-red-400 z-10' => $errors->has('incomeTransaction.payment'),
-                                                                'border-gray-300' => !$errors->has('incomeTransaction.payment'),
-                                                            ])>
-                                                        <option value="Cash">Cash</option>
-                                                        <option value="Card">Card</option>
-                                                    </select>
-                                                </div>
-                                                @error('incomeTransaction.payment')
-                                                    <x-form-error-component message="{{ $message }}" />
-                                                @enderror
-                                            </div> --}}
-
                                             <x-form-input-comp class="col-span-2" wire:model.defer="incomeTransaction.amount" label="Amount*"
                                                                for="incomeTransaction.amount"
                                                                type="text" />
@@ -112,7 +84,7 @@
                                 </div>
                             </div>
 
-                            @if ($errors->any())
+                            {{-- @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
@@ -120,7 +92,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                            @endif
+                            @endif --}}
 
                             <div class="py-3 bg-gray-200 px-6">
                                 <div class="flex justify-between items-center bg-gray-200">

@@ -241,20 +241,20 @@
 
 
         <x-slot name="modalLeftAction">
-            {{-- <div class="flex items-center space-x-3"> --}}
             <button type="button"
                     {{ $isPaid ? 'disabled' : '' }}
                     wire:click="$emit('searchAddStaff', 'inhouseEdit')"
                     class="inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Service Staff
-                {{-- <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg
-                     viewBox="0 0 20 20"
-                     fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                          clip-rule="evenodd" />
-                </svg> --}}
+            </button>
+
+            <button type="button"
+                    {{ $isPaid ? 'disabled' : '' }}
+                    wire:click="$emit('createRoomTransfer', '{{ $inhouseId }}')"
+                    class="ml-3 inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
+                    id="menu-button" aria-expanded="true" aria-haspopup="true">
+                Room Transfer
             </button>
 
             <button type="button"

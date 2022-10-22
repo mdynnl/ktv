@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\CurrentOperationDate;
+use App\Models\ServiceStaffRate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,6 +17,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('OperationDate', function () {
             return CurrentOperationDate::first()->operation_date;
+        });
+
+        $this->app->singleton('ServiceStaffRate', function () {
+            return ServiceStaffRate::first()->service_staff_rate;
         });
     }
 

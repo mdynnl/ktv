@@ -75,6 +75,7 @@ class LiveWalkIn extends Component
                     'checkin_time' => Carbon::parse($staff['arrival']),
                     'checkout_time' => Carbon::parse($staff['departure']),
                     'session_hours' => $staff['sessions'],
+                    'service_staff_rate' => $staff['service_staff_rate'],
                     'operation_date' => app('OperationDate'),
                 ]);
             }
@@ -155,7 +156,8 @@ class LiveWalkIn extends Component
                     'nick_name' => $staff->nick_name,
                     'arrival' => Carbon::parse($this->arrivalDate.' '.$this->arrivalTime)->format('Y-m-d g:i A'),
                     'departure' => Carbon::parse($this->departureDate.' '.$this->departureTime)->format('Y-m-d g:i A'),
-                    'sessions' => $this->inhouse->session_hours
+                    'sessions' => $this->inhouse->session_hours,
+                    'service_staff_rate' => app('ServiceStaffRate'),
                 ];
             }
         }

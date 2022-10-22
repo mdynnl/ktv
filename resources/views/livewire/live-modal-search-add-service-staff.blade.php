@@ -46,7 +46,7 @@
         <x-slot name="modalAction">
             <button wire:click="addToCallersList" type="button"
                     class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Add
-                Selected Guest</button>
+                Selected Staff</button>
         </x-slot>
     @endisset
 </x-modal>

@@ -4,20 +4,35 @@
     </x-slot:staticSidebarContent>
 
     <x-content-header-section>
-        <div>
-            <label for="search" class="block text-sm font-medium text-gray-700 sr-only">Search</label>
-            <div class="relative rounded-md shadow-sm">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                         aria-hidden="true">
-                        <path fill-rule="evenodd"
-                              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                              clip-rule="evenodd" />
-                    </svg>
+        <div class="flex items-center space-x-4">
+            <div>
+                <label for="search" class="block text-sm font-medium text-gray-700 sr-only">Search</label>
+                <div class="relative rounded-md shadow-sm">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                             aria-hidden="true">
+                            <path fill-rule="evenodd"
+                                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                                  clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input wire:model="search" type="text" name="search" id="search"
+                           class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
+                           placeholder="Search...">
                 </div>
-                <input wire:model="search" type="text" name="search" id="search"
-                       class="focus:ring-primary focus:border-primary block w-full pl-10 sm:text-sm border-gray-300 rounded-md"
-                       placeholder="Search...">
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <span class="text-gray-500 text-sm">Service Staff Rate:</span>
+                <span>{{ number_format($serviceStaffRate, 0, '.', ',') }}</span>
+                <button type="button" wire:click="$emit('editStaffRate')"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Edit Rate
+                </button>
+                {{-- <button wire:click="$emit('editStaffRate')" type="button"
+                        class="mr-6 inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                    Edit Rate
+                </button> --}}
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
@@ -80,5 +95,7 @@
 
     {{-- <livewire:live-guest-create wire:key="create-guest-component" /> --}}
     <livewire:live-service-staff-delete />
+    <livewire:live-service-staff-rate-edit />
+
 
 </x-page-layout>

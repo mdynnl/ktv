@@ -82,8 +82,9 @@
                                             <tr class="divide-x">
                                                 <x-th-slim>Staff Name</x-th-slim>
                                                 <x-th-slim class="w-48">Check In</x-th-slim>
-                                                <x-th-slim class="w-48">Check Out</x-th-slim>
+                                                {{-- <x-th-slim class="w-48">Check Out</x-th-slim> --}}
                                                 <x-th-centered-slim class="w-20">Sessions</x-th-centered-slim>
+                                                <x-th-slim class="w-20" align="right">Rate</x-th-slim>
                                                 <x-th-slim class="w-20"></x-th-slim>
                                             </tr>
                                         </thead>
@@ -94,8 +95,8 @@
                                                     class="divide-x">
                                                     <x-td-slim>{{ $staff['nick_name'] }}</x-td-slim>
                                                     <x-td-slim>{{ $staff['arrival'] }}</x-td-slim>
-                                                    <x-td-slim>{{ $staff['departure'] }}</x-td-slim>
                                                     <x-td-centered-slim class="text-center">{{ $staff['sessions'] }}</x-td-centered-slim>
+                                                    <x-td-slim>{{ number_format($staff['service_staff_rate'], 0, '.', ',') }}</x-td-slim>
                                                     <x-td-slim-nopadding>
                                                         <button type="button" wire:click="removeStaff('{{ $key }}')"
                                                                 class="ml-3 hover:bg-gray-200 p-1 rounded-md">

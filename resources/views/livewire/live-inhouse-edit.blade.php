@@ -95,6 +95,7 @@
                                                     <x-th-slim class="w-48">Check In</x-th-slim>
                                                     {{-- <x-th-slim class="w-48">Check Out</x-th-slim> --}}
                                                     <x-th-centered-slim class="w-20">Sessions</x-th-centered-slim>
+                                                    <x-th-slim class="w-20" align="right">Rate</x-th-slim>
                                                     @if (!$isPaid)
                                                         <x-th-slim class="w-20"></x-th-slim>
                                                     @endif
@@ -109,6 +110,7 @@
                                                         <x-td-slim>{{ $staff['arrival'] }}</x-td-slim>
                                                         {{-- <x-td-slim>{{ $staff['departure'] }}</x-td-slim> --}}
                                                         <x-td-centered-slim class="text-center">{{ $staff['sessions'] }}</x-td-centered-slim>
+                                                        <x-td-slim>{{ number_format($staff['service_staff_rate'], 0, '.', ',') }}</x-td-slim>
                                                         @if (!$isPaid)
                                                             <x-td-slim-nopadding>
                                                                 <button {{ $isPaid ? 'disabled' : '' }} type="button"

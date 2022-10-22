@@ -59,11 +59,10 @@ return new class () extends Migration {
 				inhouse_id as inhouse_id,
 				'Service Staff' as description,
 				ss.nick_name as reference,
-				service_staff_rates.service_staff_rate as price,
+				service_staff_rate as price,
 				inhouse_services.session_hours as qty,
-				inhouse_services.session_hours * service_staff_rates.service_staff_rate as amount
+				inhouse_services.session_hours * service_staff_rate as amount
 			from inhouse_services
-			join service_staff_rates
 			left join service_staff ss on ss.id = inhouse_services.service_staff_id
 			union
 			SELECT

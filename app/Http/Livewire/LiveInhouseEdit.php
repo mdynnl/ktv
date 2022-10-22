@@ -219,7 +219,7 @@ class LiveInhouseEdit extends Component
         $this->editingStaff = true;
         $this->editingStaffIndex = $index;
         $this->editingStaffId = $this->staffs[$index]['id'];
-        $this->editingStaffName = $this->staffs[$index]['name'];
+        $this->editingStaffName = $this->staffs[$index]['nick_name'];
 
         $this->editingStaffSessionHours = $this->staffs[$index]['sessions'];
 
@@ -330,7 +330,8 @@ class LiveInhouseEdit extends Component
                 'nick_name' => $service->serviceStaff->nick_name,
                 'arrival' => $service->checkin_time->format('Y-m-d g:i A'),
                 'departure' => $service->checkout_time->format('Y-m-d g:i A'),
-                'sessions' => $service->session_hours
+                'sessions' => $service->session_hours,
+                'service_staff_rate' => $service->service_staff_rate,
             ]);
         }
 

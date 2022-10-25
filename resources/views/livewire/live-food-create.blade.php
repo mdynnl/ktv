@@ -11,6 +11,16 @@
                 <div class="space-y-8 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-1">
                         <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                            <x-form-file-input-comp class="col-span-6" wire:model="image" label="Food Image" for="image">
+                                @if ($image)
+                                    <x-slot name="preview">
+                                        <img class="h-16 w-16 object-cover rounded-full"
+                                             src="{{ $image->temporaryUrl() }}"
+                                             alt="food image" />
+                                    </x-slot>
+                                @endif
+                            </x-form-file-input-comp>
+
                             <x-form-select-comp class="col-span-2" label="Category*" wire:model="selectedFoodCategory"
                                                 :options="$foodCategories"
                                                 for="selectedFoodCategory"

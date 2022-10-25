@@ -61,18 +61,18 @@
 
                                 <x-form-onlydate-picker-comp wire:key="1-d" class="sm:col-span-2"
                                                              isDisabled="{{ $isPaid }}"
-                                                             wire:model="arrivalDate"
+                                                             wire:model.lazy="arrivalDate"
                                                              label="Checkin Date"
                                                              for="inhouse.arrival" />
 
                                 <x-form-html-timepicker-comp wire:key="1-t" class="sm:col-span-2"
-                                                             :isDisabled="true"
-                                                             wire:model="arrivalTime"
+                                                             isDisabled="{{ false }}"
+                                                             wire:model.lazy="arrivalTime"
                                                              label="Checkin Time"
                                                              for="inhouse.arrival" />
 
                                 <x-form-onlydate-picker-comp wire:key="2-d" class="sm:col-span-2"
-                                                             isDisabled="{{ $isPaid }}"
+                                                             isDisabled="{{ true }}"
                                                              wire:model="departureDate"
                                                              label="Checkout Date"
                                                              for="inhouse.departure" />
@@ -240,6 +240,7 @@
 
 
 
+
         <x-slot name="modalLeftAction">
             <button type="button"
                     {{ $isPaid ? 'disabled' : '' }}
@@ -263,13 +264,6 @@
                     class="ml-3 inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Order Food
-                {{-- <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20"
-                     fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                          clip-rule="evenodd" />
-                </svg> --}}
             </button>
 
             <button type="button"
@@ -279,28 +273,38 @@
                     class="ml-3 inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Make Adjustments
-                {{-- <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20"
-                     fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                          clip-rule="evenodd" />
-                </svg> --}}
             </button>
             <button type="button"
                     wire:click="$emit('viewInvoicePaymentFolio', '{{ $inhouseId }}')"
                     class="ml-3 inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Payment
-                {{-- <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg"
-                     viewBox="0 0 20 20"
-                     fill="currentColor" aria-hidden="true">
-                    <path fill-rule="evenodd"
-                          d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
-                          clip-rule="evenodd" />
-                </svg> --}}
             </button>
             {{-- </div> --}}
+
+            <div x-data="{
+                message: '',
+                success: false,
+                setSuccessMessage(message) {
+                    this.success = true
+                    this.message = message
+                },
+                setErrorMessage(message) {
+                    this.success = false
+                    this.message = message
+                },
+            }"
+
+                 x-init="$watch('show', () => {
+                     message = ' ';
+                     success = false;
+                 })"
+                 @success-inhouse-message.window="setSuccessMessage($event.detail.message)"
+                 @unsuccess-inhouse-message.window="setErrorMessage($event.detail.message)"
+                 class="inline-flex px-3">
+                <p><span x-text="message"
+                          :class="success ? 'text-primary font-semibold' : 'text-red-400 font-semibold'"></span></p>
+            </div>
         </x-slot>
 
         <x-slot name="modalAction">
@@ -470,6 +474,48 @@
                                 No
                             </button>
                             <button wire:click="confirmDeleteTransaction" type="button"
+                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                Yes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Remove Service Staff Confirmation Modal --}}
+    <div wire:key="3-service-staff-remove-confirmation-modal">
+        <div x-data="{
+            showServiceStaffRemoveConfirmationModal: @entangle('showServiceStaffRemoveConfirmationModal')
+        }" class="relative z-[1001]">
+            <div
+                 x-show="showServiceStaffRemoveConfirmationModal"
+                 x-cloak
+                 x-transition:enter="ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+
+            <div x-show="showServiceStaffRemoveConfirmationModal" x-cloak class="fixed flex inset-0 items-center justify-center z-10">
+                <div @click.outside="showServiceStaffRemoveConfirmationModal = false"
+                     class="bg-white border flex flex-col max-w-md rounded-lg w-full overflow-hidden">
+                    <div class="flex-1 px-4 py-5 text-sm">
+
+                        <header class="mb-3">
+                            <h1>Are you sure you want to remove {{ $editingStaffName }}?</h1>
+                        </header>
+                    </div>
+                    <div class="py-3 bg-gray-200 px-6">
+                        <div class="flex justify-end space-x-3 bg-gray-200">
+                            <button wire:click="$set('showServiceStaffRemoveConfirmationModal', false)" type="button"
+                                    class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none">
+                                No
+                            </button>
+                            <button wire:click="confirmDeleteServiceStaff" type="button"
                                     class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
                                 Yes
                             </button>

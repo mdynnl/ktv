@@ -36,64 +36,66 @@
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
-            <a href="{{ route('service-staff.create') }}"
-               class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+            <button type="button" wire:click="$emit('createServiceStaff')"
+                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
                 Add Service Staff
-            </a>
+            </button>
         </div>
     </x-content-header-section>
 
-    <x-table-wrapper>
-        <table class="min-w-full border-separate mb-8" style="border-collapse: collapse">
-            <thead class="bg-gray-50">
+    <x-sticky-table-wrapper>
+
+        <thead class="bg-gray-50">
+            <tr class="divide-x">
+                <x-th-not-sticky>Name</x-th-not-sticky>
+                <x-th-not-sticky>Nick Name</x-th-not-sticky>
+                <x-th-not-sticky>NRC No</x-th-not-sticky>
+                <x-th-not-sticky>Phone</x-th-not-sticky>
+                <x-th-not-sticky>Address</x-th-not-sticky>
+                <x-th-not-sticky>Status</x-th-not-sticky>
+                <x-th-not-sticky>
+                    <span class="sr-only">Edit</span>
+                </x-th-not-sticky>
+            </tr>
+        </thead>
+        <tbody class="bg-white">
+            @foreach ($staffs as $user)
                 <tr class="divide-x">
-                    <x-th-not-sticky>Name</x-th-not-sticky>
-                    <x-th-not-sticky>Nick Name</x-th-not-sticky>
-                    <x-th-not-sticky>Nrc No</x-th-not-sticky>
-                    <x-th-not-sticky>Phone</x-th-not-sticky>
-                    <x-th-not-sticky>Address</x-th-not-sticky>
-                    <x-th-not-sticky>Status</x-th-not-sticky>
-                    <x-th-not-sticky>
-                        <span class="sr-only">Edit</span>
-                    </x-th-not-sticky>
+                    <x-td-image imagePath="{!! $user->getImage !!}"
+                                name="{{ $user->name_on_nrc }}" />
+                    <x-td>{{ $user->nick_name }}</x-td>
+                    <x-td>{{ $user->nrc }}</x-td>
+                    <x-td>{{ $user->phone }}</x-td>
+                    <x-td>{{ $user->address }}</x-td>
+                    <x-td-slim-with-align align="center">
+                        @if ($user->isActive)
+                            <span
+                                  class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Active</span>
+                        @else
+                            <span
+                                  class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
+                                Inactive</span>
+                        @endif
+                    </x-td-slim-with-align>
+                    <x-td class="w-32">
+                        <div class="inline-flex space-x-3 items-center">
+                            {{-- <a href="{{ route('service-staff.edit', $user->id) }}" class="text-primary hover:text-blue-900">Edit</a> --}}
+                            <button type="button" wire:click="$emit('editServiceStaff', {{ $user->id }})"
+                                    class="text-primary hover:text-blue-900">Edit</button>
+                            <button type="button" wire:click="$emit('deleteServiceStaff', {{ $user->id }})"
+                                    class="text-primary hover:text-blue-900">Delete</button>
+                        </div>
+                    </x-td>
                 </tr>
-            </thead>
-            <tbody class="bg-white">
-                @foreach ($staffs as $user)
-                    <tr class="divide-x">
-                        <x-td-image imagePath="{!! $user->getImage !!}"
-                                    name="{{ $user->name_on_nrc }}" />
-                        <x-td>{{ $user->nick_name }}</x-td>
-                        <x-td>{{ $user->nrc }}</x-td>
-                        <x-td>{{ $user->phone }}</x-td>
-                        <x-td>{{ $user->address }}</x-td>
-                        <x-td-slim-with-align align="center">
-                            @if ($user->isActive)
-                                <span
-                                      class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800">Active</span>
-                            @else
-                                <span
-                                      class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
-                                    Inactive</span>
-                            @endif
-                        </x-td-slim-with-align>
-                        <x-td class="w-32">
-                            <div class="inline-flex space-x-3 items-center">
-                                {{-- <a href="{{ route('users.show', $user->id) }}" class="text-primary hover:text-blue-900">View</a> --}}
-                                <a href="{{ route('service-staff.edit', $user->id) }}" class="text-primary hover:text-blue-900">Edit</a>
-                                <button type="button" wire:click="$emit('deleteServiceStaff', {{ $user->id }})"
-                                        class="text-primary hover:text-blue-900">Delete</button>
-                            </div>
-                        </x-td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </x-table-wrapper>
+            @endforeach
+        </tbody>
+    </x-sticky-table-wrapper>
 
     {{-- <x-guest-view-modal :reqGuest="$reqGuest"></x-guest-view-modal> --}}
 
     {{-- <livewire:live-guest-create wire:key="create-guest-component" /> --}}
+    <livewire:live-service-staff-create />
+    <livewire:live-service-staff-edit />
     <livewire:live-service-staff-delete />
     <livewire:live-service-staff-rate-edit />
 

@@ -61,9 +61,11 @@
                     <div
                          class="border rounded-md flex flex-wrap gap-x-3 gap-y-3 h-56 overflow-hidden overflow-y-auto p-3">
                         @foreach ($foods as $food)
-                            <x-fb-menu-card-button wire:click="addToOrder({{ $food->id }})"
-                                                   :active="false"
-                                                   label="{{ ucwords($food->food_name) }}" />
+                            <x-fb-menu-card-button-with-image wire:click="addToOrder({{ $food->id }})"
+                                                              :active="false"
+                                                              label="{{ ucwords($food->food_name) }}"
+                                                              :price="$food->price"
+                                                              :image="$food->getImage" />
                         @endforeach
                     </div>
                 </div>

@@ -18,12 +18,17 @@
      @click="handleClick('{{ $room->status }}', '{{ $room->status == 0 ? $room->room_id : $room->inhouse_id }}')"
      class="flex-shrink-0 max-w-[190px] relative w-full">
     <div
-         class="bg-occ cursor-pointer border min-h-[190px] max-w-[190px] w-full shadow-md rounded-md overflow-hidden flex flex-col relative">
+         class="cursor-pointer border min-h-[190px] max-w-[190px] w-full shadow-md rounded-md overflow-hidden flex flex-col relative">
 
         <div @class([
             'px-4 flex flex-col text-primary flex-1',
             'bg-arrival' => $room->checkout_payment_status,
-            'bg-departure' => !$room->checkout_payment_status && $room->status == 1,
+            'bg-departure' =>
+                !$room->checkout_payment_status &&
+                ($room->status == 1 && $room->remaining > 1),
+            'bg-red-400' =>
+                !$room->checkout_payment_status &&
+                ($room->status == 1 && $room->remaining < 1),
             'bg-occupy' => !$room->checkout_payment_status && $room->status == 2,
             'bg-vacant' => !$room->checkout_payment_status && $room->status == 0,
         ]) class="">

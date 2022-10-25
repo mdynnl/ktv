@@ -11,6 +11,8 @@ class LiveServiceStaffView extends Component
 
     protected $listeners = [
         'serviceStaffDeleted' => '$refresh',
+        'serviceStaffUpdated' => '$refresh',
+        'serviceStaffCreated' => '$refresh',
         'staffRateUpdated' => '$refresh',
     ];
 
@@ -22,8 +24,7 @@ class LiveServiceStaffView extends Component
                 $query->where('name_on_nrc', 'like', '%' . $this->search . '%')
                 ->orWhere('nick_name', 'like', '%' . $this->search . '%');
             })
-            ->orderBy('created_at', 'desc')
-            ->orderBy('updated_at', 'desc')
+            ->orderBy('name_on_nrc')
             ->get()
 
         ]);

@@ -47,7 +47,7 @@
              class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
             @isset($inhouse)
                 <div
-                     class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-5xl">
+                     class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-xl w-full">
                     <div class="bg-white shadow overflow-hidden sm:rounded-lg ">
 
                         <div class="bg-primary flex items-center justify-between px-6 py-4 text-white">
@@ -73,10 +73,8 @@
                                     <div class="space-y-6 sm:space-y-1">
                                         <div class="mt-6 grid gap-y-6 gap-x-4 sm:grid-cols-6">
 
-                                            <x-form-disabled-comp class="col-span-3" wire:model="inhouse.room.room_no"
-                                                                  label="From Room No"
-                                                                  for="inhouse.room.room_no"
-                                                                  type="text" />
+                                            <x-display-info-comp class="col-span-3" label="From Room No"
+                                                                 displayValue="{{ $inhouse->room->room_no }}" />
 
                                             <div class="col-span-3 flex items-end space-x-3 pb-2">
                                                 <span class="text-gray-500">Room Type</span>
@@ -88,11 +86,11 @@
                                                     To Room No*
                                                 </label>
                                                 <div class="mt-1">
-                                                    <select wire:model="roomTransfer.to_room_no" id="room_no" name="room_no"
+                                                    <select wire:model="selectedRoomIdForTransfer" id="room_no" name="room_no"
                                                             class="shadow-sm focus:ring-primary focus:border-primary block w-full sm:text-sm border-gray-300 rounded-md">
                                                         <option value=""></option>
                                                         @foreach ($rooms as $option)
-                                                            <option value="{{ $option->room_no }}">
+                                                            <option value="{{ $option->id }}">
                                                                 {{ $option->room_no }} - {{ $option->type->room_type_name }}
                                                             </option>
                                                         @endforeach
@@ -107,24 +105,14 @@
                                                 @endisset
                                             </div>
 
+                                            <x-display-info-comp class="col-span-3" label="Current Room Rate"
+                                                                 displayValue="{{ $inhouse->room_rate }}" />
 
-                                            <x-form-disabled-comp class="col-span-2" wire:model="currencyCode"
-                                                                  label="Currency"
-                                                                  for="currencyCode"
-                                                                  type="text" />
+                                            <x-display-info-comp class="col-span-3" label="New Room Rate"
+                                                                 displayValue="{{ isset($toRoom) ? $toRoom->type->room_rate : 0 }}" />
 
-                                            <x-form-disabled-comp class="col-span-2" wire:model="roomTransfer.from_room_rate"
-                                                                  label="Current Room Rate"
-                                                                  for="roomTransfer.from_room_rate"
-                                                                  type="text" />
-
-                                            <x-form-input-comp class="col-span-2" wire:model="roomTransfer.to_room_rate"
-                                                               label="New Room Rate*"
-                                                               for="roomTransfer.to_room_rate"
-                                                               type="text" />
-
-                                            <x-form-textarea-comp class="col-span-6" wire:model="roomTransfer.remark"
-                                                                  label="Remark" for="roomTransfer.remark" rows="3" />
+                                            <x-form-textarea-comp class="col-span-6" wire:model="remark"
+                                                                  label="Remark" for="remark" rows="3" />
 
                                         </div>
                                     </div>
@@ -143,7 +131,8 @@
 
                             <div class="py-3 bg-gray-200 px-6">
                                 <div class="flex justify-between items-center bg-gray-200">
-                                    <div class="max-w-[208px] text-sm leading-tight">
+                                    {{-- <div class="max-w-[208px] text-sm leading-tight"> --}}
+                                    <div class="flex-1 mr-8 text-sm leading-tight">
                                         <span x-text="message"
                                               :class="success ? 'text-primary font-semibold' : 'text-red-400 font-semibold'"></span>
                                     </div>

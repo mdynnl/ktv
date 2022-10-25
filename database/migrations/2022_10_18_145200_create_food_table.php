@@ -14,6 +14,7 @@ return new class () extends Migration {
     {
         Schema::create('food', function (Blueprint $table) {
             $table->id();
+            $table->string('food_image')->nullable();
             $table->foreignId('food_type_id');
             $table->string('food_name');
             $table->float('price');

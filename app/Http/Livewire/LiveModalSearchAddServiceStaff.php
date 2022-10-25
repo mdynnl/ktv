@@ -42,8 +42,9 @@ class LiveModalSearchAddServiceStaff extends Component
     {
         return view('livewire.live-modal-search-add-service-staff', [
             'staffs' => ServiceStaff::when(strlen($this->search) >= 2 ? $this->search : false, function ($query, $search) {
-                $query->where('name', 'like', '%'.$search.'%');
-            })->where('isActive', true)->get(),
+                $query->where('nick_name', 'like', '%'.$search.'%');
+                // ->orWhere('nick_name', 'like', '%'.$search.'%');
+            })->where('isActive', true)->orderBy('nick_name')->get(),
         ]);
     }
 }

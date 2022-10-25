@@ -23,9 +23,5 @@ class FoodCategorySeeder extends Seeder
             'food_category_name' => 'Beverage',
             'created_user_id' => 1
         ]);
-        FoodCategory::create([
-            'food_category_name' => 'Open Item',
-            'created_user_id' => 1
-        ]);
     }
 }

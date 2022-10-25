@@ -5,20 +5,27 @@ namespace App\Http\Livewire;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class LiveFoodEdit extends Component
 {
+    use WithFileUploads;
+
     public $food;
     public $foodCategories;
     public $foodTypes;
     public $selectedFoodCategory;
     public $showFoodEditForm = false;
+    public $image;
     protected $listeners = ['editFood'];
 
     protected $rules = [
+        'image' => 'nullable|image|max:512',
         'food.food_type_id' => 'required|integer',
         'food.food_name' => 'required|string',
+        // 'food.food_image' => 'nullable|image|max:512',
         'food.price' => 'required|between:0,999999999.99',
         'food.updated_user_id' => 'required|integer',
     ];
@@ -26,6 +33,11 @@ class LiveFoodEdit extends Component
     public function update()
     {
         $this->validate();
+
+        if ($this->image) {
+            Storage::delete($this->food->food_image);
+            $this->food->food_image = $this->image->store('fnb');
+        }
         $this->food->update();
         $this->emit('foodUpdated');
         $this->showFoodEditForm = false;

@@ -32,6 +32,7 @@ class LiveInhouseEdit extends Component
 
     public $editingStaff = false;
     public $editingStaffIndex;
+    public $editingInhouseServiceId;
     public $staffSessionsPassed = 0;
     public $staffRemainingSessions = 0;
     public $editingStaffSessionHours = 0.5;
@@ -65,8 +66,16 @@ class LiveInhouseEdit extends Component
     public $editingTransactionAmount;
     public $editingTransactionRemark;
     public $showTransactionRemoveConfirmationModal = false;
+    public $showServiceStaffRemoveConfirmationModal = false;
 
-    protected $listeners = ['editInhouse', 'inhouseEditAddServiceStaffs', 'orderPlaced', 'incomeTransactionAdded', 'checkOutPaymentsSettled'];
+    protected $listeners = [
+            'editInhouse',
+            'inhouseEditAddServiceStaffs',
+            'orderPlaced',
+            'incomeTransactionAdded',
+            'checkOutPaymentsSettled',
+            'roomTransferred'
+        ];
 
     protected $rules = [
         'inhouse.room_id' => 'required|integer',
@@ -77,6 +86,11 @@ class LiveInhouseEdit extends Component
         'inhouse.customer_id' => 'nullable|integer',
         'inhouse.updated_user_id' => 'required|integer',
     ];
+
+    public function roomTransferred()
+    {
+        $this->editInhouse($this->inhouse->refresh());
+    }
 
     public function checkOut()
     {
@@ -132,6 +146,7 @@ class LiveInhouseEdit extends Component
                     'checkout_time' => $service['departure'],
                     'session_hours' => $service['sessions'],
                     'operation_date' => app('OperationDate'),
+                    'service_staff_rate' => $service['service_staff_rate'],
                 ]);
             }
         }
@@ -162,6 +177,78 @@ class LiveInhouseEdit extends Component
         }
     }
 
+    public function updatedArrivalDate()
+    {
+        if ($this->checkDateIsValid()) {
+            $this->updateDepartureDateTime();
+        };
+    }
+
+    public function updatedArrivalTime()
+    {
+        if ($this->checkDateIsValid()) {
+            $this->updateDepartureDateTime();
+        };
+    }
+
+    protected function updateDepartureDateTime()
+    {
+        $sessions = $this->inhouse->session_hours;
+        $sessionInMinutes = $sessions * 60;
+        $arrival = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime);
+        $departure = $arrival->addMinutes($sessionInMinutes);
+        $this->departureDate = $departure->format('Y-m-d');
+        $this->departureTime = $departure->format('H:i');
+        $this->update();
+    }
+
+    protected function checkDateIsValid()
+    {
+        $isValid = false;
+        $arrival = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime);
+
+        $departure = Carbon::parse($this->departureDate . ' '. $this->departureTime);
+
+        if ($arrival > $departure) {
+            $isValid = false;
+            $this->dispatchBrowserEvent('unsuccess-inhouse-message', ['message' => "Selected Date/Time invalid!"]);
+        } else {
+            $isValid = true;
+            $this->dispatchBrowserEvent('success-inhouse-message', ['message' => "cc"]);
+        };
+
+        return $isValid;
+    }
+
+    public function updatedInhouseCustomerId()
+    {
+        $this->update();
+    }
+
+    public function confirmDeleteServiceStaff()
+    {
+        $this->showServiceStaffRemoveConfirmationModal = false;
+        InhouseService::find($this->editingInhouseServiceId)->delete();
+
+        unset($this->staffs[$this->editingStaffIndex]);
+        $this->staffs = array_values($this->staffs);
+    }
+
+    public function removeStaff($index)
+    {
+        if (isset($this->staffs[$index]['inhouse_service_id'])) {
+            $this->editingStaffIndex = $index;
+            $this->editingStaffName = $this->staffs[$index]['nick_name'];
+            $this->editingInhouseServiceId = $this->staffs[$index]['inhouse_service_id'];
+            $this->showServiceStaffRemoveConfirmationModal = true;
+        } else {
+            if (isset($this->staffs[$index])) {
+                unset($this->staffs[$index]);
+                $this->staffs = array_values($this->staffs);
+            }
+        }
+    }
+
 
     public function inhouseEditAddServiceStaffs($staffs)
     {
@@ -180,13 +267,15 @@ class LiveInhouseEdit extends Component
                     'nick_name' => $staff->nick_name,
                     'arrival' => now()->format('Y-m-d g:i A'),
                     'departure' => $departure,
-                    'sessions' => $sessions
+                    'sessions' => $sessions,
+                    'service_staff_rate' => app('ServiceStaffRate'),
                 ]);
 
-                $this->isStaffListDirty = true;
-                $this->isDirty = true;
+                // $this->isStaffListDirty = true;
+                // $this->isDirty = true;
             }
         }
+        $this->update();
     }
 
     public function changeStaffSessionHours($isAddition = true)
@@ -250,6 +339,7 @@ class LiveInhouseEdit extends Component
             $this->departure = Carbon::parse($this->departure)->addMinutes(60 * 0.5);
             $this->departureDate = $this->departure->format('Y-m-d');
             $this->departureTime =  $this->departure->format('H:i');
+            // $this->setUpDisplayRemainder();
             $this->changeStaffSessions($isAddition);
             $this->update();
         // $this->isDirty = true;
@@ -261,6 +351,7 @@ class LiveInhouseEdit extends Component
                 $this->departure = Carbon::parse($this->departure)->subMinutes(60 * 0.5);
                 $this->departureDate = $this->departure->format('Y-m-d');
                 $this->departureTime =  Carbon::parse($this->departure)->format('H:i');
+                // $this->setUpDisplayRemainder();
                 $this->changeStaffSessions($isAddition);
                 $this->update();
             // $this->isDirty = true;
@@ -272,6 +363,7 @@ class LiveInhouseEdit extends Component
                 $this->departure = Carbon::parse($this->departure)->subMinutes(60 * 0.5);
                 $this->departureDate = $this->departure->format('Y-m-d');
                 $this->departureTime =  Carbon::parse($this->departure)->format('H:i');
+                // $this->setUpDisplayRemainder();
                 $this->changeStaffSessions($isAddition);
                 $this->update();
                 // $this->isDirty = true;
@@ -279,10 +371,10 @@ class LiveInhouseEdit extends Component
         }
     }
 
-    public function updated()
-    {
-        $this->update();
-    }
+    // public function updated()
+    // {
+    //     $this->update();
+    // }
 
     public function changeStaffSessions($isAddition)
     {
@@ -339,7 +431,8 @@ class LiveInhouseEdit extends Component
         $this->customers = Customer::all('id', 'customer_name');
 
         // dd(Carbon::parse($this->inhouse->departure)->diff(now()));
-        $this->remainingTime = now()->diff($this->inhouse->departure)->format('%hhrs %imins');
+        // $this->remainingTime = now()->diff($this->inhouse->departure);
+        $this->setUpDisplayRemainder();
         $this->sessionsPassed = round(now()->diffInMinutes($this->inhouse->arrival) / 60, 1);
         $this->remainingSessions = $this->inhouse->session_hours - $this->sessionsPassed;
         $this->arrival = $this->inhouse->arrival;
@@ -359,6 +452,15 @@ class LiveInhouseEdit extends Component
         }
 
         $this->showInhouseEditForm = true;
+    }
+
+    protected function setUpDisplayRemainder()
+    {
+        if (now()->diffInMinutes($this->inhouse->departure) > 60) {
+            $this->remainingTime = now()->diff($this->inhouse->departure)->format('%hhrs %imins');
+        } else {
+            $this->remainingTime = now()->diff($this->inhouse->departure)->format('%imins');
+        };
     }
 
     public function render()

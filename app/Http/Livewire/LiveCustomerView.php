@@ -24,7 +24,9 @@ class LiveCustomerView extends Component
                     $query->where('customer_name', 'like', '%' . $search . '%')
                     ->orWhere('phone', 'like', '%' . $search . '%');
                 });
-            }) ->get()
+            })
+            ->orderBy('customer_name')
+            ->get()
         ]);
     }
 }

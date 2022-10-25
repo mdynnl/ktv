@@ -22,8 +22,6 @@ class FoodTypeSeeder extends Seeder
             FoodType::create([
                 'food_category_id' => 1,
                 'food_type_name' => $food,
-                'printer_type_id' => 1,
-                'isPrintable' => true,
                 'created_user_id' => 1,
             ]);
         }
@@ -32,8 +30,6 @@ class FoodTypeSeeder extends Seeder
             FoodType::create([
                 'food_category_id' => 2,
                 'food_type_name' => $beverage,
-                'printer_type_id' => 2,
-                'isPrintable' => true,
                 'created_user_id' => 1,
             ]);
         }

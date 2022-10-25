@@ -16,9 +16,9 @@ return new class () extends Migration {
             $table->id();
             $table->foreignId('food_category_id');
             $table->string('food_type_name');
-            $table->boolean('isFunctionMenu')->default(false);
-            $table->boolean('isPrintable')->default(false);
-            $table->unsignedInteger('printer_type_id')->nullable();
+            // $table->boolean('isFunctionMenu')->default(false);
+            // $table->boolean('isPrintable')->default(false);
+            // $table->unsignedInteger('printer_type_id')->nullable();
             $table->unsignedInteger('created_user_id');
             $table->unsignedInteger('updated_user_id')->nullable();
             $table->timestamps();

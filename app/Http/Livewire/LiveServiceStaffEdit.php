@@ -26,6 +26,10 @@ class LiveServiceStaffEdit extends Component
     public $new_profile_image;
     public $new_full_size_image;
 
+    public $showServiceStaffEditForm = false;
+
+    protected $listeners = ['editServiceStaff'];
+
     protected function rules()
     {
         return [
@@ -40,7 +44,7 @@ class LiveServiceStaffEdit extends Component
         ];
     }
 
-    public function updateUser()
+    public function update()
     {
         $validated = $this->validate();
 
@@ -59,19 +63,18 @@ class LiveServiceStaffEdit extends Component
             ]);
         });
 
-        return redirect()->route('service-staff.index');
+		$this->emit('serviceStaffUpdated');
+		$this->showServiceStaffEditForm = false;
     }
 
-    public function mount(ServiceStaff $serviceStaff)
+
+    public function editServiceStaff(ServiceStaff $serviceStaff)
     {
         $this->serviceStaff = $serviceStaff;
         $this->service_staff_id = $serviceStaff->id;
         $this->fill($serviceStaff);
-    }
 
-    public function render()
-    {
-        return view('livewire.live-service-staff-edit');
+        $this->showServiceStaffEditForm = true;
     }
 
     protected function checkAndUpdateImage($validated)

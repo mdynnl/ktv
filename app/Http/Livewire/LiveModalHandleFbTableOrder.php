@@ -584,7 +584,7 @@ class LiveModalHandleFbTableOrder extends Component
 
     public function updatedSelectedCategoryId()
     {
-        $this->foodTypes = FoodType::select('id', 'food_type_name', 'printer_type_id')->withCount('foods')->with('printerType:id,printer_type')->where('food_category_id', $this->selectedCategoryId)->get();
+        $this->foodTypes = FoodType::select('id', 'food_type_name')->withCount('foods')->where('food_category_id', $this->selectedCategoryId)->get();
         if ($this->foodTypes->count() > 0) {
             $this->selectedFoodTypeId = $this->foodTypes->first()->id;
         } else {
@@ -607,7 +607,7 @@ class LiveModalHandleFbTableOrder extends Component
         $this->categories = FoodCategory::all('id', 'food_category_name');
         $this->selectedCategoryId = $this->categories->first()->id;
 
-        $this->foodTypes = FoodType::select('id', 'food_type_name', 'printer_type_id')->withCount('foods')->with('printerType:id,printer_type')->where('food_category_id', $this->selectedCategoryId)->get();
+        $this->foodTypes = FoodType::select('id', 'food_type_name')->withCount('foods')->where('food_category_id', $this->selectedCategoryId)->get();
         $this->selectedFoodTypeId = $this->foodTypes->first()->id;
 
         // $this->paymentTypes = PaymentType::all('id', 'payment_type_name');
@@ -650,7 +650,7 @@ class LiveModalHandleFbTableOrder extends Component
     {
         return view('livewire.live-modal-handle-fb-table-order', [
             'foods' => Food::with('foodType')
-                ->select('id', 'food_type_id', 'food_name', 'price')
+                ->select('id', 'food_image', 'food_type_id', 'food_name', 'price')
                 ->when(strlen($this->fnbSearch) >= 2, function ($query) {
                     $query->where('food_name', 'like', '%' . $this->fnbSearch . '%');
                 }, function ($query) {

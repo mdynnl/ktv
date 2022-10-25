@@ -39,11 +39,11 @@
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
                         <x-th>Food & Beverage Type</x-th>
-                        <x-th>Printer Type</x-th>
                         <x-th width="150px">
                             <button wire:click="$emit('createFoodType')" type="button"
-                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">Add
-                                Type</button>
+                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                Add New
+                            </button>
                         </x-th>
                     </tr>
                 </thead>
@@ -52,7 +52,6 @@
                         <tr
                             class="divide-x bg-white text-gray-900">
                             <x-td>{{ $type->food_type_name }}</x-td>
-                            <x-td>{{ isset($type->printerType) ? $type->printerType->printer_type : 'Not assigned' }}</x-td>
                             <x-td>
                                 <div class="inline-flex space-x-3 items-center">
                                     <button type="button" wire:click="$set('selectedTypeId', {{ $type->id }})"
@@ -85,7 +84,7 @@
                         <x-th>
                             <button wire:click="$emit('createFood', {{ $selectedTypeId }})" type="button"
                                     class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
-                                Add Item
+                                Add New
                             </button>
                         </x-th>
                     </tr>
@@ -93,7 +92,8 @@
                 <tbody class="bg-white">
                     @foreach ($foods as $food)
                         <tr class="divide-x">
-                            <x-td>{{ $food->food_name }}</x-td>
+                            <x-td-image imagePath="{!! $food->getImage !!}"
+                                        name="{{ $food->food_name }}" />
                             <x-td>{{ $food->foodType->food_type_name }}</x-td>
                             <x-td>{{ $food->price }}</x-td>
                             <x-td width="150px">

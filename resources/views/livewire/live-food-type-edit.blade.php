@@ -21,41 +21,7 @@
                                                for="foodType.food_type_name"
                                                type="text" />
 
-                            <x-form-select-comp class="col-span-3" label="Print To*" wire:model="foodType.printer_type_id"
-                                                :options="$printers"
-                                                for="foodType.printer_type_id"
-                                                optionValue="id" optionDisplay="printer_type" />
 
-                            <div class="col-span-3 flex flex-col justify-end">
-                                <div class="flex items-end relative">
-                                    <div class="flex h-5 items-center">
-                                        <input wire:model="foodType.isPrintable" id="is-printable"
-                                               aria-describedby="is-printable" name="is-printable" type="checkbox"
-                                               class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
-                                    </div>
-                                    <div class="ml-3 text-sm">
-                                        <label for="is-printable" class="font-medium text-gray-700">Printable</label>
-                                    </div>
-                                </div>
-
-                                <div class="flex items-center relative">
-                                    <div class="flex h-5 items-center">
-                                        <input wire:model="foodType.isFunctionMenu" id="is-function-menu"
-                                               aria-describedby="is-function-menu" name="is-function-menu" type="checkbox"
-                                               class="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary">
-                                    </div>
-                                    <div class="ml-3 text-sm">
-                                        <label for="is-function-menu" class="font-medium text-gray-700">Function Menu</label>
-                                    </div>
-                                </div>
-
-                                @error('foodType.isPrintable')
-                                    <x-form-error-component message="{{ $message }}" />
-                                @enderror
-                                @error('foodType.isFunctionMenu')
-                                    <x-form-error-component message="{{ $message }}" />
-                                @enderror
-                            </div>
                             @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>

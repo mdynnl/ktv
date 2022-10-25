@@ -6,10 +6,14 @@ use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class LiveFoodCreate extends Component
 {
+    use WithFileUploads;
+
     public $food;
+    public $image;
     public $foodCategories;
     public $foodTypes;
     public $selectedFoodCategory;
@@ -18,6 +22,7 @@ class LiveFoodCreate extends Component
     protected $listeners = ['createFood'];
 
     protected $rules = [
+        'image' => 'nullable|image|max:512',
         'food.food_type_id' => 'required|integer',
         'food.food_name' => 'required|string',
         'food.price' => 'required|between:0,999999999.99',
@@ -27,6 +32,9 @@ class LiveFoodCreate extends Component
     public function create()
     {
         $this->validate();
+        if ($this->image) {
+            $this->food->food_image = $this->image->store('fnb');
+        }
         $this->food->save();
         $this->emit('foodCreated');
         $this->showFoodCreateForm = false;

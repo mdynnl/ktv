@@ -20,6 +20,10 @@ class LiveServiceStaffCreate extends Component
     public $phone;
     public $isActive;
 
+    public $showServiceStaffCreateForm = false;
+
+    protected $listeners = ['createServiceStaff'];
+
     protected $rules = [
         'profile_image' => 'nullable|image|max:512',
         'full_size_image' => 'nullable|image|max:1024',
@@ -31,10 +35,9 @@ class LiveServiceStaffCreate extends Component
         'isActive' => 'required|boolean',
     ];
 
-    public function createUser()
+    public function create()
     {
         $validated = $this->validate();
-        // $validated['password'] = bcrypt($validated['password']);
 
         DB::transaction(function () use ($validated) {
             if ($this->profile_image) {
@@ -51,16 +54,22 @@ class LiveServiceStaffCreate extends Component
         });
 
 
-        return redirect()->route('service-staff.index');
+        $this->emit('serviceStaffCreated');
+        $this->showServiceStaffCreateForm = false;
     }
 
-    public function mount()
+
+    public function createServiceStaff()
     {
-        $this->isActive = false;
+        $this->resetValidation();
+        $this->reset();
+
+        $this->isActive = true;
+        $this->showServiceStaffCreateForm = true;
     }
 
-    public function render()
-    {
-        return view('livewire.live-service-staff-create');
-    }
+    // public function render()
+    // {
+    //     return view('livewire.live-service-staff-create');
+    // }
 }

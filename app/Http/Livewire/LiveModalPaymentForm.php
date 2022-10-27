@@ -4,7 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\CheckOutPayment;
 use App\Models\CurrencyExchange;
-use App\Models\CheckoutPaymentType;
+use App\Models\PaymentType;
 use App\Models\Inhouse;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +16,17 @@ class LiveModalPaymentForm extends Component
     public $inhouse_id;
     public $room_no;
     public $total;
-    public $checkout_payment_type_id;
+    public $payment_type_id;
     public $remark;
 
-    public $checkoutPaymentTypes;
+    public $paymentTypes;
     public $showModalPaymentForm = false;
 
     protected $listeners = ['makePayments'];
 
     protected $rules = [
           'remark' => 'nullable|string',
-          'checkout_payment_type_id' => 'required|integer',
+          'payment_type_id' => 'required|integer',
     ];
 
     public function saveCheckOutPayment()
@@ -35,7 +35,7 @@ class LiveModalPaymentForm extends Component
         DB::transaction(function () {
             $inhouse = Inhouse::find($this->inhouse_id);
             $inhouse->update([
-                'checkout_payment_type_id' => $this->checkout_payment_type_id,
+                'payment_type_id' => $this->payment_type_id,
                 'remark' => $this->remark,
                 'checkout_payment_done' => true,
                 'updated_user_id' => auth()->id(),
@@ -61,7 +61,7 @@ class LiveModalPaymentForm extends Component
         }
         $this->fill($inhouse);
         $this->inhouse_id = $inhouse->id;
-        $this->checkoutPaymentTypes = CheckoutPaymentType::all('id', 'checkout_payment_type_name');
+        $this->paymentTypes = PaymentType::all('id', 'payment_type_name');
 
         $this->showModalPaymentForm = true;
     }

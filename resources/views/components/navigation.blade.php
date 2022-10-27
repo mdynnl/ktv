@@ -5,6 +5,9 @@
     <x-nav-link :href="route('service-staff.index')" :active="request()->routeIs('service-staff.index') || request()->routeIs('service-staff.*')">Service Staff</x-nav-link>
     <x-nav-link :href="route('room.index')" :active="request()->routeIs('room.index') || request()->routeIs('room.*')">Rooms</x-nav-link>
     <x-nav-link :href="route('customer.index')" :active="request()->routeIs('customer.index') || request()->routeIs('customer.*')">Customers</x-nav-link>
+    <x-nav-link :href="route('item.index')" :active="request()->routeIs('item.index')">Items</x-nav-link>
+    <x-nav-link :href="route('supplier.index')" :active="request()->routeIs('supplier.index')">Suppliers</x-nav-link>
+    <x-nav-link :href="route('purchase.index')" :active="request()->routeIs('purchase.index')">Purchases</x-nav-link>
     {{-- @endcan --}}
 </div>
 <div class="ml-4 flex items-center md:ml-6">

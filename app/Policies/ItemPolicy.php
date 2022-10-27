@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\CheckoutPaymentType;
+use App\Models\Item;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class CheckoutPaymentTypePolicy
+class ItemPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class CheckoutPaymentTypePolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CheckoutPaymentType  $checkoutPaymentType
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, CheckoutPaymentType $checkoutPaymentType)
+    public function view(User $user, Item $item)
     {
         //
     }
@@ -48,10 +48,10 @@ class CheckoutPaymentTypePolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CheckoutPaymentType  $checkoutPaymentType
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, CheckoutPaymentType $checkoutPaymentType)
+    public function update(User $user, Item $item)
     {
         //
     }
@@ -60,10 +60,10 @@ class CheckoutPaymentTypePolicy
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CheckoutPaymentType  $checkoutPaymentType
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, CheckoutPaymentType $checkoutPaymentType)
+    public function delete(User $user, Item $item)
     {
         //
     }
@@ -72,10 +72,10 @@ class CheckoutPaymentTypePolicy
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CheckoutPaymentType  $checkoutPaymentType
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, CheckoutPaymentType $checkoutPaymentType)
+    public function restore(User $user, Item $item)
     {
         //
     }
@@ -84,10 +84,10 @@ class CheckoutPaymentTypePolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\CheckoutPaymentType  $checkoutPaymentType
+     * @param  \App\Models\Item  $item
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, CheckoutPaymentType $checkoutPaymentType)
+    public function forceDelete(User $user, Item $item)
     {
         //
     }

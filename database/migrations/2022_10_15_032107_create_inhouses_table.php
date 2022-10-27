@@ -28,7 +28,7 @@ return new class () extends Migration {
             $table->float('service_tax')->default(0);
             $table->float('service_tax_amount')->default(0);
             $table->float('total')->default(0);
-            $table->float('checkout_payment_type_id')->default(1);
+            $table->float('payment_type_id')->default(1);
             $table->string('remark')->nullable();
             $table->unsignedInteger('created_user_id');
             $table->unsignedInteger('updated_user_id')->nullable();

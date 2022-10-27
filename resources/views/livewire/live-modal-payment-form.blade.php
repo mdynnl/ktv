@@ -73,11 +73,11 @@
                                             <x-td-slim>{{ number_format($total, 0, '.', ',') }}</x-td-slim>
 
                                             <x-td-slim>
-                                                <select wire:model="checkout_payment_type_id"
-                                                        class="mt-1 block w-full rounded-md border-gray-300 py-1 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm">
-                                                    @foreach ($checkoutPaymentTypes as $paymentType)
+                                                <select wire:model="payment_type_id"
+                                                        class="mt-1 block w-full rounded-md border-gray-300 py-1 pl-3 pr-10 text-base focus:border-primary focus:outline-none focus:ring-primary sm:text-sm">
+                                                    @foreach ($paymentTypes as $paymentType)
                                                         <option value="{{ $paymentType->id }}">
-                                                            {{ $paymentType->checkout_payment_type_name }}
+                                                            {{ $paymentType->payment_type_name }}
                                                         </option>
                                                     @endforeach
                                                 </select>

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Customer;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
@@ -17,9 +18,16 @@ class LiveCustomerDelete extends Component
 
     public function delete()
     {
-        $this->customer->delete();
-        $this->emit('customerDeleted');
-        $this->showCustomerDeleteModal = false;
+        try {
+            $this->customer->delete();
+            $this->emit('customerDeleted');
+            $this->showCustomerDeleteModal = false;
+        } catch (QueryException $queryException) {
+            $this->showRoomDeleteModal = false;
+            $this->dispatchBrowserEvent('failure-notify', ['title' => "Customer Delete Unsuccessful", 'body' => "Cannot delete customer cause other related data exist. Please delete related data first to delete this customer."]);
+        } catch (\Exception $exception) {
+            dd(get_class($exception));
+        }
     }
 
     public function deleteCustomer(Customer $customer)

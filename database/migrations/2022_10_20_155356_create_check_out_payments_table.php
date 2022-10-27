@@ -22,7 +22,7 @@ return new class () extends Migration {
             // $table->string('payment_currency_code');
             // $table->float('exchange_rate');
             $table->float('payment');
-            $table->integer('checkout_payment_type_id');
+            $table->integer('payment_type_id');
             $table->string('remark');
             $table->integer('created_user_id');
             $table->integer('updated_user_id')->nullable();

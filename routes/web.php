@@ -2,11 +2,15 @@
 
 use App\Http\Livewire\LiveCustomerView;
 use App\Http\Livewire\LiveFbMenuView;
+use App\Http\Livewire\LiveItemIndex;
+use App\Http\Livewire\LivePurchaseCreate;
+use App\Http\Livewire\LivePurchaseIndex;
 use App\Http\Livewire\LiveRoomInfo;
 use App\Http\Livewire\LiveRoomView;
 use App\Http\Livewire\LiveServiceStaffCreate;
 use App\Http\Livewire\LiveServiceStaffEdit;
 use App\Http\Livewire\LiveServiceStaffView;
+use App\Http\Livewire\LiveSupplierIndex;
 use App\Models\Inhouse;
 use App\Models\Room;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +27,13 @@ Route::middleware('auth')->group(function () {
     // Route::get('/service-staff/{serviceStaff}/edit', LiveServiceStaffEdit::class)->name('service-staff.edit');
 
     Route::get('/customer', LiveCustomerView::class)->name('customer.index');
+
+    Route::get('/items', LiveItemIndex::class)->name('item.index');
+
+    Route::get('/suppliers', LiveSupplierIndex::class)->name('supplier.index');
+
+    Route::get('/purchase', LivePurchaseIndex::class)->name('purchase.index');
+    // Route::get('/purchase', LivePurchaseCreate::class)->name('purchase.create');
 });
 
 Route::get('/test', function () {

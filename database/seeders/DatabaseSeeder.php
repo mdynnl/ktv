@@ -6,8 +6,10 @@ namespace Database\Seeders;
 
 use App\Models\Customer;
 use App\Models\Food;
+use App\Models\Item;
 use App\Models\RoomType;
 use App\Models\ServiceStaff;
+use App\Models\Supplier;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,7 +23,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CurrentOperationDateSeeder::class);
 
-        $this->call(CheckoutPaymentTypeSeeder::class);
+        $this->call(PaymentTypeSeeder::class);
 
         $this->call(UserSeeder::class);
 
@@ -36,6 +38,9 @@ class DatabaseSeeder extends Seeder
         $this->call(TableSeeder::class);
 
         $this->call(TransactionSeeder::class);
+
+        Supplier::factory(20)->create();
+        Item::factory(50)->create();
 
         $this->call(PrinterTypeSeeder::class);
         $this->call(FoodCategorySeeder::class);

@@ -12,9 +12,9 @@ return new class () extends Migration {
      */
     public function up()
     {
-        Schema::create('checkout_payment_types', function (Blueprint $table) {
+        Schema::create('payment_types', function (Blueprint $table) {
             $table->id();
-            $table->string('checkout_payment_type_name')->comment('Cash, Card, City');
+            $table->string('payment_type_name')->comment('Cash, Card, Credit');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class () extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('checkout_payment_types');
+        Schema::dropIfExists('payment_types');
     }
 };

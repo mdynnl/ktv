@@ -184,8 +184,11 @@ class LiveModalHandleFbTableOrder extends Component
             'order_details' => array_values($currentOrders)
         ];
         $date = [];
-        // return $this->printToPDF('pdf.kitchen-order-pdf', $data, $date, 'Kitchen-Order', 'P');
-        return $this->printToPDF('pdf.kitchen-order-pdf', $data, $date, 'Kitchen-Order', 'P');
+        try {
+            return $this->printToPDF('pdf.kitchen-order-pdf', $data, $date, 'Kitchen-Order', 'P');
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+        }
     }
 
     public function confirmClearTable()

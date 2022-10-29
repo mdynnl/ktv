@@ -126,7 +126,8 @@
                                                         {{ $payment->price != 0 ? number_format($payment->price, 0, '.', ',') : '' }}
                                                     </x-td-slim-with-align>
                                                     <x-td-slim-with-align align="center">{{ $payment->qty }}</x-td-slim-with-align>
-                                                    <x-td-slim-with-align align="right">{{ number_format($payment->amount, 0, '.', ',') }}
+                                                    <x-td-slim-with-align align="right">
+                                                        {{ number_format($payment->amount, 0, '.', ',') }}
                                                     </x-td-slim-with-align>
                                                 </tr>
                                             @endforeach

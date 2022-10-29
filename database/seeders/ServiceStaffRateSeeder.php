@@ -17,6 +17,7 @@ class ServiceStaffRateSeeder extends Seeder
     {
         ServiceStaffRate::create([
             'service_staff_rate' => 5000,
+            'service_staff_commission_rate' => 2000,
             'created_user_id' => 1,
         ]);
     }

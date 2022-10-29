@@ -76,6 +76,7 @@ class LiveWalkIn extends Component
                     'checkout_time' => Carbon::parse($staff['departure']),
                     'session_hours' => $staff['sessions'],
                     'service_staff_rate' => $staff['service_staff_rate'],
+                    'service_staff_commission_rate' => $staff['service_staff_commission_rate'],
                     'operation_date' => app('OperationDate'),
                 ]);
             }
@@ -117,26 +118,64 @@ class LiveWalkIn extends Component
         }
     }
 
-    public function clickShowStaffTimeAdjustmentModal($id)
+    public function updatedArrivalDate()
     {
-        $this->editingStaff = true;
-        $this->editingStaffId = $id;
-        $this->editingStaffName = $this->staffs[$id]['nick_name'];
-
-        $this->editingStaffSessionHours = $this->inhouse->session_hours;
-
-        $this->editingStaffMin = Carbon::parse($this->arrivalTime)->format('H:i');
-        $this->editingStaffMax = Carbon::parse($this->departureTime)->format('H:i');
-
-        $this->editingStaffArrival = Carbon::parse($this->staffs[$id]['arrival']);
-        $this->editingStaffDeparture = Carbon::parse($this->staffs[$id]['departure']);
-        $this->editingStaffArrivalDate = Carbon::parse($this->staffs[$id]['arrival'])->format('Y-m-d');
-        $this->editingStaffArrivalTime = Carbon::parse($this->staffs[$id]['arrival'])->format('H:i');
-        $this->editingStaffDepartureDate = Carbon::parse($this->staffs[$id]['departure'])->format('Y-m-d');
-        $this->editingStaffDepartureTime = Carbon::parse($this->staffs[$id]['departure'])->format('H:i');
-
-        $this->showStaffTimeAdjustmentModal = true;
+        if ($this->checkDateIsValid()) {
+            $this->updateDepartureDateTime();
+            $this->updateStaffsArrival();
+        };
     }
+
+    public function updatedArrivalTime()
+    {
+        if ($this->checkDateIsValid()) {
+            $this->updateDepartureDateTime();
+            $this->updateStaffsArrival();
+        };
+    }
+
+    protected function updateStaffsArrival()
+    {
+        $sessions = $this->inhouse->session_hours;
+        $sessionInMinutes = $sessions * 60;
+        $arrival = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime);
+        $departure = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime)->addMinutes($sessionInMinutes);
+
+        foreach ($this->staffs as &$staff) {
+            $staff['arrival'] = $arrival->format('Y-m-d g:i A');
+            $staff['departure'] = $departure->format('Y-m-d g:i A');
+        }
+    }
+
+    protected function updateDepartureDateTime()
+    {
+        $sessions = $this->inhouse->session_hours;
+        $sessionInMinutes = $sessions * 60;
+        $arrival = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime);
+        $departure = $arrival->addMinutes($sessionInMinutes);
+        $this->departureDate = $departure->format('Y-m-d');
+        $this->departureTime = $departure->format('H:i');
+        // $this->update();
+    }
+
+    protected function checkDateIsValid()
+    {
+        $isValid = false;
+        $arrival = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime);
+
+        $departure = Carbon::parse($this->departureDate . ' '. $this->departureTime);
+
+        if ($arrival > $departure) {
+            $isValid = false;
+            $this->dispatchBrowserEvent('unsuccess-walkin-message', ['message' => "Selected Date/Time invalid!"]);
+        } else {
+            $isValid = true;
+            $this->dispatchBrowserEvent('success-walkin-message', ['message' => ""]);
+        };
+
+        return $isValid;
+    }
+
 
     public function removeStaff($id)
     {
@@ -157,7 +196,8 @@ class LiveWalkIn extends Component
                     'arrival' => Carbon::parse($this->arrivalDate.' '.$this->arrivalTime)->format('Y-m-d g:i A'),
                     'departure' => Carbon::parse($this->departureDate.' '.$this->departureTime)->format('Y-m-d g:i A'),
                     'sessions' => $this->inhouse->session_hours,
-                    'service_staff_rate' => app('ServiceStaffRate'),
+                    'service_staff_rate' => app('ServiceStaffRates')->service_staff_rate,
+                    'service_staff_commission_rate' => app('ServiceStaffRates')->service_staff_commission_rate,
                 ];
             }
         }
@@ -167,14 +207,35 @@ class LiveWalkIn extends Component
     {
         if ($isAddition) {
             $this->inhouse->session_hours += .5;
-            $this->departure = now()->addMinutes(60 * $this->inhouse->session_hours);
+            // $this->departure = now()->addMinutes(60 * $this->inhouse->session_hours);
+            $this->departure = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime)->addMinutes(60 * $this->inhouse->session_hours);
             $this->departureDate = $this->departure->format('Y-m-d');
             $this->departureTime =  $this->departure->format('H:i');
+            $this->changeStaffSessions($isAddition);
         } else {
             $this->inhouse->session_hours -= .5;
-            $this->departure = now()->addMinutes(60 * $this->inhouse->session_hours);
+            $this->inhouse->session_hours = $this->inhouse->session_hours < 1 ? 1 : $this->inhouse->session_hours;
+
+            // $this->departure = now()->addMinutes(60 * $this->inhouse->session_hours);
+            $this->departure = Carbon::parse($this->arrivalDate . ' ' . $this->arrivalTime)->addMinutes(60 * $this->inhouse->session_hours);
             $this->departureDate = $this->departure->format('Y-m-d');
             $this->departureTime =  $this->departure->format('H:i');
+            $this->changeStaffSessions($isAddition);
+        }
+    }
+
+    public function changeStaffSessions($isAddition)
+    {
+        foreach ($this->staffs as &$staff) {
+            if ($isAddition) {
+                $departure = Carbon::parse($staff['departure'])->addMinutes(60 * 0.5);
+                $staff['departure'] = $departure->format('Y-m-d g:i A');
+                $staff['sessions'] = $this->inhouse->session_hours;
+            } else {
+                $departure = Carbon::parse($staff['departure'])->subMinutes(60 * 0.5);
+                $staff['departure'] = $departure->format('Y-m-d g:i A');
+                $staff['sessions'] = $this->inhouse->session_hours;
+            }
         }
     }
 

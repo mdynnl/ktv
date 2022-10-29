@@ -22,6 +22,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('ServiceStaffRate', function () {
             return ServiceStaffRate::first()->service_staff_rate;
         });
+
+        $this->app->singleton('ServiceStaffRates', function () {
+            return ServiceStaffRate::first();
+        });
     }
 
     /**

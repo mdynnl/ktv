@@ -147,6 +147,7 @@ class LiveInhouseEdit extends Component
                     'session_hours' => $service['sessions'],
                     'operation_date' => app('OperationDate'),
                     'service_staff_rate' => $service['service_staff_rate'],
+                    'service_staff_commission_rate' => $service['service_staff_commission_rate'],
                 ]);
             }
         }
@@ -268,7 +269,8 @@ class LiveInhouseEdit extends Component
                     'arrival' => now()->format('Y-m-d g:i A'),
                     'departure' => $departure,
                     'sessions' => $sessions,
-                    'service_staff_rate' => app('ServiceStaffRate'),
+                    'service_staff_rate' => app('ServiceStaffRates')->service_staff_rate,
+                    'service_staff_commission_rate' => app('ServiceStaffRates')->service_staff_commission_rate,
                 ]);
 
                 // $this->isStaffListDirty = true;
@@ -424,6 +426,7 @@ class LiveInhouseEdit extends Component
                 'departure' => $service->checkout_time->format('Y-m-d g:i A'),
                 'sessions' => $service->session_hours,
                 'service_staff_rate' => $service->service_staff_rate,
+                'service_staff_commission_rate' => $service->service_staff_commission_rate,
             ]);
         }
 
@@ -456,11 +459,13 @@ class LiveInhouseEdit extends Component
 
     protected function setUpDisplayRemainder()
     {
-        if (now()->diffInMinutes($this->inhouse->departure) > 60) {
+        if (now()->diffInMinutes($this->inhouse->departure, false) > 60) {
             $this->remainingTime = now()->diff($this->inhouse->departure)->format('%hhrs %imins');
+        } elseif (now()->diffInMinutes($this->inhouse->departure, false) <= 0) {
+            $this->remainingTime = "Time's Up";
         } else {
             $this->remainingTime = now()->diff($this->inhouse->departure)->format('%imins');
-        };
+        }
     }
 
     public function render()

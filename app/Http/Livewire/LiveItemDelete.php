@@ -20,7 +20,7 @@ class LiveItemDelete extends Component
             $this->emit('itemDeleted');
             $this->showItemDeleteModal = false;
         } catch (QueryException $queryException) {
-            $this->showRoomDeleteModal = false;
+            $this->showItemDeleteModal = false;
             $this->dispatchBrowserEvent('failure-notify', ['title' => "Item Delete Unsuccessful", 'body' => "Cannot delete item cause other related data exist. Please delete related data first to delete this item."]);
         } catch (\Exception $exception) {
             dd(get_class($exception));

@@ -78,7 +78,7 @@ class LivePurchaseDetailCreate extends Component
     public function render()
     {
         return view('livewire.live-purchase-detail-create', [
-            'items' => Item::all('id', 'item_name'),
+            'items' => Item::select('id', 'item_name')->orderBy('item_name')->get(),
         ]);
     }
 }

@@ -20,6 +20,7 @@ return new class () extends Migration {
             $table->dateTime('checkout_time');
             $table->float('session_hours');
             $table->float('service_staff_rate');
+            $table->float('service_staff_commission_rate');
             $table->date('operation_date');
             $table->timestamps();
         });

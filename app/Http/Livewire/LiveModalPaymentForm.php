@@ -40,6 +40,10 @@ class LiveModalPaymentForm extends Component
                 'checkout_payment_done' => true,
                 'updated_user_id' => auth()->id(),
             ]);
+
+            $inhouse->order()->update([
+                'is_paid' => true
+            ]);
         });
 
         $this->emit('checkOutPaymentsSettled');

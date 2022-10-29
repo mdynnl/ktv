@@ -16,6 +16,11 @@
                                                for="serviceStaffRate.service_staff_rate"
                                                type="text" />
 
+                            <x-form-input-comp class="col-span-6" wire:model.defer="serviceStaffRate.service_staff_commission_rate"
+                                               label="Commission*"
+                                               for="serviceStaffRate.service_staff_commission_rate"
+                                               type="text" />
+
                             {{-- @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>

@@ -12,6 +12,11 @@ class ServiceStaff extends Model
 
     protected $guarded = [];
 
+    public function inhouseServices()
+    {
+        return $this->hasMany(InhouseService::class);
+    }
+
     public function getImage(): Attribute
     {
         return Attribute::make(

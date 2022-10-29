@@ -79,8 +79,8 @@
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
                         <x-th>Food & Beverage</x-th>
-                        <x-th>Type</x-th>
-                        <x-th>Price</x-th>
+                        <x-th width="150px">Type</x-th>
+                        <x-th align="center" width="150px">Price</x-th>
                         <x-th>
                             <button wire:click="$emit('createFood', {{ $selectedTypeId }})" type="button"
                                     class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
@@ -95,13 +95,24 @@
                             <x-td-image imagePath="{!! $food->getImage !!}"
                                         name="{{ $food->food_name }}" />
                             <x-td>{{ $food->foodType->food_type_name }}</x-td>
-                            <x-td>{{ $food->price }}</x-td>
+
+                            <x-td-slim-with-align align="right">{{ number_format($food->price, 0, '.', ',') }}</x-td-slim-with-align>
+                            {{-- <x-td>{{ $food->price }}</x-td> --}}
                             <x-td width="150px">
                                 <div class="inline-flex space-x-3 items-center">
                                     <button type="button" wire:click="$emit('editFood', {{ $food->id }})"
                                             class="text-primary hover:text-blue-900">Edit</button>
                                     <button type="button" wire:click="$emit('deleteFood', {{ $food->id }})"
                                             class="text-primary hover:text-blue-900">Delete</button>
+
+                                    @if ($food->recipes->count() > 0)
+                                        <button type="button"
+                                                wire:click="$emit('createRecipe', {{ $food->id }}, {{ true }})"
+                                                class="text-primary hover:text-blue-900">Edit Recipe</button>
+                                    @else
+                                        <button type="button" wire:click="$emit('createRecipe', {{ $food->id }})"
+                                                class="text-primary hover:text-blue-900">Add Recipe</button>
+                                    @endif
                                 </div>
                             </x-td>
                         </tr>
@@ -118,4 +129,7 @@
     <livewire:live-food-create />
     <livewire:live-food-edit />
     <livewire:live-food-delete />
+
+
+    <livewire:live-recipe-create />
 </x-page-layout>

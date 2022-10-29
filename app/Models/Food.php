@@ -10,6 +10,11 @@ class Food extends Model
 {
     use HasFactory;
 
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class);
+    }
+
     public function foodType()
     {
         return $this->belongsTo(FoodType::class);

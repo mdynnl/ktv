@@ -144,7 +144,7 @@
                     {{ $slot }}
 
                     {{-- Shared Components --}}
-                    {{-- <livewire:live-night-audit wire:key="night-audit-component" /> --}}
+                    <livewire:live-night-audit />
 
                     {{-- Notifaction Toaster --}}
                     <x-success-notification />

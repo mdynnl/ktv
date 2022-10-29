@@ -113,6 +113,10 @@
                             <span class="p-3 rounded-md inline-flex bg-arrival"></span>
                             <span class="text-xs inline-flex text-gray-800">Paid</span>
                         </li>
+                        <li class="flex items-center space-x-2">
+                            <span class="p-3 rounded-md inline-flex bg-red-400"></span>
+                            <span class="text-xs inline-flex text-gray-800">Times Up</span>
+                        </li>
                     </ul>
                 </div>
             </div>

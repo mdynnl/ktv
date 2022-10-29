@@ -23,8 +23,14 @@
             </div>
 
             <div class="flex items-center space-x-3">
-                <span class="text-gray-500 text-sm">Service Staff Rate:</span>
-                <span>{{ number_format($serviceStaffRate, 0, '.', ',') }}</span>
+                <p>
+                    <span class="text-gray-500 text-sm">Service Staff Rate:</span>
+                    <span>{{ number_format($serviceStaffRate, 0, '.', ',') }}</span>
+                </p>
+                <p>
+                    <span class="text-gray-500 text-sm">Commission:</span>
+                    <span>{{ number_format($serviceStaffCommissionRate, 0, '.', ',') }}</span>
+                </p>
                 <button type="button" wire:click="$emit('editStaffRate')"
                         class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
                     Edit Rate

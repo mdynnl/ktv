@@ -8,6 +8,7 @@
     <x-nav-link :href="route('item.index')" :active="request()->routeIs('item.index')">Items</x-nav-link>
     <x-nav-link :href="route('supplier.index')" :active="request()->routeIs('supplier.index')">Suppliers</x-nav-link>
     <x-nav-link :href="route('purchase.index')" :active="request()->routeIs('purchase.index')">Purchases</x-nav-link>
+    <x-nav-link :href="route('report.sales-detail')" :active="request()->routeIs('report.sales-detail') || request()->routeIs('report.*')">Reports</x-nav-link>
     {{-- @endcan --}}
 </div>
 <div class="ml-4 flex items-center md:ml-6">

@@ -7,6 +7,7 @@ use App\Models\Customers;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
+use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\PaymentType;
@@ -236,15 +237,22 @@ class LiveModalHandleFbTableOrder extends Component
             $orderDetails = $order->orderDetails->sortBy('order_time');
             $this->order_time = $orderDetails->last()->order_time + 1;
 
-            foreach ($filtered as $item) {
+            foreach ($filtered as $orderDetail) {
                 $order->orderDetails()->create([
                     'invoice_no' => $order->invoice_no,
                     'order_time' => $this->order_time,
-                    'food_id' => $item['food_id'],
-                    'price' => $item['price'],
-                    'qty' => $item['qty'],
-                    'remark' => $item['remark'],
+                    'food_id' => $orderDetail['food_id'],
+                    'price' => $orderDetail['price'],
+                    'qty' => $orderDetail['qty'],
+                    'remark' => $orderDetail['remark'],
                 ]);
+
+                $food = Food::select('id')->with('recipes:food_id,item_id,qty', 'recipes.item:id,current_qty')->find($orderDetail['food_id']);
+                foreach ($food->recipes as $recipe) {
+                    $recipeQty = $recipe->qty;
+                    $totalRecipeQty = $recipeQty * $orderDetail['qty'];
+                    Item::find($recipe->item_id)->decrement('current_qty', $totalRecipeQty);
+                }
             }
 
             $this->fill($order);
@@ -294,15 +302,21 @@ class LiveModalHandleFbTableOrder extends Component
                 'created_user_id' => auth()->id()
             ]);
 
-            foreach ($this->orderDetails as $item) {
+            foreach ($this->orderDetails as $orderDetail) {
                 $order->orderDetails()->create([
                     'invoice_no' => $order->invoice_no,
-                    'order_time' => $item['order_time'],
-                    'food_id' => $item['food_id'],
-                    'price' => $item['price'],
-                    'qty' => $item['qty'],
-                    'remark' => $item['remark'],
+                    'order_time' => $orderDetail['order_time'],
+                    'food_id' => $orderDetail['food_id'],
+                    'price' => $orderDetail['price'],
+                    'qty' => $orderDetail['qty'],
+                    'remark' => $orderDetail['remark'],
                 ]);
+                $food = Food::select('id')->with('recipes:food_id,item_id,qty', 'recipes.item:id,current_qty')->find($orderDetail['food_id']);
+                foreach ($food->recipes as $recipe) {
+                    $recipeQty = $recipe->qty;
+                    $totalRecipeQty = $recipeQty * $orderDetail['qty'];
+                    Item::find($recipe->item_id)->decrement('current_qty', $totalRecipeQty);
+                }
             }
 
             $this->fill($order);
@@ -604,6 +618,7 @@ class LiveModalHandleFbTableOrder extends Component
 
         if (!is_null($table->room)) {
             $this->inhouse_id = $table->room->inhouses()->select('id')->where('checked_out', false)->first()->id;
+
             $this->room_no = $table->room->room_no;
         };
 
@@ -652,7 +667,7 @@ class LiveModalHandleFbTableOrder extends Component
     public function render()
     {
         return view('livewire.live-modal-handle-fb-table-order', [
-            'foods' => Food::with('foodType')
+            'foods' => Food::has('recipes')->with('foodType')
                 ->select('id', 'food_image', 'food_type_id', 'food_name', 'price')
                 ->when(strlen($this->fnbSearch) >= 2, function ($query) {
                     $query->where('food_name', 'like', '%' . $this->fnbSearch . '%');

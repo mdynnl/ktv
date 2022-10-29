@@ -32,6 +32,7 @@ return new class () extends Migration {
         return <<<SQL
 			CREATE VIEW `view_information_invoices` as
 			SELECT
+				1 as group_no,
 				inhouses.id as inhouse_id,
 				'Room' as description,
 				r.room_no as reference,
@@ -44,6 +45,7 @@ return new class () extends Migration {
 			left join room_types rt on rt.id = r.room_type_id
 			union
 			SELECT
+				2 as group_no,
 				inhouse_id as inhouse_id,
 				'Food' as description,
 				food.food_name as reference,
@@ -56,6 +58,7 @@ return new class () extends Migration {
 			left join food on food.id = od.food_id
 			union
 			SELECT
+				3 as group_no,
 				inhouse_id as inhouse_id,
 				'Service Staff' as description,
 				ss.nick_name as reference,
@@ -66,6 +69,7 @@ return new class () extends Migration {
 			left join service_staff ss on ss.id = inhouse_services.service_staff_id
 			union
 			SELECT
+				1 as group_no,
 				inhouse_id as inhouse_id,
 				'Adjustment' as description,
 				concat(transactions.transaction_name, ' - ', remark) as reference,

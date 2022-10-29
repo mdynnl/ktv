@@ -25,7 +25,7 @@ class LiveFoodCreate extends Component
         'image' => 'nullable|image|max:512',
         'food.food_type_id' => 'required|integer',
         'food.food_name' => 'required|string',
-        'food.price' => 'required|between:0,999999999.99',
+        'food.price' => 'required|numeric|between:0,999999999.99',
         'food.created_user_id' => 'required|integer',
     ];
 

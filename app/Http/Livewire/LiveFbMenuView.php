@@ -22,6 +22,8 @@ class LiveFbMenuView extends Component
         'foodCreated' => '$refresh',
         'foodUpdated' => '$refresh',
         'foodDeleted' => '$refresh',
+
+        'recipeCreated' => '$refresh',
     ];
 
     public function hydrate()
@@ -52,7 +54,7 @@ class LiveFbMenuView extends Component
     public function render()
     {
         return view('livewire.live-fb-menu-view', [
-            'foods' => Food::with('foodType')
+            'foods' => Food::with([ 'foodType', 'recipes' ])
             ->select('id', 'food_type_id', 'food_name', 'food_image', 'price')
             ->where('food_type_id', $this->selectedTypeId)
             ->orderBy('food_name')

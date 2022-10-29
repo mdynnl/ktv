@@ -13,7 +13,8 @@ class LiveServiceStaffRateEdit extends Component
     protected $listeners = ['editStaffRate'];
 
     protected $rules = [
-        'serviceStaffRate.service_staff_rate' => 'required|between:0,999999999.99',
+        'serviceStaffRate.service_staff_rate' => 'required|numeric|between:0,999999999.99',
+        'serviceStaffRate.service_staff_commission_rate' => 'required|numeric|between:0,999999999.99',
         'serviceStaffRate.updated_user_id' => 'required|integer'
     ];
 

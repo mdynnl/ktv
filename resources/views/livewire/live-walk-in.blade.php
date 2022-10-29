@@ -48,20 +48,19 @@
                             </div>
 
                             <x-form-onlydate-picker-comp wire:key="1-d" class="sm:col-span-2"
-                                                         wire:model="arrivalDate"
+                                                         isDisabled="{{ false }}"
+                                                         wire:model.lazy="arrivalDate"
                                                          label="Checkin Date"
                                                          for="inhouse.arrival" />
-                            {{-- <input type="date" wire:model="arrivalDate"
-                                   disabled
-                                   class="col-span-2 shadow-sm focus:ring-primary focus:border-primary border-gray-300 block w-full sm:text-sm  rounded-md"> --}}
 
                             <x-form-html-timepicker-comp wire:key="1-t" class="sm:col-span-2"
-                                                         :isDisabled="true"
-                                                         wire:model="arrivalTime"
+                                                         :isDisabled="false"
+                                                         wire:model.lazy="arrivalTime"
                                                          label="Checkin Time"
                                                          for="inhouse.arrival" />
 
                             <x-form-onlydate-picker-comp wire:key="2-d" class="sm:col-span-2"
+                                                         :isDisabled="true"
                                                          wire:model="departureDate"
                                                          label="Checkout Date"
                                                          for="inhouse.departure" />
@@ -107,7 +106,7 @@
                                                                       clip-rule="evenodd" />
                                                             </svg>
                                                         </button>
-                                                        <button type="button"
+                                                        {{-- <button type="button"
                                                                 wire:click="clickShowStaffTimeAdjustmentModal('{{ $key }}')"
                                                                 class="ml-3 hover:bg-gray-200 p-1 rounded-md">
                                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
@@ -117,7 +116,7 @@
                                                                 <path
                                                                       d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0010 3H4.75A2.75 2.75 0 002 5.75v9.5A2.75 2.75 0 004.75 18h9.5A2.75 2.75 0 0017 15.25V10a.75.75 0 00-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5z" />
                                                             </svg>
-                                                        </button>
+                                                        </button> --}}
                                                     </x-td-slim-nopadding>
                                                 </tr>
                                             @endforeach
@@ -142,12 +141,38 @@
 
 
         <x-slot name="modalLeftAction">
+
             <button type="button"
                     wire:click="$emit('searchAddStaff', 'checkIn')"
-                    class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-primary"
+                    class="inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Service Staff
             </button>
+
+
+            <div x-data="{
+                message: '',
+                success: false,
+                setSuccessMessage(message) {
+                    this.success = true
+                    this.message = message
+                },
+                setErrorMessage(message) {
+                    this.success = false
+                    this.message = message
+                },
+            }"
+
+                 x-init="$watch('show', () => {
+                     message = ' ';
+                     success = false;
+                 })"
+                 @success-walkin-message.window="setSuccessMessage($event.detail.message)"
+                 @unsuccess-walkin-message.window="setErrorMessage($event.detail.message)"
+                 class="inline-flex px-3">
+                <p><span x-text="message"
+                          :class="success ? 'text-primary font-semibold' : 'text-red-400 font-semibold'"></span></p>
+            </div>
         </x-slot>
 
         <x-slot name="modalAction">
@@ -186,7 +211,7 @@
                                     <div class="col-span-6 font-semibold text-base mb-3"><span class="text-gray-700">Staff Name:</span>
                                         {{ $editingStaffName }}</div>
                                     <x-form-onlydate-picker-comp wire:key="1-md" class="sm:col-span-3"
-                                                                 wire:model="editingStaffArrivalDate"
+                                                                 wire:model.lazy="editingStaffArrivalDate"
                                                                  label="Checkin Date"
                                                                  for="editingStaffArrivalDate" />
 

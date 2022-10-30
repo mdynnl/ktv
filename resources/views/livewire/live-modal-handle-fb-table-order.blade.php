@@ -1,5 +1,6 @@
 <x-modal wire:model="showHandleTableOrderModal" size="xxl" cancelButtonLabel="Close">
-    @isset($table_id)
+    {{-- @isset($table_id) --}}
+    @isset($inhouse_id)
         <x-slot name="modalHeader">
             <h1 class="text-2xl font-semibold flex justify-between items-center w-full">
                 <span>

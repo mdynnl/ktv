@@ -399,7 +399,8 @@ class LiveInhouseEdit extends Component
 
     public function orderPlaced()
     {
-        $order = $this->room->table->orders->where('is_paid', false)->first();
+        // $order = $this->room->table->orders->where('is_paid', false)->first();
+        $order = $this->inhouse->order;
         if (!is_null($order)) {
             $this->orderDetails = $order->orderDetails()->with('food')->get();
         }
@@ -449,7 +450,8 @@ class LiveInhouseEdit extends Component
 
         $this->inhouse->updated_user_id = auth()->id();
 
-        $order = $this->room->table->orders->where('is_paid', false)->first();
+        // $order = $this->room->table->orders->where('is_paid', false)->first();
+        $order = $this->inhouse->order;
         if (!is_null($order)) {
             $this->orderDetails = $order->orderDetails()->with('food')->get();
         }

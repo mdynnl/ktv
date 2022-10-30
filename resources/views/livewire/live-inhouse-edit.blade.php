@@ -4,8 +4,10 @@
             <div class="flex space-x-3 items-baseline">
                 <h1 class="text-2xl font-semibold">Edit Inhouse</h1>
                 <span>Remains: <span class="font-semibold text-xl">{{ $remainingTime }}</span></span>
-                {{-- <span>Passed: {{ $sessionsPassed }}</span>
-                <span>R: {{ $decimals }}</span> --}}
+                {{-- <span>IH: {{ $inhouse->id }}</span>
+                @isset($inhouse->order)
+                    <span>Or: {{ $inhouse->order->id }}</span>
+                @endisset --}}
             </div>
 
             <div class="font-medium text-base">
@@ -260,7 +262,8 @@
 
             <button type="button"
                     {{ $isPaid ? 'disabled' : '' }}
-                    wire:click="$emit('createOrder', '{{ $room->table->id }}')"
+                    {{-- wire:click="$emit('createOrder', '{{ $room->table->id }}')" --}}
+                    wire:click="$emit('createOrder', '{{ $inhouseId }}')"
                     class="ml-3 inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Order Food

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\Inhouse;
+use App\Models\ViewInformationInvoice;
 use App\Traits\WithPrinting;
 use Livewire\Component;
 
@@ -10,7 +11,7 @@ class LiveSalesDetailReport extends Component
 {
     use WithPrinting;
 
-    public $inhouses;
+    public $infoInvoices;
     public $dateFrom;
     public $dateTo;
     public $selectedGroups = [1, 2, 3];
@@ -19,8 +20,8 @@ class LiveSalesDetailReport extends Component
     {
         $data['date_from'] = $this->dateFrom;
         $data['date_to'] = $this->dateTo;
-        $data['inhouses'] = $this->inhouses;
-        return $this->printToPDF('pdf.sales-detail-pdf', $data, app('OperationDate'), "Sales-Detail", 'P');
+        $data['infoInvoices'] = $this->infoInvoices;
+        return $this->printToPDF('pdf.sales-detail-pdf', $data, app('OperationDate'), "Sales-Detail", 'L');
     }
 
     public function mount()
@@ -31,12 +32,14 @@ class LiveSalesDetailReport extends Component
 
     public function render()
     {
-        $this->inhouses = Inhouse::with([ 'viewInformationInvoices' => function ($query) {
-            $query->whereIn('group_no', $this->selectedGroups);
-        }])
-        ->whereDate('operation_date', '>=', $this->dateFrom)
-        ->whereDate('operation_date', '<=', $this->dateTo)
-        ->where('checked_out', true)->get();
+        $this->infoInvoices = ViewInformationInvoice::with('inhouse')
+        ->whereIn('group_no', $this->selectedGroups)
+        ->whereHas('inhouse', function ($query) {
+            // $query->where('checked_out', true)
+            $query->whereDate('operation_date', '>=', $this->dateFrom)
+            ->whereDate('operation_date', '<=', $this->dateTo);
+        })
+        ->get();
 
         return view('livewire.live-sales-detail-report');
     }

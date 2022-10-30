@@ -29,8 +29,10 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                <x-th width="80px" align="center">Sr. No</x-th>
+                <x-th width="80px" align="center">Reg No</x-th>
                 <x-th>Date</x-th>
-                <x-th align="center">Reg No</x-th>
+                <x-th width="150px">Room</x-th>
                 <x-th align="center">Room Amount</x-th>
                 <x-th align="center">F&B Amount</x-th>
                 <x-th align="center">Service Amount</x-th>
@@ -44,11 +46,12 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($salesSummary as $summary)
-                {{-- @dump($summary) --}}
+            @foreach ($salesSummary as $index => $summary)
                 <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
-                    <x-td>{{ $summary->operation_date }}</x-td>
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="center">{{ $summary->id }}</x-td-slim-with-align>
+                    <x-td>{{ $summary->operation_date }}</x-td>
+                    <x-td>{{ $summary->room_no }}</x-td>
                     <x-td-slim-with-align align="right">{{ number_format($summary->room_amount, 0, '.', ',') }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="right">{{ number_format($summary->fb_amount, 0, '.', ',') }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="right">{{ number_format($summary->service_amount, 0, '.', ',') }}</x-td-slim-with-align>

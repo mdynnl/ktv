@@ -40,7 +40,8 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
-                <x-th align="center" width="100px">Reg No</x-th>
+                <x-th align="center" width="80px">Sr. No</x-th>
+                <x-th align="center" width="80px">Reg No</x-th>
                 <x-th align="center">Name</x-th>
                 <x-th align="center" width="150px">Sessions</x-th>
                 <x-th align="center" width="150px">Service Rate</x-th>
@@ -49,9 +50,10 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($commissionSummaries as $summary)
+            @foreach ($commissionSummaries as $index => $summary)
                 <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
-                    <x-td>{{ $summary->service_staff_id }}</x-td>
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="center">{{ $summary->service_staff_id }}</x-td-slim-with-align>
                     <x-td-image imagePath="{!! asset($summary->profile_image) !!}"
                                 name="{!! $summary->nick_name !!}" />
                     <x-td-slim-with-align align="center">{{ $summary->session_hours }}</x-td-slim-with-align>

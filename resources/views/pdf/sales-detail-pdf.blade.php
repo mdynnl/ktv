@@ -55,7 +55,9 @@
     <table border="1" style="width: 100%; border-collapse: collapse">
         <thead>
             <x-tr-mpdf-bg-primary>
-                <x-th-mpdf width="50px">Reg No</x-th-mpdf>
+                <x-th-mpdf width="80px" align="center">Sr. No</x-th-mpdf>
+                <x-th-mpdf width="80px" align="center">Reg No</x-th-mpdf>
+                <x-th-mpdf>Room</x-th-mpdf>
                 <x-th-mpdf>Description</x-th-mpdf>
                 <x-th-mpdf>Reference</x-th-mpdf>
                 <x-th-mpdf align="center" width="120px">Price</x-th-mpdf>
@@ -64,21 +66,21 @@
             </x-tr-mpdf-bg-primary>
         </thead>
         <tbody class="bg-white text-xs">
-            @foreach ($data['inhouses'] as $inhouse)
-                @foreach ($inhouse->viewInformationInvoices as $detail)
-                    <tr>
-                        <x-td-mpdf>{{ $detail->inhouse_id }}</x-td-mpdf>
-                        <x-td-mpdf>{{ $detail->description }}</x-td-mpdf>
-                        <x-td-mpdf>{{ $detail->reference }}</x-td-mpdf>
-                        <x-td-mpdf align="right">
-                            {{ $detail->price != 0 ? number_format($detail->price, 0, '.', ',') : '' }}
-                        </x-td-mpdf>
-                        <x-td-mpdf align="center">{{ $detail->qty }}</x-td-mpdf>
-                        <x-td-mpdf align="right">
-                            {{ number_format($detail->amount, 0, '.', ',') }}
-                        </x-td-mpdf>
-                    </tr>
-                @endforeach
+            @foreach ($data['infoInvoices'] as $index => $detail)
+                <tr>
+                    <x-td-mpdf align="center">{{ $index + 1 }}</x-td-mpdf>
+                    <x-td-mpdf align="center">{{ $detail->inhouse_id }}</x-td-mpdf>
+                    <x-td-mpdf>{{ $detail->inhouse->room->room_no }}</x-td-mpdf>
+                    <x-td-mpdf>{{ $detail->description }}</x-td-mpdf>
+                    <x-td-mpdf>{{ $detail->reference }}</x-td-mpdf>
+                    <x-td-mpdf align="right">
+                        {{ $detail->price != 0 ? number_format($detail->price, 0, '.', ',') : '' }}
+                    </x-td-mpdf>
+                    <x-td-mpdf align="center">{{ $detail->qty }}</x-td-mpdf>
+                    <x-td-mpdf align="right">
+                        {{ number_format($detail->amount, 0, '.', ',') }}
+                    </x-td-mpdf>
+                </tr>
             @endforeach
 
             {{-- <tr style="border: none">

@@ -15,7 +15,7 @@ return new class () extends Migration {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('invoice_no');
-            $table->foreignId('table_id');
+            $table->foreignId('table_id')->nullable();
             // $table->unsignedInteger('pax');
             // $table->string('cashier');
             $table->float('sub_total');

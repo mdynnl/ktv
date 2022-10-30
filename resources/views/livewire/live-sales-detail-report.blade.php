@@ -6,7 +6,6 @@
     <x-content-header-section>
         <div class="flex items-center justify-between space-x-3 w-full">
             <div class="flex items-center space-x-8">
-                {{-- <x-table-filter-input class="w-72" wire:model="search" placeholder="Room, Guest or Agent..." /> --}}
                 <x-datepicker-inline-label label="From" wire:model="dateFrom" />
                 <x-datepicker-inline-label label="To" wire:model="dateTo" />
 
@@ -42,30 +41,32 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
-                <x-th>Reg No</x-th>
+                <x-th width="80px" align="center">Sr. No</x-th>
+                <x-th width="80px" align="center">Reg No</x-th>
+                <x-th>Room</x-th>
                 <x-th>Description</x-th>
                 <x-th>Reference</x-th>
-                <x-th>Price Summery</x-th>
-                <x-th>Qty</x-th>
-                <x-th>Amount</x-th>
+                <x-th width="120px" align="center">Price</x-th>
+                <x-th width="80px" align="center">Qty</x-th>
+                <x-th width="120px" align="center">Amount</x-th>
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($inhouses as $inhouse)
-                @foreach ($inhouse->viewInformationInvoices as $detail)
-                    <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
-                        <x-td>{{ $detail->inhouse_id }}</x-td>
-                        <x-td>{{ $detail->description }}</x-td>
-                        <x-td>{{ $detail->reference }}</x-td>
-                        <x-td>
-                            {{ $detail->price != 0 ? number_format($detail->price, 0, '.', ',') : '' }}
-                        </x-td>
-                        <x-td>{{ $detail->qty }}</x-td>
-                        <x-td>
-                            {{ number_format($detail->amount, 0, '.', ',') }}
-                        </x-td>
-                    </tr>
-                @endforeach
+            @foreach ($infoInvoices as $index => $detail)
+                <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="center">{{ $detail->inhouse_id }}</x-td-slim-with-align>
+                    <x-td>{{ $detail->inhouse->room->room_no }}</x-td>
+                    <x-td>{{ $detail->description }}</x-td>
+                    <x-td>{{ $detail->reference }}</x-td>
+                    <x-td-slim-with-align align="right">
+                        {{ $detail->price != 0 ? number_format($detail->price, 0, '.', ',') : '' }}
+                    </x-td-slim-with-align>
+                    <x-td-slim-with-align align="center">{{ $detail->qty }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="right">
+                        {{ number_format($detail->amount, 0, '.', ',') }}
+                    </x-td-slim-with-align>
+                </tr>
             @endforeach
         </tbody>
     </x-sticky-table-wrapper>

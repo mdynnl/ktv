@@ -43,10 +43,10 @@ class LiveSalesSummaryReport extends Component
     {
         return DB::select(
             "SELECT
-				operation_date, id, room_amount, fb_amount, service_amount, cash, card, credit, total_amount, tax, service, total_amount - (tax + service) net_amount
+				operation_date, id, room_no, room_amount, fb_amount, service_amount, cash, card, credit, total_amount, tax, service, total_amount - (tax + service) net_amount
 			from
 			(
-				select operation_date, id, commercial_tax_amount as tax, service_tax_amount as service,
+				select operation_date, inhouses.id, room_no, commercial_tax_amount as tax, service_tax_amount as service,
 				case
 					when payment_type_id = 1 then total
 					else 0
@@ -61,6 +61,7 @@ class LiveSalesSummaryReport extends Component
 				end as 'credit',
 					total as 'total_amount'
 				from inhouses
+				left join rooms on rooms.id = inhouses.room_id
 			) x
 			left join (
 				select inhouse_id, sum(rAmt) as room_amount, sum(fAmt) as fb_amount, sum(sAmt) as service_amount

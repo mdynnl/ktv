@@ -44,6 +44,7 @@
     <table border="1" style="width: 100%; border-collapse: collapse">
         <thead>
             <x-tr-mpdf-bg-primary>
+                <x-th-mpdf align="center" width="100px">Sr. No</x-th-mpdf>
                 <x-th-mpdf align="center" width="100px">Reg No</x-th-mpdf>
                 <x-th-mpdf align="center">Name</x-th-mpdf>
                 <x-th-mpdf align="center" width="150px">Sessions</x-th-mpdf>
@@ -53,9 +54,10 @@
             </x-tr-mpdf-bg-primary>
         </thead>
         <tbody class="bg-white text-xs">
-            @foreach ($data['commissionSummaries'] as $summary)
+            @foreach ($data['commissionSummaries'] as $index => $summary)
                 <tr>
-                    <x-td-mpdf>{{ $summary->service_staff_id }}</x-td-mpdf>
+                    <x-td-mpdf align="center">{{ $index + 1 }}</x-td-mpdf>
+                    <x-td-mpdf align="center">{{ $summary->service_staff_id }}</x-td-mpdf>
                     <x-td-mpdf>{{ $summary->nick_name }}</x-td-mpdf>
                     <x-td-mpdf align="center">{{ $summary->session_hours }}</x-td-mpdf>
                     <x-td-mpdf align="right">{{ number_format($summary->service_staff_rate, 0, '.', ',') }}

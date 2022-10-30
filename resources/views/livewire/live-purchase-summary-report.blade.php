@@ -29,7 +29,8 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
-                <x-th align="center" width="100px">Reg No</x-th>
+                <x-th align="center" width="80px">Sr. No</x-th>
+                <x-th align="center" width="80px">Reg No</x-th>
                 <x-th>Invoice No</x-th>
                 <x-th>Supplier</x-th>
                 <x-th>Purchase Date</x-th>
@@ -40,8 +41,9 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($purchaseSummary as $summary)
+            @foreach ($purchaseSummary as $index => $summary)
                 <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="center">{{ $summary->id }}</x-td-slim-with-align>
                     <x-td>{{ $summary->invoice_no }}</x-td>
                     <x-td>{{ $summary->supplier }}</x-td>

@@ -7,6 +7,7 @@ use App\Models\Customers;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
+use App\Models\Inhouse;
 use App\Models\Item;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -609,18 +610,21 @@ class LiveModalHandleFbTableOrder extends Component
         }
     }
 
-    public function createOrder(Table $table)
+    // public function createOrder(Table $table)
+    public function createOrder(Inhouse $inhouse)
     {
         $this->reset();
 
-        $this->table_id = $table->id;
-        $this->fill($table);
+        $this->inhouse_id = $inhouse->id;
+        $this->room_no = $inhouse->room->room_no;
+        // $this->table_id = $table->id;
+        // $this->fill($table);
 
-        if (!is_null($table->room)) {
-            $this->inhouse_id = $table->room->inhouses()->select('id')->where('checked_out', false)->first()->id;
+        // if (!is_null($table->room)) {
+        //     $this->inhouse_id = $table->room->inhouses()->select('id')->where('checked_out', false)->first()->id;
 
-            $this->room_no = $table->room->room_no;
-        };
+        //     $this->room_no = $table->room->room_no;
+        // };
 
         $this->categories = FoodCategory::all('id', 'food_category_name');
         $this->selectedCategoryId = $this->categories->first()->id;
@@ -631,7 +635,9 @@ class LiveModalHandleFbTableOrder extends Component
         // $this->paymentTypes = PaymentType::all('id', 'payment_type_name');
         // $this->payment_type_id = $this->paymentTypes->first()->id;
 
-        $order = $table->orders()->where('is_paid', false)->first();
+        // $order = $table->orders()->where('is_paid', false)->first();
+        // Inhouse::find()
+        $order = $inhouse->order;
 
         if (isset($order)) {
             $this->fill($order);

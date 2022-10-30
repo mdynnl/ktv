@@ -55,8 +55,10 @@
     <table border="1" style="width: 100%; border-collapse: collapse">
         <thead>
             <x-tr-mpdf-bg-primary>
+                <x-th-mpdf width="80px" align="center">Sr. No</x-th-mpdf>
+                <x-th-mpdf width="80px" align="center">Reg No</x-th-mpdf>
                 <x-th-mpdf>Date</x-th-mpdf>
-                <x-th-mpdf align="center">Reg No</x-th-mpdf>
+                <x-th-mpdf>Room</x-th-mpdf>
                 <x-th-mpdf align="center">Room Amount</x-th-mpdf>
                 <x-th-mpdf align="center">F&B Amount</x-th-mpdf>
                 <x-th-mpdf align="center">Service Amount</x-th-mpdf>
@@ -70,10 +72,12 @@
             </x-tr-mpdf-bg-primary>
         </thead>
         <tbody class="bg-white text-xs">
-            @foreach ($data['salesSummary'] as $summary)
+            @foreach ($data['salesSummary'] as $index => $summary)
                 <tr>
-                    <x-td-mpdf>{{ $summary->operation_date }}</x-td-mpdf>
+                    <x-td-mpdf align="center">{{ $index + 1 }}</x-td-mpdf>
                     <x-td-mpdf align="center">{{ $summary->id }}</x-td-mpdf>
+                    <x-td-mpdf>{{ $summary->operation_date }}</x-td-mpdf>
+                    <x-td-mpdf>{{ $summary->room_no }}</x-td-mpdf>
                     <x-td-mpdf align="right">{{ number_format($summary->room_amount, 0, '.', ',') }}</x-td-mpdf>
                     <x-td-mpdf align="right">{{ number_format($summary->fb_amount, 0, '.', ',') }}</x-td-mpdf>
                     <x-td-mpdf align="right">{{ number_format($summary->service_amount, 0, '.', ',') }}</x-td-mpdf>

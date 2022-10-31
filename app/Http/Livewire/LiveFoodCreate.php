@@ -5,11 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\Food;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class LiveFoodCreate extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $food;
@@ -42,6 +44,7 @@ class LiveFoodCreate extends Component
 
     public function createFood(FoodType $foodType)
     {
+        $this->authorize('add food and beverage');
         $this->resetValidation();
         $this->reset();
 

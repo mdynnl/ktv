@@ -5,17 +5,21 @@
              this.showActions = false;
          },
      
-         handleClick(status, id) {
+         handleClick(status, id, canAdd, canEdit) {
      
              if (status == 0) {
-                 $wire.emit('createWalkIn', id)
+                 if (canAdd) {
+                     $wire.emit('createWalkIn', id)
+                 }
              } else {
-                 $wire.emit('editInhouse', id)
+                 if (canEdit) {
+                     $wire.emit('editInhouse', id)
+                 }
              }
          }
      }"
      {{-- @click="showActions = true" --}}
-     @click="handleClick('{{ $room->status }}', '{{ $room->status == 0 ? $room->room_id : $room->inhouse_id }}')"
+     @click="handleClick('{{ $room->status }}', '{{ $room->status == 0 ? $room->room_id : $room->inhouse_id }}', '{{ auth()->user()->can('add inhouse') }}', '{{ auth()->user()->can('edit inhouse') }}')"
      class="flex-shrink-0 max-w-[190px] relative w-full">
     <div
          class="cursor-pointer border min-h-[190px] max-w-[190px] w-full shadow-md rounded-md overflow-hidden flex flex-col relative">

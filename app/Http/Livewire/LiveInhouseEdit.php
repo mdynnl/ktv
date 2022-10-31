@@ -7,11 +7,14 @@ use App\Models\IncomeTransaction;
 use App\Models\Inhouse;
 use App\Models\InhouseService;
 use App\Models\ServiceStaff;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class LiveInhouseEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $counter;
     public $room;
     public $inhouseId;
@@ -408,6 +411,7 @@ class LiveInhouseEdit extends Component
 
     public function editInhouse(Inhouse $inhouse)
     {
+        $this->authorize('edit inhouse');
         $this->resetValidation();
         $this->reset();
 

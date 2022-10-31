@@ -7,11 +7,14 @@ use App\Models\Inhouse;
 use App\Models\Room;
 use App\Models\ServiceStaff;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Carbon;
 use Livewire\Component;
 
 class LiveWalkIn extends Component
 {
+    use AuthorizesRequests;
+
     public $counter;
     public $room;
     public $inhouse;
@@ -241,6 +244,7 @@ class LiveWalkIn extends Component
 
     public function createWalkIn(Room $room)
     {
+        $this->authorize('add inhouse');
         $this->resetValidation();
         $this->reset();
 

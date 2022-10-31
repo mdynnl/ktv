@@ -5,10 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
 use App\Models\PrinterType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveFoodTypeEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $foodType;
     public $foodCategories;
     public $printers;
@@ -33,6 +36,7 @@ class LiveFoodTypeEdit extends Component
 
     public function editFoodType(FoodType $foodType)
     {
+        $this->authorize('edit food and beverage');
         $this->resetValidation();
         $this->reset();
 

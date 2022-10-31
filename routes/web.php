@@ -17,6 +17,11 @@ use App\Http\Livewire\LiveServiceStaffCreate;
 use App\Http\Livewire\LiveServiceStaffEdit;
 use App\Http\Livewire\LiveServiceStaffView;
 use App\Http\Livewire\LiveSupplierIndex;
+use App\Http\Livewire\LiveUserCreate;
+use App\Http\Livewire\LiveUserEdit;
+use App\Http\Livewire\LiveUserRolesAndPermissionView;
+use App\Http\Livewire\LiveUserShow;
+use App\Http\Livewire\LiveUserView;
 use App\Models\Food;
 use App\Models\Inhouse;
 use App\Models\Room;
@@ -24,32 +29,42 @@ use App\Models\ServiceStaff;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', LiveRoomInfo::class)->name('home');
+    Route::get('/', LiveRoomInfo::class)->name('home')->middleware('permission:view inhouses');
 
-    Route::get('/food-and-beverage/setting', LiveFbMenuView::class)->name('fnb.menu-view');
+    Route::get('/food-and-beverage/setting', LiveFbMenuView::class)->name('fnb.menu-view')->middleware('permission:view food and beverages');
 
-    Route::get('/rooms', LiveRoomView::class)->name('room.index');
+    Route::get('/rooms', LiveRoomView::class)->name('room.index')->middleware('permission:view food and beverages');
 
-    Route::get('/service-staff', LiveServiceStaffView::class)->name('service-staff.index');
+    Route::get('/service-staff', LiveServiceStaffView::class)->name('service-staff.index')->middleware('permission:view service staffs');
     // Route::get('/service-staff/create', LiveServiceStaffCreate::class)->name('service-staff.create');
     // Route::get('/service-staff/{serviceStaff}/edit', LiveServiceStaffEdit::class)->name('service-staff.edit');
 
-    Route::get('/customer', LiveCustomerView::class)->name('customer.index');
+    Route::get('/customer', LiveCustomerView::class)->name('customer.index')->middleware('permission:view customers');
 
-    Route::get('/items', LiveItemIndex::class)->name('item.index');
+    Route::get('/items', LiveItemIndex::class)->name('item.index')->middleware('permission:view items');
 
-    Route::get('/suppliers', LiveSupplierIndex::class)->name('supplier.index');
+    Route::get('/suppliers', LiveSupplierIndex::class)->name('supplier.index')->middleware('permission:view suppliers');
 
-    Route::get('/purchase', LivePurchaseIndex::class)->name('purchase.index');
+    Route::get('/purchase', LivePurchaseIndex::class)->name('purchase.index')->middleware('permission:view purchases');
 
-    Route::get('/reports', LiveSalesDetailReport::class)->name('report.sales-detail');
-    Route::get('/reports/sales-summary', LiveSalesSummaryReport::class)->name('report.sales-summary');
-    Route::get('/reports/purchase-details', LivePurchaseDetailReport::class)->name('report.purchase-details');
-    Route::get('/reports/purchase-summary', LivePurchaseSummaryReport::class)->name('report.purchase-summary');
+    Route::group(['middleware' => ['permission:view reports']], function () {
+        Route::get('/reports', LiveSalesDetailReport::class)->name('report.sales-detail');
+        Route::get('/reports/sales-summary', LiveSalesSummaryReport::class)->name('report.sales-summary');
+        Route::get('/reports/purchase-details', LivePurchaseDetailReport::class)->name('report.purchase-details');
+        Route::get('/reports/purchase-summary', LivePurchaseSummaryReport::class)->name('report.purchase-summary');
+        Route::get('/reports/commission-details', LiveServiceStaffCommissionDetailReport::class)->name('report.commission-details');
+        Route::get('/reports/commission-summary', LiveServiceStaffCommissionSummaryReport::class)->name('report.commission-summary');
+    });
 
-    Route::get('/reports/commission-details', LiveServiceStaffCommissionDetailReport::class)->name('report.commission-details');
-    Route::get('/reports/commission-summary', LiveServiceStaffCommissionSummaryReport::class)->name('report.commission-summary');
     // Route::get('/purchase', LivePurchaseCreate::class)->name('purchase.create');
+
+    Route::group(['middleware' => ['permission:view any users']], function () {
+        Route::get('/users', LiveUserView::class)->name('users');
+        Route::get('/users/roles-and-permission', LiveUserRolesAndPermissionView::class)->name('users.roles-permission');
+        Route::get('/users/create', LiveUserCreate::class)->name('users.create');
+        Route::get('/users/{user}', LiveUserShow::class)->name('users.show');
+        Route::get('/users/{user}/edit', LiveUserEdit::class)->name('users.edit');
+    });
 });
 
 Route::get('/test', function () {

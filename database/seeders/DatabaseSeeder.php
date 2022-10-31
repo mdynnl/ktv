@@ -7,9 +7,12 @@ namespace Database\Seeders;
 use App\Models\Customer;
 use App\Models\Food;
 use App\Models\Item;
+use App\Models\Permission;
+use App\Models\Role;
 use App\Models\RoomType;
 use App\Models\ServiceStaff;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,11 +24,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $this->call(UserSeeder::class);
+        $permissions = Permission::defaultPermissions();
+
+        foreach ($permissions as $key => $permission) {
+            foreach ($permission as $perm) {
+                Permission::firstOrCreate([
+                    'name' => $perm,
+                    'group_name' => $key
+                ]);
+            }
+        }
+
+        $roles = Role::defaultRoles();
+        foreach ($roles as $role) {
+            $role = Role::firstOrCreate(['name' => $role]);
+            if ($role->name == 'Owner') {
+                $role->syncPermissions(Permission::all());
+                $this->command->info('Admin granted all the permissions');
+            } else {
+                $role->syncPermissions(Permission::where('name', 'LIKE', 'view_%')->get());
+            }
+        }
+
+        $role = Role::where('name', 'Owner')->orWhere('name', 'Admin')->orWhere('name', 'Super Admin')->first();
+        $user = User::first();
+        $user->assignRole($role);
+
+
         $this->call(CurrentOperationDateSeeder::class);
 
         $this->call(PaymentTypeSeeder::class);
 
-        $this->call(UserSeeder::class);
 
         Customer::factory(50)->create();
         $this->call(ServiceStaffRateSeeder::class);

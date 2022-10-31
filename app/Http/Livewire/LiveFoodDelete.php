@@ -3,10 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Models\Food;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveFoodDelete extends Component
 {
+    use AuthorizesRequests;
     public $food;
     public $showFoodDeleteModal = false;
 
@@ -21,6 +23,7 @@ class LiveFoodDelete extends Component
 
     public function deleteFood(Food $food)
     {
+        $this->authorize('delete food and beverage');
         $this->reset();
 
         $this->food = $food;

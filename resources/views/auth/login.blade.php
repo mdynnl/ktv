@@ -4,11 +4,11 @@
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
 
-                    <h2 class="mt-6 text-3xl font-bold tracking-tight flex items-center space-x-2">
-                        <img class="h-12 w-auto" src="{{ asset('images/unity-logo.jpg') }}" alt="Your Company">
-                        <span> KTV Master</span>
+                    <h2 class="mt-6 text-5xl h-20 font-bold tracking-tight flex items-center space-x-2">
+                        <span style="color: #88CFEA" class="font-extrabold"> KTV Master</span>
+                        <img class="h-12 w-auto mb-8" src="{{ asset('images/unity-logo.jpg') }}" alt="Your Company">
                     </h2>
-                    <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Log in to your account</h2>
+                    <h2 class="text-3xl font-bold tracking-tight text-gray-900">Log in to your account</h2>
                 </div>
 
                 <div class="mt-8">

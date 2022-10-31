@@ -5,10 +5,13 @@ namespace App\Http\Livewire;
 use App\Models\FoodCategory;
 use App\Models\FoodType;
 use App\Models\PrinterType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveFoodTypeCreate extends Component
 {
+    use AuthorizesRequests;
+
     public $foodType;
     public $foodCategories;
     public $showFoodTypeCreateForm = false;
@@ -32,6 +35,7 @@ class LiveFoodTypeCreate extends Component
 
     public function createFoodType()
     {
+        $this->authorize('add food and beverage');
         $this->resetValidation();
         $this->reset();
 

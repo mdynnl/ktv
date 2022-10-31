@@ -7,10 +7,12 @@ use App\Models\Item;
 use App\Models\Recipe;
 use App\Models\RecipeView;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveRecipeCreate extends Component
 {
+    use AuthorizesRequests;
     public $search = '';
     public $selectedFoodId;
     public $food;
@@ -204,6 +206,7 @@ class LiveRecipeCreate extends Component
 
     public function createRecipe(Food $food, $hasRecipe = false)
     {
+        $this->authorize('add food and beverage');
         $this->resetValidation();
         $this->reset();
 

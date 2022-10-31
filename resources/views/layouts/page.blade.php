@@ -49,7 +49,8 @@
                 </div>
 
                 <div class="flex-shrink-0 flex items-center justify-center px-4 h-16">
-                    <h1 class="text-white text-lg">KTV POS System</h1>
+                    {{-- <h1 class="text-white text-lg">KTV POS System</h1> --}}
+                    <h1 class="text-white text-lg">{{ config('app.name') }}</h1>
                 </div>
 
                 <div class="my-6 flex-1 h-0 overflow-y-auto">
@@ -77,7 +78,8 @@
     <div x-cloak x-show="showDesktopSidebar" class="hidden bg-primary md:flex md:w-64 md:flex-col md:fixed md:inset-y-0">
         <!-- Sidebar component, swap this element with another sidebar if you like -->
         <div class="flex items-center flex-shrink-0 px-4 h-16">
-            <h1 class="text-white text-lg font-normal">KTV POS System</h1>
+            {{-- <h1 class="text-white text-lg font-normal">KTV POS System</h1> --}}
+            <h1 class="text-white text-lg font-normal">{{ config('app.name') }}</h1>
         </div>
 
         <div class="flex flex-col flex-grow overflow-y-auto">

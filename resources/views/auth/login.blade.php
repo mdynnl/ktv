@@ -3,7 +3,11 @@
         <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
             <div class="mx-auto w-full max-w-sm lg:w-96">
                 <div>
-                    <h2 class="mt-6 text-3xl font-bold tracking-tight text-primary">KTV Master</h2>
+
+                    <h2 class="mt-6 text-3xl font-bold tracking-tight flex items-center space-x-2">
+                        <img class="h-12 w-auto" src="{{ asset('images/unity-logo.jpg') }}" alt="Your Company">
+                        <span> KTV Master</span>
+                    </h2>
                     <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Log in to your account</h2>
                 </div>
 

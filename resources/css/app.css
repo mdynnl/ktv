@@ -3,6 +3,32 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+	@font-face {
+		font-family: "Nunito Sans";
+		font-weight: 400;
+		src: url('/resources/fonts/NunitoSans-Regular.ttf');
+	}
+
+	/* @font-face {
+		font-family: "Nunito Sans";
+		font-weight: 400;
+		src: url('/resources/fonts/NunitoSans-Italic.ttf');
+	} */
+
+	@font-face {
+		font-family: "Nunito Sans";
+		font-weight: 600;
+		src: url('/resources/fonts/NunitoSans-SemiBold.ttf');
+	}
+
+	@font-face {
+		font-family: "Nunito Sans";
+		font-weight: 700;
+		src: url('/resources/fonts/NunitoSans-Bold.ttf');
+	}
+}
+
 /* For Alpine JS */
 [x-cloak] { display: none !important; }
 

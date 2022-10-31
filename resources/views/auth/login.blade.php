@@ -1,5 +1,88 @@
 <x-guest-layout>
-    <x-auth-card>
+    <div class="flex min-h-full">
+        <div class="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+            <div class="mx-auto w-full max-w-sm lg:w-96">
+                <div>
+                    <h2 class="mt-6 text-3xl font-bold tracking-tight text-primary">KTV Master</h2>
+                    <h2 class="mt-6 text-3xl font-bold tracking-tight text-gray-900">Log in to your account</h2>
+                </div>
+
+                <div class="mt-8">
+
+                    <div class="mt-6">
+                        <form action="{{ route('login') }}" method="POST" class="space-y-6">
+                            @csrf
+
+                            <!-- Email Address -->
+                            <div>
+                                <x-input-label for="email" :value="__('Email')" />
+
+                                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')"
+                                              required autofocus />
+
+                                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                            </div>
+
+                            <!-- Password -->
+                            <div class="mt-4">
+                                <x-input-label for="password" :value="__('Password')" />
+
+                                <x-text-input id="password" class="block mt-1 w-full"
+                                              type="password"
+                                              name="password"
+                                              required autocomplete="current-password" />
+
+                                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                            </div>
+
+                            <!-- Remember Me -->
+                            <div class="flex items-center justify-between mt-4">
+                                <label for="remember_me" class="inline-flex items-center">
+                                    <input id="remember_me" type="checkbox"
+                                           class="rounded border-gray-300 text-primary shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                           name="remember">
+                                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+                                </label>
+                                @if (Route::has('password.request'))
+                                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+                                        {{ __('Forgot your password?') }}
+                                    </a>
+                                @endif
+                            </div>
+
+
+                            <div>
+                                <x-primary-button class="w-full text-center">
+                                    {{ __('Log in') }}
+                                </x-primary-button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="relative hidden w-0 flex-1 lg:block">
+            <img class="absolute inset-0 h-full w-full object-cover"
+                 src="https://images.unsplash.com/photo-1505904267569-f02eaeb45a4c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1908&q=80"
+                 alt="">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    {{-- <x-auth-card>
         <x-slot name="logo">
             <a href="/">
                 <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
@@ -36,7 +119,7 @@
             <!-- Remember Me -->
             <div class="block mt-4">
                 <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
+                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-primary shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" name="remember">
                     <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
                 </label>
             </div>
@@ -53,5 +136,5 @@
                 </x-primary-button>
             </div>
         </form>
-    </x-auth-card>
+    </x-auth-card> --}}
 </x-guest-layout>

@@ -11,13 +11,14 @@
 
                 <div class="flex items-center space-x-8">
 
-                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups" :isDisabled="false" value="1"
+                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups_room" :isDisabled="false" value="1"
                                                   label="Room" />
 
-                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups" :isDisabled="false" value="2"
+                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups_fb" :isDisabled="false" value="2"
                                                   label="F&B" />
 
-                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups" :isDisabled="false" value="3"
+                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups_service_staff" :isDisabled="false"
+                                                  value="3"
                                                   label="Service Staff" />
                 </div>
             </div>

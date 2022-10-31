@@ -54,7 +54,7 @@
                 <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
                     <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="center">{{ $summary->service_staff_id }}</x-td-slim-with-align>
-                    <x-td-image imagePath="{!! asset($summary->profile_image) !!}"
+                    <x-td-image imagePath="{!! isset($summary->profile_image) ? asset('storage/' . $summary->profile_image) : asset('images/employee.png') !!}"
                                 name="{!! $summary->nick_name !!}" />
                     <x-td-slim-with-align align="center">{{ $summary->session_hours }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="right">{{ number_format($summary->service_staff_rate, 0, '.', ',') }}

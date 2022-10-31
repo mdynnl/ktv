@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-full" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -8,16 +8,13 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="stylesheet" href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap">
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
-    <div class="font-sans text-gray-900 antialiased">
-        {{ $slot }}
-    </div>
+<body class="h-full font-sans">
+    {{-- <div class="font-sans text-gray-900 antialiased"> --}}
+    {{ $slot }}
+    {{-- </div> --}}
 </body>
 
 </html>

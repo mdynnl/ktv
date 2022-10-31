@@ -50,7 +50,7 @@ class LiveServiceStaffCommissionSummaryReport extends Component
         return DB::select(
             "SELECT
 				service_staff_id,
-				case when profile_image IS Null then 'images/employee.png' else profile_image end profile_image,
+				profile_image,
 				nick_name,
 				session_hours, service_staff_rate, service_staff_commission_rate, session_hours * service_staff_commission_rate commission_amount
 				from

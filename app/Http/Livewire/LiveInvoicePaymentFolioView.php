@@ -101,6 +101,7 @@ class LiveInvoicePaymentFolioView extends Component
     {
         // $this->inhouse = $inhouse;
         $this->fill($inhouse);
+        $this->room_no = $inhouse->room->room_no;
         $this->inhouse_id = $inhouse->id;
         $this->payments = $inhouse->viewInformationInvoices;
         $this->sub_total = $this->payments->sum('amount');

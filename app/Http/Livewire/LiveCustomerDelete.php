@@ -23,7 +23,7 @@ class LiveCustomerDelete extends Component
             $this->emit('customerDeleted');
             $this->showCustomerDeleteModal = false;
         } catch (QueryException $queryException) {
-            $this->showRoomDeleteModal = false;
+            $this->showCustomerDeleteModal = false;
             $this->dispatchBrowserEvent('failure-notify', ['title' => "Customer Delete Unsuccessful", 'body' => "Cannot delete customer cause other related data exist. Please delete related data first to delete this customer."]);
         } catch (\Exception $exception) {
             dd(get_class($exception));

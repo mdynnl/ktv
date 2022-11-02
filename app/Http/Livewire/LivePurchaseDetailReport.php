@@ -13,7 +13,7 @@ class LivePurchaseDetailReport extends Component
     public $purchaseDetails;
     public $dateFrom;
     public $dateTo;
-    public $viewOnlyKitchenItem = false;
+    public $viewOnlyKitchenItem = [0, 1];
 
     public function print()
     {
@@ -33,9 +33,9 @@ class LivePurchaseDetailReport extends Component
     public function render()
     {
         $this->purchaseDetails = PurchaseDetail::with('item', 'purchase')
-        ->whereHas('item', function ($query) {
-            $query->where('is_kitchen_item', $this->viewOnlyKitchenItem);
-        })
+            ->whereHas('item', function ($query) {
+                $query->whereIn('is_kitchen_item', $this->viewOnlyKitchenItem);
+            })
         ->whereHas('purchase', function ($query) {
             $query->whereDate('created_at', '>=', $this->dateFrom)
             ->whereDate('created_at', '<=', $this->dateTo);

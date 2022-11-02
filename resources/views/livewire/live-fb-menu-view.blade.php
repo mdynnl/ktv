@@ -38,6 +38,7 @@
             <x-sticky-table-wrapper>
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
+                        <x-th width="80px">Sr. No</x-th>
                         <x-th>Food & Beverage Type</x-th>
                         <x-th width="150px">
                             <button wire:click="$emit('createFoodType')" type="button"
@@ -48,9 +49,10 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($foodTypes as $type)
+                    @foreach ($foodTypes as $index => $type)
                         <tr
                             class="divide-x bg-white text-gray-900">
+                            <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                             <x-td>{{ $type->food_type_name }}</x-td>
                             <x-td>
                                 <div class="inline-flex space-x-3 items-center">
@@ -78,6 +80,7 @@
             <x-sticky-table-wrapper>
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
+                        <x-th width="80px">Sr. No</x-th>
                         <x-th>Food & Beverage</x-th>
                         <x-th width="150px">Type</x-th>
                         <x-th align="center" width="150px">Price</x-th>
@@ -90,8 +93,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($foods as $food)
+                    @foreach ($foods as $index => $food)
                         <tr class="divide-x">
+                            <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                             <x-td-image imagePath="{!! $food->getImage !!}"
                                         name="{{ $food->food_name }}" />
                             <x-td>{{ $food->foodType->food_type_name }}</x-td>

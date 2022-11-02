@@ -19,6 +19,7 @@ use App\Http\Livewire\LiveServiceStaffView;
 use App\Http\Livewire\LiveSupplierIndex;
 use App\Http\Livewire\LiveUserCreate;
 use App\Http\Livewire\LiveUserEdit;
+use App\Http\Livewire\LiveUserPasswordChange;
 use App\Http\Livewire\LiveUserRolesAndPermissionView;
 use App\Http\Livewire\LiveUserShow;
 use App\Http\Livewire\LiveUserView;
@@ -61,9 +62,13 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['permission:view any users']], function () {
         Route::get('/users', LiveUserView::class)->name('users');
         Route::get('/users/roles-and-permission', LiveUserRolesAndPermissionView::class)->name('users.roles-permission');
-        Route::get('/users/create', LiveUserCreate::class)->name('users.create');
-        Route::get('/users/{user}', LiveUserShow::class)->name('users.show');
-        Route::get('/users/{user}/edit', LiveUserEdit::class)->name('users.edit');
+        // Route::get('/users/create', LiveUserCreate::class)->name('users.create');
+        // Route::get('/users/{user}', LiveUserShow::class)->name('users.show');
+        // Route::get('/users/{user}/edit', LiveUserEdit::class)->name('users.edit');
+    });
+
+    Route::group(['middleware' => ['permission:view user']], function () {
+        Route::get('/profile/{user}/change-password', LiveUserPasswordChange::class)->name('profile.change-password');
     });
 });
 

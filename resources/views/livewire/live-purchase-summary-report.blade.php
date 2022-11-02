@@ -29,6 +29,7 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                <x-th width="50px"></x-th>
                 <x-th align="center" width="80px">Sr. No</x-th>
                 <x-th align="center" width="80px">Reg No</x-th>
                 <x-th>Invoice No</x-th>
@@ -43,6 +44,18 @@
         <tbody class="bg-white">
             @foreach ($purchaseSummary as $index => $summary)
                 <tr class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
+                    <x-td-slim-nopadding>
+                        <button type="button"
+                                wire:click="$emit('showPurchaseInvoice', '{{ $summary->id }}')"
+                                class="enabled:hover:bg-gray-200 p-1 rounded-md">
+
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                 stroke="currentColor" class="w-6 text-gray-500 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                        </button>
+                    </x-td-slim-nopadding>
                     <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td-slim-with-align align="center">{{ $summary->id }}</x-td-slim-with-align>
                     <x-td>{{ $summary->invoice_no }}</x-td>
@@ -57,4 +70,5 @@
         </tbody>
     </x-sticky-table-wrapper>
 
+    <livewire:live-view-purchase-invoice />
 </x-page-layout>

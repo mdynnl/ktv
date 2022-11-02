@@ -246,7 +246,7 @@
         <x-slot name="modalLeftAction">
             <button type="button"
                     {{ $isPaid ? 'disabled' : '' }}
-                    wire:click="$emit('searchAddStaff', 'inhouseEdit')"
+                    wire:click="$emit('inhouseAddStaff', '{{ $inhouseId }}')"
                     class="inline-flex items-center rounded-md border border-transparent enabled:bg-white disabled:bg-gray-300 disabled:text-gray-500 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none "
                     id="menu-button" aria-expanded="true" aria-haspopup="true">
                 Service Staff

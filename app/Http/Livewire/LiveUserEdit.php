@@ -6,6 +6,7 @@ use App\Models\Gender;
 use App\Models\Role;
 use App\Models\Honorific;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -13,12 +14,13 @@ use Livewire\WithFileUploads;
 
 class LiveUserEdit extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
-    public User $user;
+    public $user;
     public $image;
     public $role;
-    public $roles;
+    public $roles = [];
 
     public $name;
     public $username;
@@ -30,6 +32,10 @@ class LiveUserEdit extends Component
     public $address;
     public $password;
     public $updated_user_id;
+
+    public $showUserUpdateForm = false;
+
+    protected $listeners = ['editUser'];
 
     protected function rules()
     {
@@ -48,7 +54,7 @@ class LiveUserEdit extends Component
         ];
     }
 
-    public function updateUser()
+    public function update()
     {
         $validated = $this->validate();
 
@@ -68,8 +74,12 @@ class LiveUserEdit extends Component
         return redirect()->route('users');
     }
 
-    public function mount(User $user)
+    public function editUser(User $user)
     {
+        $this->authorize('update', $user);
+        $this->resetValidation();
+        $this->reset();
+
         $this->fill($user);
 
         $this->user = $user->load('roles');
@@ -77,6 +87,8 @@ class LiveUserEdit extends Component
         $this->updated_user_id = auth()->id();
 
         $this->roles = Role::all('id', 'name');
+
+        $this->showUserUpdateForm = true;
     }
 
     public function render()

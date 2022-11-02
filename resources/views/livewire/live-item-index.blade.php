@@ -45,6 +45,7 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                <x-th width="80px">Sr. No</x-th>
                 <x-th class="w-full">Item</x-th>
                 <x-th width="100px">Recipe Unit</x-th>
                 <x-th width="100px" align="center">Recipe Price</x-th>
@@ -56,9 +57,10 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($items as $item)
+            @foreach ($items as $index => $item)
                 <tr
                     class="divide-x bg-white text-gray-900">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td>{{ $item->item_name }} <br>
                     </x-td>
                     <x-td>{{ $item->recipe_unit }}</x-td>

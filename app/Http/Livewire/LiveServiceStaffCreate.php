@@ -16,6 +16,7 @@ class LiveServiceStaffCreate extends Component
     public $name_on_nrc;
     public $nick_name;
     public $nrc;
+    public $dob;
     public $address;
     public $phone;
     public $isActive;
@@ -30,6 +31,7 @@ class LiveServiceStaffCreate extends Component
         'name_on_nrc' => 'required|string',
         'nick_name' => 'nullable|string',
         'nrc' => 'nullable|string|unique:service_staff,nrc',
+        'dob' => 'nullable|date',
         'address' => 'nullable|string',
         'phone' => 'required|string',
         'isActive' => 'required|boolean',

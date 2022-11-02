@@ -12,6 +12,8 @@
                     <x-form-input-comp class="col-span-3" wire:model="search" label="Search"
                                        for="search"
                                        type="text" />
+
+
                     <div class="h-[400px] border overflow-y-scroll relative rounded-xl shadow-md mt-6">
                         <table class="min-w-full border-separate " style="border-spacing: 0">
                             <thead class="bg-gray-50">

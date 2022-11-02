@@ -73,6 +73,7 @@ class LiveInhouseEdit extends Component
 
     protected $listeners = [
             'editInhouse',
+            'inhouseServiceStaffAdded',
             'inhouseEditAddServiceStaffs',
             'orderPlaced',
             'incomeTransactionAdded',
@@ -89,6 +90,23 @@ class LiveInhouseEdit extends Component
         'inhouse.customer_id' => 'nullable|integer',
         'inhouse.updated_user_id' => 'required|integer',
     ];
+
+    public function inhouseServiceStaffAdded()
+    {
+        $inhouseServices = $this->inhouse->inhouseServices->load('serviceStaff');
+        foreach ($inhouseServices as $service) {
+            array_push($this->staffs, [
+                'id' => $service->serviceStaff->id,
+                'inhouse_service_id' => $service->id,
+                'nick_name' => $service->serviceStaff->nick_name,
+                'arrival' => $service->checkin_time->format('Y-m-d g:i A'),
+                'departure' => $service->checkout_time->format('Y-m-d g:i A'),
+                'sessions' => $service->session_hours,
+                'service_staff_rate' => $service->service_staff_rate,
+                'service_staff_commission_rate' => $service->service_staff_commission_rate,
+            ]);
+        }
+    }
 
     public function roomTransferred()
     {
@@ -132,6 +150,7 @@ class LiveInhouseEdit extends Component
         if (count($updatableServices) > 0) {
             foreach ($updatableServices as $service) {
                 InhouseService::find($service['inhouse_service_id'])->update([
+                    'checkin_time' => $service['arrival'],
                     'checkout_time' => $service['departure'],
                     'session_hours' => $service['sessions'],
                 ]);
@@ -304,6 +323,7 @@ class LiveInhouseEdit extends Component
         $this->staffs[$this->editingStaffIndex]['arrival'] = Carbon::parse($this->editingStaffArrivalDate.' '.$this->editingStaffArrivalTime)->format('Y-m-d g:i A');
         $this->staffs[$this->editingStaffIndex]['departure'] = Carbon::parse($this->editingStaffDepartureDate.' '.$this->editingStaffDepartureTime)->format('Y-m-d g:i A');
         $this->staffs[$this->editingStaffIndex]['sessions'] = $this->editingStaffSessionHours;
+        $this->update();
 
         $this->showStaffTimeAdjustmentModal = false;
     }

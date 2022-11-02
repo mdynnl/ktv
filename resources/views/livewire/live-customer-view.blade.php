@@ -30,16 +30,17 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                <x-th width="80px">Sr. No</x-th>
                 <x-th>Name</x-th>
-                {{-- <x-th align="center" width="100px">Discount</x-th> --}}
                 <x-th>Phone No.</x-th>
                 <x-th>Address</x-th>
                 <x-th></x-th>
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($customers as $customer)
+            @foreach ($customers as $index => $customer)
                 <tr class="divide-x">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td>{{ $customer->customer_name }}</x-td>
                     {{-- <x-td align="right">{{ isset($customer->discount) ? $customer->discount . '%' : '0%' }}</x-td> --}}
                     <x-td>{{ $customer->phone }}</x-td>

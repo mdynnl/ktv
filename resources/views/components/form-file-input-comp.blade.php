@@ -1,5 +1,5 @@
 <div {{ $attributes->only('class') }}>
-    <div class="flex flex-col space-y-4">
+    <div class="flex flex-col space-y-1">
 
         @isset($preview)
             <div class="shrink-0">

@@ -55,7 +55,6 @@
     <table border="1" style="width: 100%; border-collapse: collapse">
         <thead>
             <x-tr-mpdf-bg-primary>
-                {{-- <x-th-mpdf>Date</x-th-mpdf> --}}
                 <x-th-mpdf>Description</x-th-mpdf>
                 <x-th-mpdf>Reference</x-th-mpdf>
                 <x-th-mpdf align="right" width="120px">Price</x-th-mpdf>
@@ -66,10 +65,9 @@
         <tbody class="bg-white text-xs">
             @foreach ($data['data'] as $payment)
                 <tr>
-                    {{-- <x-td-mpdf>{{ $payment->date }}</x-td-mpdf> --}}
                     <x-td-mpdf>{{ $payment->description }}</x-td-mpdf>
                     <x-td-mpdf>{{ $payment->reference }}</x-td-mpdf>
-                    <x-td-mpdf align="right">{{ number_format($payment->price, 0, '.', ',') }}</x-td-mpdf>
+                    <x-td-mpdf align="right">{{ $payment->price > 0 ? number_format($payment->price, 0, '.', ',') : '' }}</x-td-mpdf>
                     <x-td-mpdf align="center">{{ $payment->qty }}</x-td-mpdf>
                     <x-td-mpdf align="right">{{ number_format($payment->amount, 0, '.', ',') }}</x-td-mpdf>
                 </tr>

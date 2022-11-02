@@ -53,9 +53,12 @@
 
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                {{-- <x-th width="80px">Sr. No</x-th> --}}
+                <x-th-not-sticky width="80px">Sr. No</x-th-not-sticky>
                 <x-th-not-sticky>Name</x-th-not-sticky>
                 <x-th-not-sticky>Nick Name</x-th-not-sticky>
                 <x-th-not-sticky>NRC No</x-th-not-sticky>
+                <x-th-not-sticky>DOB</x-th-not-sticky>
                 <x-th-not-sticky>Phone</x-th-not-sticky>
                 <x-th-not-sticky>Address</x-th-not-sticky>
                 <x-th-not-sticky>Status</x-th-not-sticky>
@@ -65,12 +68,14 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($staffs as $user)
+            @foreach ($staffs as $index => $user)
                 <tr class="divide-x">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td-image imagePath="{!! $user->getImage !!}"
                                 name="{{ $user->name_on_nrc }}" />
                     <x-td>{{ $user->nick_name }}</x-td>
                     <x-td>{{ $user->nrc }}</x-td>
+                    <x-td>{{ $user->dob->format('Y-m-d') }}</x-td>
                     <x-td>{{ $user->phone }}</x-td>
                     <x-td>{{ $user->address }}</x-td>
                     <x-td-slim-with-align align="center">

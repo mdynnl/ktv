@@ -41,7 +41,7 @@ class LiveViewInvoice extends Component
     {
         $data = [];
         $data['inhouse_id'] = $this->inhouse_id;
-        $data['room_no'] = $this->inhouse_id;
+        $data['room_no'] = $this->room_no;
         $data['arrival'] = Carbon::parse($this->arrival)->format('Y-m-d g:i A');
         $data['departure'] = Carbon::parse($this->departure)->format('Y-m-d g:i A');
         $data['sub_total'] = $this->sub_total;

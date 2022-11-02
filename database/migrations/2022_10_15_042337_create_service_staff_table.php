@@ -19,8 +19,9 @@ return new class () extends Migration {
             $table->string('profile_image')->nullable();
             $table->string('full_size_image')->nullable();
             $table->string('nrc')->nullable()->unique();
+            $table->date('dob')->nullable();
             $table->string('address')->nullable();
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->boolean('isActive')->default(false);
             $table->timestamps();
         });

@@ -21,10 +21,11 @@
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
-            <a href="{{ route('users.create') }}"
-               class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+            <button type="button"
+                    wire:click="$emit('createUser')"
+                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
                 Add User
-            </a>
+            </button>
         </div>
     </x-content-header-section>
 
@@ -32,6 +33,7 @@
         <table class="min-w-full border-separate mb-8" style="border-collapse: collapse">
             <thead class="bg-gray-50">
                 <tr class="divide-x">
+                    <x-th-not-sticky width="80px">Sr. No</x-th-not-sticky>
                     <x-th-not-sticky>Name</x-th-not-sticky>
                     <x-th-not-sticky>Role</x-th-not-sticky>
                     <x-th-not-sticky>Username</x-th-not-sticky>
@@ -43,8 +45,9 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                @foreach ($users as $user)
+                @foreach ($users as $index => $user)
                     <tr class="divide-x">
+                        <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                         <x-td>{{ $user->name }}</x-td>
                         <x-td>{{ $user->roleName() }}</x-td>
                         <x-td>{{ $user->username }}</x-td>
@@ -53,8 +56,10 @@
                         <x-td class="w-52">
                             <div class="inline-flex space-x-3 items-center">
                                 {{-- <a href="{{ route('users.show', $user->id) }}" class="text-primary hover:text-blue-900">View</a> --}}
-                                <a href="{{ route('users.edit', $user->id) }}" class="text-primary hover:text-blue-900">Edit</a>
-                                <a href="#" class="text-primary hover:text-blue-900">Delete</a>
+                                <button type="button" wire:click="$emit('editUser', '{{ $user->id }}')"
+                                        class="text-primary hover:text-blue-900">Edit</button>
+                                <button type="button" wire:click="$emit('deleteUser', '{{ $user->id }}')"
+                                        class="text-primary hover:text-blue-900">Delete</button>
                             </div>
                         </x-td>
                     </tr>
@@ -66,4 +71,8 @@
     {{-- <x-guest-view-modal :reqGuest="$reqGuest"></x-guest-view-modal> --}}
 
     {{-- <livewire:live-guest-create wire:key="create-guest-component" /> --}}
+
+    <livewire:live-user-create />
+    <livewire:live-user-edit />
+    <livewire:live-user-delete />
 </x-page-layout>

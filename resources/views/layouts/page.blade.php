@@ -147,6 +147,7 @@
 
                     {{-- Shared Components --}}
                     <livewire:live-night-audit />
+                    <livewire:live-user-password-change />
 
                     {{-- Notifaction Toaster --}}
                     <x-success-notification />

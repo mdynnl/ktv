@@ -175,6 +175,7 @@
     <livewire:live-walk-in />
     <livewire:live-inhouse-edit />
     <livewire:live-modal-search-add-service-staff />
+    <livewire:live-inhouse-search-add-service-staff />
     <livewire:live-modal-handle-fb-table-order />
     <livewire:live-room-transfer />
 

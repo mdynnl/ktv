@@ -6,18 +6,20 @@ use App\Models\Gender;
 use App\Models\Role;
 use App\Models\Honorific;
 use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class LiveUserCreate extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
-    public User $user;
+    public $user;
     public $image;
     public $role;
-    public $roles;
+    public $roles = [];
 
     public $name;
     public $username;
@@ -29,6 +31,10 @@ class LiveUserCreate extends Component
     public $address;
     public $password;
     public $created_user_id;
+
+    public $showUserCreateForm = false;
+
+    protected $listeners = ['createUser'];
 
     protected $rules = [
         // 'image' => 'nullable|image|max:512',
@@ -45,7 +51,7 @@ class LiveUserCreate extends Component
     ];
 
 
-    public function createUser()
+    public function create()
     {
         $validated = $this->validate();
         $validated['password'] = bcrypt($validated['password']);
@@ -60,13 +66,20 @@ class LiveUserCreate extends Component
         });
 
 
-        return redirect()->route('users');
+        $this->emit('userCreated');
+        $this->showUserCreateForm = false;
     }
 
-    public function mount()
+    public function createUser()
     {
+        $this->authorize('add user');
+
+        $this->resetValidation();
+        $this->reset();
+
         $this->roles = Role::all('id', 'name');
         $this->created_user_id = auth()->id();
+        $this->showUserCreateForm = true;
     }
 
     public function render()

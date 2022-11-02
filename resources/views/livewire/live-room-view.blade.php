@@ -28,11 +28,12 @@
         </div> --}}
     </x-content-header-section>
 
-    <div class="grid grid-cols-6 gap-8 max-w-6xl">
+    <div class="grid grid-cols-6 gap-8">
         <div class="col-span-3 relative">
             <x-sticky-table-wrapper>
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
+                        <x-th width="80px">Sr. No</x-th>
                         <x-th>Room Type</x-th>
                         <x-th>Room Rate</x-th>
                         <x-th width="150px">
@@ -44,9 +45,10 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($roomTypes as $type)
+                    @foreach ($roomTypes as $index => $type)
                         <tr
                             class="divide-x bg-white text-gray-900">
+                            <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                             <x-td>{{ $type->room_type_name }}</x-td>
                             <x-td>{{ $type->room_rate }}</x-td>
                             <x-td>
@@ -75,6 +77,7 @@
             <x-sticky-table-wrapper>
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
+                        <x-th width="80px">Sr. No</x-th>
                         <x-th width="200px">Room</x-th>
                         <x-th>Type</x-th>
                         {{-- <x-th>Price</x-th> --}}
@@ -87,8 +90,9 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
-                    @foreach ($rooms as $room)
+                    @foreach ($rooms as $index => $room)
                         <tr class="divide-x">
+                            <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                             <x-td>{{ $room->room_no }}</x-td>
                             <x-td>{{ $room->type->room_type_name }}</x-td>
                             <x-td width="150px">

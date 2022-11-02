@@ -12,6 +12,10 @@ class ServiceStaff extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'dob' => 'datetime',
+    ];
+
     public function inhouseServices()
     {
         return $this->hasMany(InhouseService::class);

@@ -93,7 +93,7 @@ class LiveRoomInfo extends Component
 
         switch ($this->viewBy) {
             case 'all':
-                $rooms = $roomsCollection;
+                $rooms = $roomsCollection->sortBy('room_no');
                 break;
             case 'status':
                 $rooms = $roomsCollection->groupBy(function ($room) {

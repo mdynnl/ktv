@@ -11,40 +11,50 @@
                 <div class="space-y-8 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-1">
                         <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                            <x-form-file-input-comp class="col-span-6" wire:model="profile_image" label="Profile Image" for="profile_image">
-                                @if ($profile_image)
-                                    <x-slot name="preview">
-                                        <img class="h-16 w-16 object-cover rounded-full"
-                                             src="{{ $profile_image->temporaryUrl() }}"
-                                             alt="Current profile photo" />
-                                    </x-slot>
-                                @endif
-                            </x-form-file-input-comp>
+                            <div class="col-span-3 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                <x-form-file-input-comp class="col-span-6" wire:model="profile_image" label="Profile Image"
+                                                        for="profile_image">
+                                    @if ($profile_image)
+                                        <x-slot name="preview">
+                                            <img class="h-16 w-16 object-cover rounded-full"
+                                                 src="{{ $profile_image->temporaryUrl() }}"
+                                                 alt="Current profile photo" />
+                                        </x-slot>
+                                    @endif
+                                </x-form-file-input-comp>
 
-                            <x-form-file-input-comp class="col-span-6" wire:model="full_size_image" label="Full Size Image"
-                                                    for="full_size_image">
-                                @if ($full_size_image)
-                                    <x-slot name="preview">
-                                        <img class="h-80 w-52 object-cover rounded-md"
-                                             src="{{ $full_size_image->temporaryUrl() }}"
-                                             alt="Current profile photo" />
-                                    </x-slot>
-                                @endif
-                            </x-form-file-input-comp>
+                                <x-form-file-input-comp class="col-span-6" wire:model="full_size_image" label="Full Size Image"
+                                                        for="full_size_image">
+                                    @if ($full_size_image)
+                                        <x-slot name="preview">
+                                            <img class="h-32 w-28 object-cover rounded-md"
+                                                 src="{{ $full_size_image->temporaryUrl() }}"
+                                                 alt="Current profile photo" />
+                                        </x-slot>
+                                    @endif
+                                </x-form-file-input-comp>
+                            </div>
 
-                            <x-form-input-comp class="col-span-3" wire:model.defer="name_on_nrc" label="Name On NRC*"
-                                               for="name_on_nrc"
-                                               type="text" />
+                            <div class="col-span-3 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+                                <x-form-input-comp class="col-span-6" wire:model.defer="name_on_nrc" label="Name On NRC*"
+                                                   for="name_on_nrc"
+                                                   type="text" />
 
-                            <x-form-input-comp class="col-span-3" wire:model.defer="nick_name" label="Nick Name" for="user.nick_name"
-                                               type="text" />
+                                <x-form-input-comp class="col-span-6" wire:model.defer="nick_name" label="Nick Name" for="user.nick_name"
+                                                   type="text" />
 
-                            <x-form-input-comp class="sm:col-span-3" wire:model.defer="nrc" label="NRC No" for="nrc"
-                                               type="text" />
+                                <x-form-input-comp class="sm:col-span-6" wire:model.defer="nrc" label="NRC No" for="nrc"
+                                                   type="text" />
+
+                                <x-form-datepicker-comp class="sm:col-span-6" wire:model.defer="dob" label="Date of Birth"
+                                                        for="dob" />
 
 
-                            <x-form-input-comp class="sm:col-span-3" wire:model.defer="phone" label="Phone" for="phone"
-                                               type="text" />
+                                <x-form-input-comp class="sm:col-span-6" wire:model.defer="phone" label="Phone" for="phone"
+                                                   type="text" />
+                            </div>
+
+
 
                             <div class="col-span-6">
                                 <x-inline-checkbox-with-label wire:model.defer="isActive" :isDisabled="false" for="isActive"

@@ -33,6 +33,7 @@
     <x-sticky-table-wrapper>
         <thead class="bg-gray-50">
             <tr class="divide-x">
+                <x-th width="80px">Sr. No</x-th>
                 <x-th width="150px">Invoice No</x-th>
                 <x-th width="150px">Date</x-th>
                 <x-th>Supplier</x-th>
@@ -45,9 +46,10 @@
             </tr>
         </thead>
         <tbody class="bg-white">
-            @foreach ($purchases as $purchase)
+            @foreach ($purchases as $index => $purchase)
                 <tr
                     class="divide-x bg-white text-gray-900">
+                    <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
                     <x-td>{{ $purchase->invoice_no }}</x-td>
                     <x-td>{{ $purchase->purchase_date }}</x-td>
                     <x-td>{{ $purchase->supplier->supplier_name }}</x-td>

@@ -42,8 +42,13 @@
     <!-- Profile dropdown -->
     <x-profile-dropdown>
         {{-- <x-dropdown-link href="{{ route('profile', auth()->id()) }}" role="menuitem" tabindex="-1">{{ __('Your Profile') }}</x-dropdown-link> --}}
-        <x-dropdown-link role="menuitem" tabindex="-1">{{ __('Your Profile') }}</x-dropdown-link>
-        <x-dropdown-link role="menuitem" tabindex="-1">{{ __('Settings') }}</x-dropdown-link>
+        <button type="button" wire:click="$emit('changePassword', '{{ auth()->id() }}')"
+                class="w-full text-left px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out">
+            Change Password
+        </button>
+
+        {{-- <x-dropdown-link role="menuitem" tabindex="-1" href="{{ route('profile.change-passowrd') }}">{{ __('Change Password') }}
+        </x-dropdown-link> --}}
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <x-dropdown-link

@@ -20,6 +20,7 @@ class ServiceStaffFactory extends Factory
             'name_on_nrc' => fake()->name('female'),
             'nick_name' => fake()->name('female'),
             'nrc' => fake()->isbn10(),
+            'dob' => fake()->date,
             'address' => fake()->address,
             'phone' => fake()->phoneNumber,
             'isActive' => fake()->boolean,

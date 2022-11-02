@@ -19,6 +19,7 @@ class LiveServiceStaffEdit extends Component
     public $name_on_nrc;
     public $nick_name;
     public $nrc;
+    public $dob;
     public $address;
     public $phone;
     public $isActive;
@@ -38,6 +39,7 @@ class LiveServiceStaffEdit extends Component
             'name_on_nrc' => 'required|string',
             'nick_name' => 'nullable|string',
             'nrc' => 'nullable|string|unique:service_staff,nrc,'.$this->service_staff_id,
+            'dob' => 'nullable|date',
             'address' => 'nullable|string',
             'phone' => 'required|string',
             'isActive' => 'required|boolean',
@@ -48,7 +50,6 @@ class LiveServiceStaffEdit extends Component
     {
         $validated = $this->validate();
 
-
         DB::transaction(function () use ($validated) {
             $validatedWithImageUpdates = $this->checkAndUpdateImage($validated);
             $this->serviceStaff->update([
@@ -57,22 +58,26 @@ class LiveServiceStaffEdit extends Component
                 'name_on_nrc' => $validated['name_on_nrc'],
                 'nick_name' => $validated['nick_name'],
                 'nrc' => $validated['nrc'],
+                'dob' => $validated['dob'],
                 'address' => $validated['address'],
                 'phone' => $validated['phone'],
                 'isActive' => $validated['isActive'],
             ]);
         });
 
-		$this->emit('serviceStaffUpdated');
-		$this->showServiceStaffEditForm = false;
+        $this->emit('serviceStaffUpdated');
+        $this->showServiceStaffEditForm = false;
     }
 
 
     public function editServiceStaff(ServiceStaff $serviceStaff)
     {
+        $this->resetValidation();
+        $this->reset();
         $this->serviceStaff = $serviceStaff;
         $this->service_staff_id = $serviceStaff->id;
         $this->fill($serviceStaff);
+        $this->dob = $serviceStaff->dob->format('Y-m-d');
 
         $this->showServiceStaffEditForm = true;
     }

@@ -13,13 +13,11 @@
                 <div class="flex items-center space-x-8">
 
                     <x-inline-checkbox-with-label wire:model="viewOnlyKitchenItem" for="viewOnlyKitchenItem" :isDisabled="false" value="1"
-                                                  label="Only Kitchen Item" />
+                                                  label="Kitchen Items" />
 
-                    {{-- <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups" :isDisabled="false" value="2"
-                                                  label="F&B" />
-
-                    <x-inline-checkbox-with-label wire:model="selectedGroups" for="selectedGroups" :isDisabled="false" value="3"
-                                                  label="Service Staff" /> --}}
+                    <x-inline-checkbox-with-label wire:model="viewOnlyKitchenItem" for="viewOnlyKitchenItem" :isDisabled="false"
+                                                  value="0"
+                                                  label="Other Items" />
                 </div>
             </div>
 

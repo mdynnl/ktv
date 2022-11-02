@@ -13,6 +13,7 @@ use App\Models\RoomType;
 use App\Models\ServiceStaff;
 use App\Models\Supplier;
 use App\Models\User;
+use App\Policies\StockTypePolicy;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -53,6 +54,8 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call(CurrentOperationDateSeeder::class);
+
+        $this->call(StockOutTypeSeeder::class);
 
         $this->call(PaymentTypeSeeder::class);
 

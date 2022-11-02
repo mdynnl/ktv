@@ -16,6 +16,7 @@ use App\Http\Livewire\LiveServiceStaffCommissionSummaryReport;
 use App\Http\Livewire\LiveServiceStaffCreate;
 use App\Http\Livewire\LiveServiceStaffEdit;
 use App\Http\Livewire\LiveServiceStaffView;
+use App\Http\Livewire\LiveStockOutIndex;
 use App\Http\Livewire\LiveSupplierIndex;
 use App\Http\Livewire\LiveUserCreate;
 use App\Http\Livewire\LiveUserEdit;
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/suppliers', LiveSupplierIndex::class)->name('supplier.index')->middleware('permission:view suppliers');
 
     Route::get('/purchase', LivePurchaseIndex::class)->name('purchase.index')->middleware('permission:view purchases');
+
+    Route::get('/stockout', LiveStockOutIndex::class)->name('stockout.index')->middleware('permission:view stockouts');
 
     Route::group(['middleware' => ['permission:view reports']], function () {
         Route::get('/reports', LiveSalesDetailReport::class)->name('report.sales-detail');

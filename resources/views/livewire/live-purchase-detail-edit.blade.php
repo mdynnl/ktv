@@ -1,5 +1,5 @@
 <x-modal wire:model="showPurchaseDetailEditForm" size="lg">
-    @isset($items)
+    @if ($showPurchaseDetailEditForm)
         <x-slot name="modalHeader">
             <div>
                 <h1 class="text-2xl font-semibold">Edit Item</h1>
@@ -9,7 +9,8 @@
         <form wire:submit.prevent="create" class="grid gap-y-6 gap-x-4 grid-cols-7">
             <x-form-select-comp class="col-span-2" wire:model="item_id" :options="$items" optionValue="id"
                                 isDisabled="{{ isset($purchase_detail_id) }}"
-                                optionDisplay="item_name" label="{{ isset($purchase_detail_id) ? 'Item' : 'Select an Item*' }}" for="item_id" />
+                                optionDisplay="item_name" label="{{ isset($purchase_detail_id) ? 'Item' : 'Select an Item*' }}"
+                                for="item_id" />
 
             <x-form-disabled-comp class="col-span-1" wire:model.defer="recipe_unit" label="Recipe Unit"
                                   for="recipe_unit"
@@ -51,5 +52,5 @@
                 Update Item
             </button>
         </x-slot>
-    @endisset
+    @endif
 </x-modal>

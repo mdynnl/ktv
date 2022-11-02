@@ -1,5 +1,5 @@
 <x-modal wire:model="showUserCreateForm" size="md2">
-    @isset($showUserCreateForm)
+    @if ($showUserCreateForm)
         <x-slot name="modalHeader">
             <h1 class="text-2xl font-semibold">
                 Add a User
@@ -73,5 +73,5 @@
                 Create
             </button>
         </x-slot>
-    @endisset
+    @endif
 </x-modal>

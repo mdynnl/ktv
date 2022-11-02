@@ -81,6 +81,13 @@ class Permission extends \Spatie\Permission\Models\Permission
                 'delete purchase',
             ],
 
+            'stockout' => [
+                'view stockouts',
+                'add stockout',
+                'edit stockout',
+                'delete stockout',
+            ],
+
             'report' => [
                 'view reports',
                 'add report',

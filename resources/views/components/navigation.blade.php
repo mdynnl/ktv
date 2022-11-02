@@ -25,6 +25,10 @@
         <x-nav-link :href="route('purchase.index')" :active="request()->routeIs('purchase.index')">Purchases</x-nav-link>
     @endcan
 
+    @can('view stockouts')
+        <x-nav-link :href="route('stockout.index')" :active="request()->routeIs('stockout.index')">Stockouts</x-nav-link>
+    @endcan
+
     @can('view reports')
         <x-nav-link :href="route('report.sales-detail')" :active="request()->routeIs('report.sales-detail') || request()->routeIs('report.*')">Reports</x-nav-link>
     @endcan

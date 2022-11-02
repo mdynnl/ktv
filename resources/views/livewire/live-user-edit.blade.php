@@ -1,5 +1,5 @@
 <x-modal wire:model="showUserUpdateForm" size="md2">
-    @isset($showUserUpdateForm)
+    @if ($showUserUpdateForm)
         <x-slot name="modalHeader">
             <h1 class="text-2xl font-semibold">
                 Edit {{ $name }}
@@ -73,5 +73,5 @@
                 Update
             </button>
         </x-slot>
-    @endisset
+    @endif
 </x-modal>

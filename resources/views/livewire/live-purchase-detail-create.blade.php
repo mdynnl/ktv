@@ -1,5 +1,5 @@
 <x-modal wire:model="showSearchAddItem" size="lg">
-    @isset($items)
+    @if ($showSearchAddItem)
         <x-slot name="modalHeader">
             <div>
                 <h1 class="text-2xl font-semibold">Add Item</h1>

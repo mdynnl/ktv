@@ -34,6 +34,7 @@
         <thead class="bg-gray-50">
             <tr class="divide-x">
                 <x-th width="80px">Sr. No</x-th>
+                <x-th width="80px">Reg No</x-th>
                 <x-th width="150px">Invoice No</x-th>
                 <x-th width="150px">Date</x-th>
                 <x-th>Supplier</x-th>
@@ -50,6 +51,7 @@
                 <tr
                     class="divide-x bg-white text-gray-900">
                     <x-td-slim-with-align align="center">{{ $index + 1 }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="center">{{ $purchase->id }}</x-td-slim-with-align>
                     <x-td>{{ $purchase->invoice_no }}</x-td>
                     <x-td>{{ $purchase->purchase_date }}</x-td>
                     <x-td>{{ $purchase->supplier->supplier_name }}</x-td>
@@ -75,6 +77,4 @@
     <livewire:live-purchase-detail-create />
     <livewire:live-purchase-detail-edit />
     <livewire:live-purchase-detail-delete />
-    {{-- <livewire:live-item-create />
-    <livewire:live-item-delete /> --}}
 </x-page-layout>

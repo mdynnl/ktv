@@ -1,5 +1,5 @@
 <x-modal wire:model="showPurchaseCreateModal" size="xxl" cancelButtonLabel="Close">
-    @isset($createPurchaseNow)
+    @if ($createPurchaseNow)
         <x-slot name="modalHeader">
             <div class="flex space-x-3 items-baseline">
                 <h1 class="text-2xl font-semibold">Add a Purchase</h1>
@@ -71,13 +71,16 @@
                                                             class="divide-x">
                                                             <x-td-slim>{{ $pd['item_name'] }}</x-td-slim>
                                                             <x-td-slim>{{ $pd['invoice_unit'] }}</x-td-slim>
-                                                            <x-td-centered-slim class="text-center">{{ number_format($pd['price'], 0, '.', ',') }}
+                                                            <x-td-centered-slim class="text-center">
+                                                                {{ number_format($pd['price'], 0, '.', ',') }}
                                                             </x-td-centered-slim>
                                                             <x-td-centered-slim class="text-center">{{ $pd['qty'] }}</x-td-centered-slim>
                                                             <x-td-centered-slim class="text-center">
                                                                 {{ number_format($pd['qty'] * $pd['price'], 0, '.', ',') }}</x-td-centered-slim>
-                                                            <x-td-centered-slim class="text-center">{{ $pd['recipe_unit'] }}</x-td-centered-slim>
-                                                            <x-td-centered-slim class="text-center">{{ $pd['recipe_qty'] }}</x-td-centered-slim>
+                                                            <x-td-centered-slim class="text-center">{{ $pd['recipe_unit'] }}
+                                                            </x-td-centered-slim>
+                                                            <x-td-centered-slim class="text-center">{{ $pd['recipe_qty'] }}
+                                                            </x-td-centered-slim>
                                                             <x-td-slim-nopadding>
                                                                 <button type="button"
                                                                         wire:click="removePurchaseDetails('{{ $key }}')"
@@ -151,5 +154,5 @@
                 Create
             </button>
         </x-slot>
-    @endisset
+    @endif
 </x-modal>

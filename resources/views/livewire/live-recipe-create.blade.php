@@ -53,12 +53,6 @@
                     <button wire:click="showLoadRecipeModal" type="button"
                             class="inline-flex items-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
                         Load Recipe
-                        <!-- Heroicon name: mini/folder -->
-                        {{-- <svg class="ml-2 -mr-1 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                             aria-hidden="true">
-                            <path
-                                  d="M4.75 3A1.75 1.75 0 003 4.75v2.752l.104-.002h13.792c.035 0 .07 0 .104.002V6.75A1.75 1.75 0 0015.25 5h-3.836a.25.25 0 01-.177-.073L9.823 3.513A1.75 1.75 0 008.586 3H4.75zM3.104 9a1.75 1.75 0 00-1.673 2.265l1.385 4.5A1.75 1.75 0 004.488 17h11.023a1.75 1.75 0 001.673-1.235l1.384-4.5A1.75 1.75 0 0016.896 9H3.104z" />
-                        </svg> --}}
                     </button>
                 </div>
 
@@ -135,6 +129,11 @@
             <div x-show="showQtyEditModal" x-cloak x-trap="showQtyEditModal" class="absolute grid inset-0 place-items-center z-10">
                 <form wire:submit.prevent="updateQty" @click.outside="showQtyEditModal = false"
                       class="bg-white border flex flex-col max-w-sm rounded-lg w-full overflow-hidden">
+                    <div class="bg-primary font-semibold px-4 py-3.5 text-white">
+                        @isset($editingRecipeItem['item_name'])
+                            Item: {{ $editingRecipeItem['item_name'] }}
+                        @endisset
+                    </div>
                     <div class="flex-1 px-4 py-5 text-sm">
 
                         <x-form-input-comp class="w-full" wire:model="editingRecipeQty" label="Qty" for="editingRecipeQty"

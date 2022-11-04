@@ -10,6 +10,8 @@ class Food extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function recipes()
     {
         return $this->hasMany(Recipe::class);
@@ -27,7 +29,7 @@ class Food extends Model
                 if (isset($this->food_image)) {
                     return asset('storage/' . $this->food_image);
                 } else {
-                    return asset('images/food-delivery.png');
+                    return asset('images/serving.png');
                 }
             }
         );

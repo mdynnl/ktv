@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Room;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveRoomDelete extends Component
 {
+    use AuthorizesRequests;
+
     public $room;
     public $showRoomDeleteModal = false;
 
@@ -29,6 +32,8 @@ class LiveRoomDelete extends Component
 
     public function deleteRoom(Room $room)
     {
+        $this->authorize('delete', $room);
+
         $this->room = $room;
 
         $this->showRoomDeleteModal = true;

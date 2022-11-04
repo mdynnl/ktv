@@ -18,7 +18,9 @@ class StockOutPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user->can('view stockouts')) {
+            return true;
+        }
     }
 
     /**
@@ -30,7 +32,9 @@ class StockOutPolicy
      */
     public function view(User $user, StockOut $stockOut)
     {
-        //
+        if ($user->can('view stockouts')) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +45,9 @@ class StockOutPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add stockout')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +59,9 @@ class StockOutPolicy
      */
     public function update(User $user, StockOut $stockOut)
     {
-        //
+        if ($user->can('edit stockout')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +73,9 @@ class StockOutPolicy
      */
     public function delete(User $user, StockOut $stockOut)
     {
-        //
+        if ($user->can('delete stockout')) {
+            return true;
+        }
     }
 
     /**

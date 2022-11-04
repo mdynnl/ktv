@@ -3,12 +3,14 @@
 namespace App\Http\Livewire;
 
 use App\Models\ServiceStaff;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 class LiveServiceStaffCreate extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $profile_image;
@@ -29,11 +31,11 @@ class LiveServiceStaffCreate extends Component
         'profile_image' => 'nullable|image|max:512',
         'full_size_image' => 'nullable|image|max:1024',
         'name_on_nrc' => 'required|string',
-        'nick_name' => 'nullable|string',
+        'nick_name' => 'required|string',
         'nrc' => 'nullable|string|unique:service_staff,nrc',
         'dob' => 'nullable|date',
         'address' => 'nullable|string',
-        'phone' => 'required|string',
+        'phone' => 'nullable|string',
         'isActive' => 'required|boolean',
     ];
 
@@ -63,6 +65,7 @@ class LiveServiceStaffCreate extends Component
 
     public function createServiceStaff()
     {
+        $this->authorize('create', ServiceStaff::class);
         $this->resetValidation();
         $this->reset();
 

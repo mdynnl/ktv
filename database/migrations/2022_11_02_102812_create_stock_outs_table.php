@@ -17,6 +17,7 @@ return new class () extends Migration {
             $table->date('stock_out_date');
             $table->foreignId('item_id')->constrained()->restrictOnDelete();
             $table->float('qty');
+            $table->float('price');
             $table->foreignId('stock_out_type_id')->constrained()->restrictOnDelete();
             $table->text('remark')->nullable();
             $table->unsignedInteger('created_user_id');

@@ -31,10 +31,13 @@
                     <span class="text-gray-500 text-sm">Commission:</span>
                     <span>{{ number_format($serviceStaffCommissionRate, 0, '.', ',') }}</span>
                 </p>
-                <button type="button" wire:click="$emit('editStaffRate')"
-                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                    Edit Rate
-                </button>
+                @can('edit service staff')
+                    <button type="button" wire:click="$emit('editStaffRate')"
+                            class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                        Edit Rate
+                    </button>
+                @endcan
+
                 {{-- <button wire:click="$emit('editStaffRate')" type="button"
                         class="mr-6 inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
                     Edit Rate
@@ -42,10 +45,13 @@
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
-            <button type="button" wire:click="$emit('createServiceStaff')"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Service Staff
-            </button>
+            @can('add service staff')
+                <button type="button" wire:click="$emit('createServiceStaff')"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Service Staff
+                </button>
+            @endcan
+
         </div>
     </x-content-header-section>
 
@@ -90,11 +96,15 @@
                     </x-td-slim-with-align>
                     <x-td class="w-32">
                         <div class="inline-flex space-x-3 items-center">
-                            {{-- <a href="{{ route('service-staff.edit', $user->id) }}" class="text-primary hover:text-blue-900">Edit</a> --}}
-                            <button type="button" wire:click="$emit('editServiceStaff', {{ $user->id }})"
-                                    class="text-primary hover:text-blue-900">Edit</button>
-                            <button type="button" wire:click="$emit('deleteServiceStaff', {{ $user->id }})"
-                                    class="text-primary hover:text-blue-900">Delete</button>
+                            @can('update', $user)
+                                <button type="button" wire:click="$emit('editServiceStaff', {{ $user->id }})"
+                                        class="text-primary hover:text-blue-900">Edit</button>
+                            @endcan
+
+                            @can('delete', $user)
+                                <button type="button" wire:click="$emit('deleteServiceStaff', {{ $user->id }})"
+                                        class="text-primary hover:text-blue-900">Delete</button>
+                            @endcan
                         </div>
                     </x-td>
                 </tr>

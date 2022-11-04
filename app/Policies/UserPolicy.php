@@ -58,7 +58,11 @@ class UserPolicy
      */
     public function update(User $user, User $model)
     {
-        if ($user->can('edit user') || $user->is($model)) {
+        if ($user->can('edit user')) {
+            return true;
+        }
+
+        if ($user->is($model)) {
             return true;
         }
     }

@@ -3,11 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Traits\WithPrinting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LiveSalesSummaryReport extends Component
 {
+    use AuthorizesRequests;
     use WithPrinting;
     public $dateFrom;
     public $dateTo;
@@ -28,6 +30,8 @@ class LiveSalesSummaryReport extends Component
 
     public function mount()
     {
+        $this->authorize('view reports');
+
         $this->dateFrom = today()->subDay()->toDateString();
         $this->dateTo = today()->toDateString();
     }

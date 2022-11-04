@@ -37,7 +37,7 @@ class LiveStockOutDelete extends Component
 
     public function deleteStockout(StockOut $stockout)
     {
-        $this->authorize('delete stockout');
+        $this->authorize('delete', $stockout);
 
         $this->stockout = $stockout;
         $this->showStockoutDeleteModal = true;

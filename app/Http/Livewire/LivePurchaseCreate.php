@@ -6,11 +6,13 @@ use App\Models\Item;
 use App\Models\PaymentType;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class LivePurchaseCreate extends Component
 {
+    use AuthorizesRequests;
     // Purchase fills
     public $purchase_date;
     public $invoice_no;
@@ -150,6 +152,8 @@ class LivePurchaseCreate extends Component
 
     public function createPurchase()
     {
+        $this->authorize('create', Purchase::class);
+
         $this->resetValidation();
         $this->reset();
 

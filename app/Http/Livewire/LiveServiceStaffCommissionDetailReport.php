@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\InhouseService;
 use App\Traits\WithPrinting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveServiceStaffCommissionDetailReport extends Component
 {
+    use AuthorizesRequests;
     use WithPrinting;
 
     public $inhouseServices;
@@ -26,6 +28,7 @@ class LiveServiceStaffCommissionDetailReport extends Component
 
     public function mount()
     {
+        $this->authorize('view reports');
         $this->commission = app('ServiceStaffRates')->service_staff_commission_rate;
         $this->dateFrom = today()->subDay()->toDateString();
         $this->dateTo = today()->toDateString();

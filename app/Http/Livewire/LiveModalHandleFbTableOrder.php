@@ -244,6 +244,7 @@ class LiveModalHandleFbTableOrder extends Component
                     'order_time' => $this->order_time,
                     'food_id' => $orderDetail['food_id'],
                     'price' => $orderDetail['price'],
+                    'food_cost' => $orderDetail['food_cost'],
                     'qty' => $orderDetail['qty'],
                     'remark' => $orderDetail['remark'],
                 ]);
@@ -309,6 +310,7 @@ class LiveModalHandleFbTableOrder extends Component
                     'order_time' => $orderDetail['order_time'],
                     'food_id' => $orderDetail['food_id'],
                     'price' => $orderDetail['price'],
+                    'food_cost' => $orderDetail['food_cost'],
                     'qty' => $orderDetail['qty'],
                     'remark' => $orderDetail['remark'],
                 ]);
@@ -346,192 +348,6 @@ class LiveModalHandleFbTableOrder extends Component
         }
     }
 
-    // public function updatedPaymentTypeId()
-    // {
-    //     $validated = $this->validate([
-    //         'payment_type_id' => 'required|integer|numeric'
-    //     ]);
-
-    //     if (isset($this->order_id)) {
-    //         Order::find($this->order_id)->update([
-    //             'payment_type_id' => $validated['payment_type_id']
-    //         ]);
-    //     }
-    // }
-
-    // public function updatedPax()
-    // {
-    //     $validated = $this->validate([
-    //         'pax' => 'required|integer|numeric|min:1'
-    //     ]);
-    //     if (isset($this->order_id)) {
-    //         Order::find($this->order_id)->update([
-    //             'pax' => $validated['pax']
-    //         ]);
-    //     }
-    // }
-
-    // public function updatedDiscountAmount()
-    // {
-    //     if (isset($this->order_id)) {
-    //         Order::find($this->order_id)->update([
-    //             'discount_amount' => $this->discount_amount
-    //         ]);
-    //     }
-    // }
-
-    // public function selectCustomer(Customers $customer)
-    // {
-    //     $this->fill($customer);
-    //     $this->customer_id = $customer->id;
-    //     $this->customerSearch = $customer->customer_name;
-    //     $this->discount_percent = $customer->discount;
-
-    //     if (isset($customer->discount) && isset($this->order_id)) {
-    //         $this->discount_amount = round($this->sub_total * $this->discount / 100, 2);
-    //         Order::find($this->order_id)->update([
-    //             'discount_percent' => $this->discount_percent,
-    //             'discount_amount' => $this->discount_amount,
-    //             'customer_id' => $customer->id,
-    //             'updated_user_id' => auth()->id(),
-    //         ]);
-    //     } else {
-    //         $this->discount_amount = round($this->sub_total * $this->discount / 100, 2);
-    //         if (isset($this->order_id)) {
-    //             Order::find($this->order_id)->update([
-    //                 'discount_percent' => $this->discount_percent,
-    //                 'discount_amount' => $this->discount_amount,
-    //                 'customer_id' => $customer->id,
-    //                 'updated_user_id' => auth()->id(),
-    //             ]);
-    //         }
-    //     }
-    // }
-
-    // On order item delete/reduce
-    // public function delete()
-    // {
-    //     $this->showDeleteConfirmationModal = false;
-
-    //     $qtyForReduction = $this->editingItem['qtyForReduction'];
-    //     $cancellingQty = $this->editingItem['qty'] - $qtyForReduction;
-
-    //     if ($cancellingQty > 0) {
-    //         DB::transaction(function () use ($cancellingQty) {
-    //             CancelOrder::create([
-    //                 'order_detail_id' => $this->editingItem['id'],
-    //                 'food_id' => $this->editingItem['food_id'],
-    //                 'invoice_no' => $this->invoice_no,
-    //                 'order_time' => $this->editingItem['order_time'],
-    //                 'cancelled_quantity' => $this->editingItem['qtyForReduction'],
-    //                 'created_user_id' => auth()->id()
-    //             ]);
-
-    //             OrderDetail::find($this->editingItem['id'])->update([
-    //                     'qty' => $cancellingQty,
-    //             ]);
-    //             $lastQty = $this->orderDetails[$this->editingItem['index']]['qty'];
-    //             $deductingAmount = $this->editingItem['qtyForReduction'] * $this->orderDetails[$this->editingItem['index']]['price'];
-
-    //             $newSubtotal = $this->sub_total - $deductingAmount;
-    //             $this->discount_amount = round($newSubtotal * $this->discount / 100, 2);
-
-    //             $order = Order::find($this->order_id);
-    //             $order->update([
-    //                 'sub_total' => $newSubtotal,
-    //                 'discount_amount' => $this->discount_amount
-    //             ]);
-    //             $order->refresh();
-
-    //             $this->fill($order);
-
-    //             $this->orderDetails[$this->editingItem['index']]['qty'] = $cancellingQty;
-    //             $this->orderDetails[$this->editingItem['index']]['amount'] = $cancellingQty * $this->orderDetails[$this->editingItem['index']]['price'];
-    //         });
-    //         return $this->printKitchenCancelOrder();
-    //     } else {
-    //         DB::transaction(function () {
-    //             CancelOrder::create([
-    //                 'order_detail_id' => $this->editingItem['id'],
-    //                 'food_id' => $this->editingItem['food_id'],
-    //                 'invoice_no' => $this->invoice_no,
-    //                 'order_time' => $this->editingItem['order_time'],
-    //                 'cancelled_quantity' => $this->editingItem['qtyForReduction'],
-    //                 'created_user_id' => auth()->id()
-    //             ]);
-
-    //             OrderDetail::find($this->editingItem['id'])->delete();
-
-    //             $deductingAmount = $this->orderDetails[$this->editingItem['index']]['price'] * $this->orderDetails[$this->editingItem['index']]['qty'];
-
-    //             $newSubtotal = $this->sub_total - $deductingAmount;
-    //             $this->discount_amount = round($newSubtotal * $this->discount / 100, 2);
-
-    //             $order = Order::find($this->order_id);
-    //             $order->update([
-    //                 'sub_total' => $newSubtotal,
-    //                 'discount_amount' => $this->discount_amount
-    //             ]);
-    //             $order->refresh();
-
-    //             $this->fill($order);
-
-
-    //             unset($this->orderDetails[$this->editingItem['index']]);
-    //             $this->orderDetails = array_values($this->orderDetails);
-    //         });
-    //         return $this->printKitchenCancelOrder();
-    //     }
-    // }
-
-    // public function confirmDelete()
-    // {
-    //     $this->showOrderDeleteModal = false;
-
-    //     $food_name = ucwords($this->editingItem['food_name']);
-    //     $qtyForReduction = $this->editingItem['qtyForReduction'];
-    //     $cancellingQty = $this->editingItem['qty'] - $qtyForReduction;
-
-    //     if ($cancellingQty > 0) {
-    //         $this->confirmingItem['message'] = "Are you sure you want to cancel $qtyForReduction quantity for $food_name ?";
-    //     } else {
-    //         $this->confirmingItem['message'] = "Are you sure you want to delete the $food_name Order ?";
-    //     }
-
-    //     $this->showDeleteConfirmationModal = true;
-    // }
-
-    // public function reduceQty($isAddition = true)
-    // {
-    //     if ($isAddition) {
-    //         if ($this->editingItem['qtyForReduction'] < $this->editingItem['qty']) {
-    //             $this->editingItem['qtyForReduction']++;
-    //             $this->isModalDirty = true;
-    //         }
-    //     } else {
-    //         if ($this->editingItem['qtyForReduction'] > 1) {
-    //             $this->editingItem['qtyForReduction']--;
-    //             $this->isModalDirty = true;
-    //         }
-    //     }
-    // }
-
-    // public function showOrderDelete($index)
-    // {
-    //     $this->isModalDirty = true;
-
-    //     $this->editingItem['index'] = $index;
-    //     $this->editingItem['id'] = $this->orderDetails[$index]['id'];
-    //     $this->editingItem['food_id'] = $this->orderDetails[$index]['food_id'];
-    //     $this->editingItem['food_name'] = $this->orderDetails[$index]['food_name'];
-    //     $this->editingItem['order_time'] = $this->orderDetails[$index]['order_time'];
-    //     $this->editingItem['qty'] = $this->orderDetails[$index]['qty'];
-    //     $this->editingItem['qtyForReduction'] = 1;
-
-
-    //     $this->showOrderDeleteModal = true;
-    // }
-    // End of order item delete/reduce
 
     public function saveRemark()
     {
@@ -591,6 +407,7 @@ class LiveModalHandleFbTableOrder extends Component
                 'food_id' => $food->id,
                 'food_name' => $food->food_name,
                 'price' => $food->price,
+                'food_cost' => $food->food_cost,
                 'qty' => 1,
                 'amount' => $food->price,
                 'remark' => null
@@ -617,14 +434,6 @@ class LiveModalHandleFbTableOrder extends Component
 
         $this->inhouse_id = $inhouse->id;
         $this->room_no = $inhouse->room->room_no;
-        // $this->table_id = $table->id;
-        // $this->fill($table);
-
-        // if (!is_null($table->room)) {
-        //     $this->inhouse_id = $table->room->inhouses()->select('id')->where('checked_out', false)->first()->id;
-
-        //     $this->room_no = $table->room->room_no;
-        // };
 
         $this->categories = FoodCategory::all('id', 'food_category_name');
         $this->selectedCategoryId = $this->categories->first()->id;
@@ -632,40 +441,12 @@ class LiveModalHandleFbTableOrder extends Component
         $this->foodTypes = FoodType::select('id', 'food_type_name')->withCount('foods')->where('food_category_id', $this->selectedCategoryId)->get();
         $this->selectedFoodTypeId = $this->foodTypes->first()->id;
 
-        // $this->paymentTypes = PaymentType::all('id', 'payment_type_name');
-        // $this->payment_type_id = $this->paymentTypes->first()->id;
-
-        // $order = $table->orders()->where('is_paid', false)->first();
-        // Inhouse::find()
         $order = $inhouse->order;
 
         if (isset($order)) {
             $this->fill($order);
             $this->order_id = $order->id;
-            // if (isset($order->customer)) {
-            //     $customer = $order->customer;
-            //     $this->fill($customer);
-            //     $this->customerSearch = $this->customer_name;
-            // }
-
-            // $orderDetails = $order->orderDetails->sortBy('order_time');
-            // if ($orderDetails->count() > 0) {
-            //     $this->order_time = $orderDetails->last()->order_time;
-            //     foreach ($orderDetails as $orderDetail) {
-            //         array_push($this->orderDetails, [
-            //             'id' => $orderDetail->id,
-            //             'order_time' => $orderDetail->order_time,
-            //             'food_id' => $orderDetail->food_id,
-            //             'food_name' => $orderDetail->food->food_name,
-            //             'qty' => $orderDetail->qty,
-            //             'price' => $orderDetail->price,
-            //             'amount' => $orderDetail->qty * $orderDetail->price,
-            //             'remark' => $orderDetail->remark
-            //         ]);
-            //     }
-            // }
         }
-
 
         $this->showHandleTableOrderModal = true;
     }
@@ -680,13 +461,6 @@ class LiveModalHandleFbTableOrder extends Component
                 }, function ($query) {
                     $query->where('food_type_id', $this->selectedFoodTypeId);
                 })->get(),
-
-            // 'customers' => Customers::where(function ($query) {
-            //     $query->when(strlen($this->customerSearch) >= 2 ? $this->customerSearch : false, function ($query) {
-            //         $query->where('customer_name', 'like', '%' . $this->customerSearch . '%');
-            //     });
-            // })->get(),
-
         ]);
     }
 }

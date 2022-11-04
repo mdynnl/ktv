@@ -10,13 +10,6 @@ class Permission extends \Spatie\Permission\Models\Permission
     public static function defaultPermissions()
     {
         return [
-            'user' => [
-                'view any users',
-                'view user',
-                'add user',
-                'edit user',
-                'delete user',
-            ],
 
             'role' => [
                 'view roles',
@@ -90,9 +83,24 @@ class Permission extends \Spatie\Permission\Models\Permission
 
             'report' => [
                 'view reports',
-                'add report',
-                'edit report',
-                'delete report',
+                // 'add report',
+                // 'edit report',
+                // 'delete report',
+            ],
+
+            'expense' => [
+                'view expenses',
+                'add expense',
+                'edit expense',
+                'delete expense',
+            ],
+
+            'user' => [
+                'view any users',
+                'view user',
+                'add user',
+                'edit user',
+                'delete user',
             ],
 
             // 'transaction' => [

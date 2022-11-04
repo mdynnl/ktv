@@ -19,6 +19,7 @@ return new class () extends Migration {
             $table->unsignedInteger('order_time');
             $table->foreignId('food_id');
             $table->float('price');
+            $table->float('food_cost');
             $table->unsignedInteger('qty');
             $table->text('remark')->nullable();
             $table->timestamps();

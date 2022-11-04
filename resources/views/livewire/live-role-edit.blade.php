@@ -58,7 +58,7 @@
                                                                         <x-inline-checkbox-with-label wire:model.defer="selectedRolePermissions"
                                                                                                       value="{{ $permission->id }}"
                                                                                                       label="{{ $permission->permissionName }}"
-                                                                                                      for="selectedRolePermissions"
+                                                                                                      for="{{ $permission->permissionName }}"
                                                                                                       isDisabled="{{ false }}" />
                                                                     </li>
                                                                 @endforeach

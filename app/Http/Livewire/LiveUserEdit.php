@@ -76,7 +76,7 @@ class LiveUserEdit extends Component
 
     public function editUser(User $user)
     {
-        $this->authorize('update', $user);
+        $this->authorize('viewAny', $user);
         $this->resetValidation();
         $this->reset();
 

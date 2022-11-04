@@ -48,11 +48,11 @@
                             </div>
 
                             <div class="col-span-3 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
-                                <x-form-input-comp class="col-span-6" wire:model.defer="name_on_nrc" label="Name On NRC*"
+                                <x-form-input-comp class="col-span-6" wire:model.defer="name_on_nrc" label="Name*"
                                                    for="name_on_nrc"
                                                    type="text" />
 
-                                <x-form-input-comp class="col-span-6" wire:model.defer="nick_name" label="Nick Name" for="user.nick_name"
+                                <x-form-input-comp class="col-span-6" wire:model.defer="nick_name" label="Nick Name*" for="user.nick_name"
                                                    type="text" />
 
                                 <x-form-input-comp class="sm:col-span-6" wire:model.defer="nrc" label="NRC No" for="nrc"

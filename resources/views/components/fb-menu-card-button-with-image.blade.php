@@ -5,7 +5,7 @@
             'hover:bg-gray-200' => !$active,
         ])>
     <div class="flex h-full items-center">
-        <img {{ $attributes->merge(['class' => 'h-10 w-10 rounded-full']) }}
+        <img {{ $attributes->merge(['class' => 'h-10 w-10 rounded-md']) }}
              src="{{ $image }}"
              alt="">
 

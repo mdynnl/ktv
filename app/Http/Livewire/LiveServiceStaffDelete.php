@@ -4,12 +4,14 @@ namespace App\Http\Livewire;
 
 use App\Models\ServiceStaff;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 
 class LiveServiceStaffDelete extends Component
 {
+    use AuthorizesRequests;
     public $serviceStaff;
     public $showServiceStaffDeleteModal = false;
 
@@ -41,6 +43,7 @@ class LiveServiceStaffDelete extends Component
 
     public function deleteServiceStaff(ServiceStaff $serviceStaff)
     {
+        $this->authorize('delete', $serviceStaff);
         $this->serviceStaff = $serviceStaff;
         $this->showServiceStaffDeleteModal = true;
     }

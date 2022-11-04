@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Supplier;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveSupplierEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $supplier;
 
     public $showSupplierEditForm = false;
@@ -38,6 +41,8 @@ class LiveSupplierEdit extends Component
 
     public function editSupplier(Supplier $supplier)
     {
+        $this->authorize('update', $supplier);
+
         $this->resetValidation();
         $this->reset();
 

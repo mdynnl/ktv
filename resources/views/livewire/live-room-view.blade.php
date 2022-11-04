@@ -37,10 +37,12 @@
                         <x-th>Room Type</x-th>
                         <x-th>Room Rate</x-th>
                         <x-th width="150px">
-                            <button wire:click="$emit('createRoomType')" type="button"
-                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
-                                Add Room Type
-                            </button>
+                            @can('create', App\Models\RoomType::class)
+                                <button wire:click="$emit('createRoomType')" type="button"
+                                        class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                    Add Room Type
+                                </button>
+                            @endcan
                         </x-th>
                     </tr>
                 </thead>
@@ -60,10 +62,14 @@
                                                 'text-primary' => $type->id != $selectedTypeId,
                                             ])>Select</button>
 
-                                    <button type="button" wire:click="$emit('editRoomType', {{ $type->id }})"
-                                            class="text-primary hover:text-blue-900">Edit</button>
-                                    <button type="button" wire:click="$emit('deleteRoomType', {{ $type->id }})"
-                                            class="text-primary hover:text-blue-900">Delete</button>
+                                    @can('update', $type)
+                                        <button type="button" wire:click="$emit('editRoomType', {{ $type->id }})"
+                                                class="text-primary hover:text-blue-900">Edit</button>
+                                    @endcan
+                                    @can('delete', $type)
+                                        <button type="button" wire:click="$emit('deleteRoomType', {{ $type->id }})"
+                                                class="text-primary hover:text-blue-900">Delete</button>
+                                    @endcan
                                 </div>
                             </x-td>
                         </tr>
@@ -80,12 +86,13 @@
                         <x-th width="80px">Sr. No</x-th>
                         <x-th width="200px">Room</x-th>
                         <x-th>Type</x-th>
-                        {{-- <x-th>Price</x-th> --}}
                         <x-th>
-                            <button wire:click="$emit('createRoom', {{ $selectedTypeId }})" type="button"
-                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
-                                Add Room
-                            </button>
+                            @can('create', App\Models\Room::class)
+                                <button wire:click="$emit('createRoom', {{ $selectedTypeId }})" type="button"
+                                        class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                    Add Room
+                                </button>
+                            @endcan
                         </x-th>
                     </tr>
                 </thead>
@@ -97,10 +104,14 @@
                             <x-td>{{ $room->type->room_type_name }}</x-td>
                             <x-td width="150px">
                                 <div class="inline-flex space-x-3 items-center">
-                                    <button type="button" wire:click="$emit('editRoom', {{ $room->id }})"
-                                            class="text-primary hover:text-blue-900">Edit</button>
-                                    <button type="button" wire:click="$emit('deleteRoom', {{ $room->id }})"
-                                            class="text-primary hover:text-blue-900">Delete</button>
+                                    @can('update', $room)
+                                        <button type="button" wire:click="$emit('editRoom', {{ $room->id }})"
+                                                class="text-primary hover:text-blue-900">Edit</button>
+                                    @endcan
+                                    @can('delete', $room)
+                                        <button type="button" wire:click="$emit('deleteRoom', {{ $room->id }})"
+                                                class="text-primary hover:text-blue-900">Delete</button>
+                                    @endcan
                                 </div>
                             </x-td>
                         </tr>

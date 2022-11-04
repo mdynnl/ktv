@@ -17,7 +17,6 @@
                     <table class="min-w-full border-separate " style="border-spacing: 0">
                         <thead class="bg-gray-50">
                             <tr class="divide-x">
-                                <x-th-slim></x-th-slim>
                                 <x-th-slim-with-align align="left">Item</x-th-slim-with-align>
                                 <x-th-slim-with-align align="center">Unit</x-th-slim-with-align>
                                 <x-th-slim-with-align align="center">Unit Price</x-th-slim-with-align>
@@ -26,12 +25,13 @@
                         <tbody class="bg-white">
                             @foreach ($items as $key => $item)
                                 <tr class="divide-x">
-                                    <x-td-slim-checkbox>
-                                        <x-inline-checkbox-without-label wire:key="{{ $item->id }}"
-                                                                         wire:model="selectedItems"
-                                                                         value="{{ $item->id }}" />
-                                    </x-td-slim-checkbox>
-                                    <x-td-slim-with-align align="left">{{ ucwords($item->item_name) }}</x-td-slim-with-align>
+                                    <x-td-slim-with-align align="left">
+                                        <x-inline-checkbox-with-label wire:key="{{ $item->id . '-' . $item->item_name }}"
+                                                                      wire:model="selectedItems" label="{{ ucwords($item->item_name) }}"
+                                                                      for="{{ $item->id }}"
+                                                                      :isDisabled="false"
+                                                                      value="{{ $item->id }}" />
+                                    </x-td-slim-with-align>
                                     <x-td-slim-with-align align="center">{{ ucwords($item->recipe_unit) }}</x-td-slim-with-align>
                                     <x-td-slim-with-align align="right">{{ $item->recipe_price }}</x-td-slim-with-align>
                                 </tr>

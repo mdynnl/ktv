@@ -30,5 +30,8 @@ class StockOutTypeSeeder extends Seeder
         StockOutType::create([
             'stock_out_type_name' => 'Waste',
         ]);
+        StockOutType::create([
+            'stock_out_type_name' => 'Lost',
+        ]);
     }
 }

@@ -1,4 +1,4 @@
-<x-modal wire:model="showStockoutCreateForm" size="md2">
+<x-modal wire:model="showStockoutCreateForm" size="lg">
     @if ($showStockoutCreateForm)
         <x-slot name="modalHeader">
             <h1 class="text-2xl font-semibold">
@@ -10,9 +10,9 @@
             <div class="grid grid-cols-1 gap-x-6">
                 <div class="space-y-8 sm:space-y-5">
                     <div class="space-y-6 sm:space-y-1">
-                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-7">
+                        <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
-                            <x-form-datepicker-comp class="sm:col-span-2" wire:model.defer="stock_out_date" label="Stockout Date"
+                            <x-form-datepicker-comp class="sm:col-span-2" wire:model.defer="stock_out_date" label="Stockout Date*"
                                                     for="stock_out_date" />
 
                             <x-form-select-comp class="col-span-2" wire:model.defer="item_id" :options="$items"
@@ -21,30 +21,26 @@
                                                 optionDisplay="item_name"
                                                 for="item_id" />
 
-                            <x-form-input-comp class="col-span-1" wire:model.defer="qty" label="Qty*"
-                                               for="qty"
-                                               type="text" />
-
                             <x-form-select-comp class="col-span-2" wire:model.defer="stock_out_type_id" :options="$stockOutTypes"
                                                 label="Stockout Types*"
                                                 optionValue="id"
                                                 optionDisplay="stock_out_type_name"
                                                 for="stock_out_type_id" />
 
-                            <x-form-textarea-comp class="sm:col-span-7" wire:model.defer="remark" label="Remark" for="remark"
+                            <x-form-input-comp class="col-span-2" wire:model.lazy="qty" label="Qty*"
+                                               for="qty"
+                                               type="text" />
+
+                            <x-form-input-comp class="col-span-2" wire:model.lazy="price" label="Cost*"
+                                               for="price"
+                                               type="text" />
+
+                            <x-display-info-comp class="col-span-2" label="Amount"
+                                                 displayValue="{{ number_format($qty * $price, 0, '.', ',') }}" />
+
+                            <x-form-textarea-comp class="sm:col-span-6" wire:model.defer="remark" label="Remark" for="remark"
                                                   rows="3"
                                                   type="text" />
-
-
-                            @if ($errors->any())
-                                <div class="alert alert-danger">
-                                    <ul>
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
                         </div>
                     </div>
                 </div>

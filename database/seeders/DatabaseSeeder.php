@@ -55,6 +55,8 @@ class DatabaseSeeder extends Seeder
 
         $this->call(CurrentOperationDateSeeder::class);
 
+        $this->call(ExpenseTypeSeeder::class);
+
         $this->call(StockOutTypeSeeder::class);
 
         $this->call(PaymentTypeSeeder::class);

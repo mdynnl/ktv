@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Item;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveItemEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $item;
     public $showItemEditForm = false;
 
@@ -35,8 +38,11 @@ class LiveItemEdit extends Component
 
     public function editItem(Item $item)
     {
+        $this->authorize('update', $item);
+
         $this->resetValidation();
         $this->reset();
+
         $this->item = $item;
 
         $this->showItemEditForm = true;

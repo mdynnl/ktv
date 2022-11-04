@@ -21,11 +21,14 @@
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
-            <button type="button"
-                    wire:click="$emit('createUser')"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add User
-            </button>
+            @can('create', App\Models\User::class)
+                <button type="button"
+                        wire:click="$emit('createUser')"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add User
+                </button>
+            @endcan
+
         </div>
     </x-content-header-section>
 
@@ -55,11 +58,14 @@
                         <x-td>{{ $user->phone }}</x-td>
                         <x-td class="w-52">
                             <div class="inline-flex space-x-3 items-center">
-                                {{-- <a href="{{ route('users.show', $user->id) }}" class="text-primary hover:text-blue-900">View</a> --}}
-                                <button type="button" wire:click="$emit('editUser', '{{ $user->id }}')"
-                                        class="text-primary hover:text-blue-900">Edit</button>
-                                <button type="button" wire:click="$emit('deleteUser', '{{ $user->id }}')"
-                                        class="text-primary hover:text-blue-900">Delete</button>
+                                @can('viewAny', App\Models\User::class)
+                                    <button type="button" wire:click="$emit('editUser', '{{ $user->id }}')"
+                                            class="text-primary hover:text-blue-900">Edit</button>
+                                @endcan
+                                @can('delete', $user)
+                                    <button type="button" wire:click="$emit('deleteUser', '{{ $user->id }}')"
+                                            class="text-primary hover:text-blue-900">Delete</button>
+                                @endcan
                             </div>
                         </x-td>
                     </tr>

@@ -42,7 +42,7 @@
     </x-content-header-section>
 
     <div class="max-w-5xl">
-        <div class="bg-white p-8 grid grid-cols-4 gap-8">
+        <div class="bg-white py-6 grid grid-cols-4 gap-8">
             @foreach ($permissionGroups as $key => $permissions)
                 <div class="col-span-1">
                     <header>{{ ucwords(Str::replace('_', ' ', $key)) }}</header>

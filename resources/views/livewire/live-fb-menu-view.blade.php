@@ -33,18 +33,20 @@
     </x-content-header-section>
 
 
-    <div class="grid grid-cols-6 gap-8">
-        <div class="col-span-2 relative">
+    <div class="grid grid-cols-7 gap-8">
+        <div class="col-span-3 relative">
             <x-sticky-table-wrapper>
                 <thead class="bg-gray-50">
                     <tr class="divide-x">
                         <x-th width="80px">Sr. No</x-th>
                         <x-th>Food & Beverage Type</x-th>
                         <x-th width="150px">
-                            <button wire:click="$emit('createFoodType')" type="button"
-                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
-                                Add New
-                            </button>
+                            @can('add food and beverage')
+                                <button wire:click="$emit('createFoodType')" type="button"
+                                        class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                    Add New
+                                </button>
+                            @endcan
                         </x-th>
                     </tr>
                 </thead>
@@ -63,10 +65,15 @@
                                                 'text-primary' => $type->id != $selectedTypeId,
                                             ])>Select</button>
 
-                                    <button type="button" wire:click="$emit('editFoodType', {{ $type->id }})"
-                                            class="text-primary hover:text-blue-900">Edit</button>
-                                    <button type="button" wire:click="$emit('deleteFoodType', {{ $type->id }})"
-                                            class="text-primary hover:text-blue-900">Delete</button>
+                                    @can('edit food and beverage')
+                                        <button type="button" wire:click="$emit('editFoodType', {{ $type->id }})"
+                                                class="text-primary hover:text-blue-900">Edit</button>
+                                    @endcan
+
+                                    @can('delete food and beverage')
+                                        <button type="button" wire:click="$emit('deleteFoodType', {{ $type->id }})"
+                                                class="text-primary hover:text-blue-900">Delete</button>
+                                    @endcan
                                 </div>
                             </x-td>
                         </tr>
@@ -84,11 +91,14 @@
                         <x-th>Food & Beverage</x-th>
                         <x-th width="150px">Type</x-th>
                         <x-th align="center" width="150px">Price</x-th>
+                        <x-th align="center" width="150px">Cost</x-th>
                         <x-th>
-                            <button wire:click="$emit('createFood', {{ $selectedTypeId }})" type="button"
-                                    class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
-                                Add New
-                            </button>
+                            @can('add food and beverage')
+                                <button wire:click="$emit('createFood', {{ $selectedTypeId }})" type="button"
+                                        class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
+                                    Add New
+                                </button>
+                            @endcan
                         </x-th>
                     </tr>
                 </thead>
@@ -101,22 +111,30 @@
                             <x-td>{{ $food->foodType->food_type_name }}</x-td>
 
                             <x-td-slim-with-align align="right">{{ number_format($food->price, 0, '.', ',') }}</x-td-slim-with-align>
+                            <x-td-slim-with-align align="right">{{ number_format($food->food_cost, 0, '.', ',') }}</x-td-slim-with-align>
                             {{-- <x-td>{{ $food->price }}</x-td> --}}
                             <x-td width="150px">
                                 <div class="inline-flex space-x-3 items-center">
-                                    <button type="button" wire:click="$emit('editFood', {{ $food->id }})"
-                                            class="text-primary hover:text-blue-900">Edit</button>
-                                    <button type="button" wire:click="$emit('deleteFood', {{ $food->id }})"
-                                            class="text-primary hover:text-blue-900">Delete</button>
+                                    @can('edit food and beverage')
+                                        <button type="button" wire:click="$emit('editFood', {{ $food->id }})"
+                                                class="text-primary hover:text-blue-900">Edit</button>
+                                    @endcan
+                                    @can('delete food and beverage')
+                                        <button type="button" wire:click="$emit('deleteFood', {{ $food->id }})"
+                                                class="text-primary hover:text-blue-900">Delete</button>
+                                    @endcan
 
-                                    @if ($food->recipes->count() > 0)
-                                        <button type="button"
-                                                wire:click="$emit('createRecipe', {{ $food->id }}, {{ true }})"
-                                                class="text-primary hover:text-blue-900">Edit Recipe</button>
-                                    @else
-                                        <button type="button" wire:click="$emit('createRecipe', {{ $food->id }})"
-                                                class="text-primary hover:text-blue-900">Add Recipe</button>
-                                    @endif
+
+                                    @can('edit food and beverage')
+                                        @if ($food->recipes->count() > 0)
+                                            <button type="button"
+                                                    wire:click="$emit('createRecipe', {{ $food->id }}, {{ true }})"
+                                                    class="text-primary hover:text-blue-900">Edit Recipe</button>
+                                        @else
+                                            <button type="button" wire:click="$emit('createRecipe', {{ $food->id }})"
+                                                    class="text-primary hover:text-blue-900">Add Recipe</button>
+                                        @endif
+                                    @endcan
                                 </div>
                             </x-td>
                         </tr>

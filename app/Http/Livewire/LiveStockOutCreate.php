@@ -16,6 +16,7 @@ class LiveStockOutCreate extends Component
     public $stock_out_date;
     public $item_id;
     public $qty;
+    public $price;
     public $stock_out_type_id;
     public $remark;
     public $created_user_id;
@@ -31,6 +32,7 @@ class LiveStockOutCreate extends Component
         'stock_out_date' => 'required|date',
         'item_id' => 'required|integer',
         'qty' => 'required|numeric',
+        'price' => 'required|numeric|between:0,999999999.99',
         'stock_out_type_id' => 'required|integer',
         'remark' => 'nullable|string',
         'created_user_id' => 'required|integer',
@@ -51,7 +53,7 @@ class LiveStockOutCreate extends Component
 
     public function createStockout()
     {
-        $this->authorize('add stockout');
+        $this->authorize('create', StockOut::class);
 
         $this->resetValidation();
         $this->reset();

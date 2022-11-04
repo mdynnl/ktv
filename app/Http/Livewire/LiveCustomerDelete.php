@@ -32,6 +32,8 @@ class LiveCustomerDelete extends Component
 
     public function deleteCustomer(Customer $customer)
     {
+        $this->authorize('delete', $customer);
+
         $this->customer = $customer;
         $this->showCustomerDeleteModal = true;
     }

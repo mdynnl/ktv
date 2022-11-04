@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Item;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveItemDelete extends Component
 {
+    use AuthorizesRequests;
+
     public $item;
     public $showItemDeleteModal = false;
 
@@ -29,6 +32,8 @@ class LiveItemDelete extends Component
 
     public function deleteItem(Item $item)
     {
+        $this->authorize('delete', $item);
+
         $this->item = $item;
         $this->showItemDeleteModal = true;
     }

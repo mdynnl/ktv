@@ -1,5 +1,5 @@
 <x-modal wire:model="showSearchAddServiceStaff" size="md2">
-    @isset($staffs)
+    @if ($showSearchAddServiceStaff)
         <x-slot name="modalHeader">
             <div>
                 <h1 class="text-2xl font-semibold">Search & Add Service Staff</h1>
@@ -18,23 +18,24 @@
                         <table class="min-w-full border-separate " style="border-spacing: 0">
                             <thead class="bg-gray-50">
                                 <tr class="divide-x">
-                                    <x-th-slim></x-th-slim>
-                                    <x-th-slim>Name</x-th-slim>
-                                    {{-- <x-th-slim>Phone</x-th-slim> --}}
+                                    <x-th-slim>Service Staffs</x-th-slim>
                                 </tr>
                             </thead>
                             <tbody class="bg-white">
                                 @foreach ($staffs as $staff)
                                     <tr
-                                        class="divide-x hover:bg-gray-200 transition-colors ease-out duration-150 cursor-pointer">
+                                        wire:key="{{ $staff->id . '-' . $staff->nick_name }}"
+                                        class="divide-x">
                                         <x-td-slim-checkbox>
-                                            <x-inline-checkbox-without-label wire:key="{{ $staff->id }}"
-                                                                             wire:model="selectedStaff"
-                                                                             value="{{ $staff->id }}" />
+
+                                            <x-inline-checkbox-with-label-image
+                                                                                for="{{ $staff->id }}"
+                                                                                :isDisabled="false"
+                                                                                wire:model="selectedStaff"
+                                                                                image="{!! $staff->getImage !!}"
+                                                                                label="{{ $staff->nick_name }}"
+                                                                                value="{{ $staff->id }}" />
                                         </x-td-slim-checkbox>
-                                        <x-td-image imagePath="{!! $staff->getImage !!}"
-                                                    name="{{ $staff->nick_name }}" />
-                                        {{-- <x-td-slim>{{ $staff->name }}</x-td-slim> --}}
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -50,5 +51,5 @@
                     class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">Add
                 Selected Staff</button>
         </x-slot>
-    @endisset
+    @endif
 </x-modal>

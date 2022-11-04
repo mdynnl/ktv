@@ -5,10 +5,12 @@ namespace App\Http\Livewire;
 use App\Models\Inhouse;
 use App\Models\ViewInformationInvoice;
 use App\Traits\WithPrinting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveSalesDetailReport extends Component
 {
+    use AuthorizesRequests;
     use WithPrinting;
 
     public $infoInvoices;
@@ -26,6 +28,7 @@ class LiveSalesDetailReport extends Component
 
     public function mount()
     {
+        $this->authorize('view reports');
         $this->dateFrom = today()->subDay()->toDateString();
         $this->dateTo = today()->toDateString();
     }
@@ -35,7 +38,7 @@ class LiveSalesDetailReport extends Component
         $this->infoInvoices = ViewInformationInvoice::with('inhouse')
         ->whereIn('group_no', $this->selectedGroups)
         ->whereHas('inhouse', function ($query) {
-            // $query->where('checked_out', true)
+            // $query->where('checked_out', true)'
             $query->whereDate('operation_date', '>=', $this->dateFrom)
             ->whereDate('operation_date', '<=', $this->dateTo);
         })

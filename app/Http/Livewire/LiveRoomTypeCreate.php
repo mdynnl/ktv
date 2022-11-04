@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\RoomType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveRoomTypeCreate extends Component
 {
+    use AuthorizesRequests;
+
     public $roomType;
     public $showRoomTypeCreateForm = false;
 
@@ -32,6 +35,7 @@ class LiveRoomTypeCreate extends Component
 
     public function createRoomType()
     {
+        $this->authorize('create', RoomType::class);
         $this->resetValidation();
         $this->reset();
 

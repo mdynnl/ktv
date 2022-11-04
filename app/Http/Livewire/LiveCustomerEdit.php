@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Customer;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveCustomerEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $customer;
     public $showCustomerEditForm = false;
 
@@ -35,8 +38,11 @@ class LiveCustomerEdit extends Component
 
     public function editCustomer(Customer $customer)
     {
+        $this->authorize('update', $customer);
+
         $this->resetValidation();
         $this->reset();
+
         $this->customer = $customer;
         $this->customer->updated_user_id = auth()->id();
         $this->showCustomerEditForm = true;

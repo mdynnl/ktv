@@ -30,7 +30,9 @@ class CustomerPolicy
      */
     public function view(User $user, Customer $customer)
     {
-        //
+        if ($user->can('view customers')) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +43,9 @@ class CustomerPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add customer')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +57,9 @@ class CustomerPolicy
      */
     public function update(User $user, Customer $customer)
     {
-        //
+        if ($user->can('edit customer')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +71,9 @@ class CustomerPolicy
      */
     public function delete(User $user, Customer $customer)
     {
-        //
+        if ($user->can('delete customer')) {
+            return true;
+        }
     }
 
     /**

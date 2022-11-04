@@ -55,7 +55,7 @@ class LiveFbMenuView extends Component
     {
         return view('livewire.live-fb-menu-view', [
             'foods' => Food::with([ 'foodType', 'recipes' ])
-            ->select('id', 'food_type_id', 'food_name', 'food_image', 'price')
+            ->select('id', 'food_type_id', 'food_name', 'food_image', 'price', 'food_cost')
             ->where('food_type_id', $this->selectedTypeId)
             ->orderBy('food_name')
             ->get()

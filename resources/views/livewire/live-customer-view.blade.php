@@ -20,10 +20,13 @@
             </div>
         </div>
         <div class="sm:ml-16 sm:flex-none">
-            <button wire:click="$emit('createCustomer')" type="button"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Customer
-            </button>
+            @can('create', App\Models\Customer::class)
+                <button wire:click="$emit('createCustomer')" type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Customer
+                </button>
+            @endcan
+
         </div>
     </x-content-header-section>
 
@@ -47,10 +50,14 @@
                     <x-td>{{ $customer->address }}</x-td>
                     <x-td>
                         <div class="inline-flex space-x-3 items-center">
-                            <button type="button" wire:click="$emit('editCustomer', {{ $customer->id }})"
-                                    class="text-primary hover:text-blue-900">Edit</button>
-                            <button type="button" wire:click="$emit('deleteCustomer', {{ $customer->id }})"
-                                    class="text-primary hover:text-blue-900">Delete</button>
+                            @can('update', $customer)
+                                <button type="button" wire:click="$emit('editCustomer', {{ $customer->id }})"
+                                        class="text-primary hover:text-blue-900">Edit</button>
+                            @endcan
+                            @can('delete', $customer)
+                                <button type="button" wire:click="$emit('deleteCustomer', {{ $customer->id }})"
+                                        class="text-primary hover:text-blue-900">Delete</button>
+                            @endcan
                         </div>
                     </x-td>
                 </tr>

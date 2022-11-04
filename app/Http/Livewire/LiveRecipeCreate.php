@@ -69,6 +69,8 @@ class LiveRecipeCreate extends Component
                     'qty' => $item['qty']
                 ]);
             }
+
+            $this->updateFoodCost();
         } else {
             foreach ($this->recipeItems as $item) {
                 Recipe::create([
@@ -77,11 +79,21 @@ class LiveRecipeCreate extends Component
                     'qty' => $item['qty']
                 ]);
             }
+            $this->updateFoodCost();
         }
 
         $this->emit('recipeCreated');
         // $this->showRecipeCreateModal = false;
         $this->isDirty = false;
+    }
+
+    protected function updateFoodCost()
+    {
+        $total_cost = 0;
+        foreach ($this->recipeItems as $item) {
+            $total_cost += $item['amount'];
+        }
+        Food::find($this->food->id)->update(['food_cost' => $total_cost]);
     }
 
     public function loadRecipe()
@@ -151,6 +163,8 @@ class LiveRecipeCreate extends Component
         Recipe::find($this->recipeItems[$this->editingIndex]['recipe_id'])->delete();
         unset($this->recipeItems[$this->editingIndex]);
         $this->recipeItems = array_values($this->recipeItems);
+        $this->updateFoodCost();
+        $this->emit('recipeCreated');
     }
 
     public function deleteRecipeItem($index)

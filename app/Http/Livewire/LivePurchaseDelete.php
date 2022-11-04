@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Purchase;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LivePurchaseDelete extends Component
 {
+    use AuthorizesRequests;
+
     public $purchase;
     public $showPurchaseDeleteModal = false;
 
@@ -29,6 +32,8 @@ class LivePurchaseDelete extends Component
 
     public function deletePurchase(Purchase $purchase)
     {
+        $this->authorize('delete', $purchase);
+
         $this->purchase = $purchase;
         $this->showPurchaseDeleteModal = true;
     }

@@ -29,14 +29,19 @@
         </div>
 
         <div class="sm:ml-16 sm:flex-none">
-            <button wire:click="$emit('createItem')" type="button"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Item
-            </button>
-            <button wire:click="print" type="button"
-                    class="ml-3 inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Print
-            </button>
+            @can('create', App\Models\Item::class)
+                <button wire:click="$emit('createItem')" type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Item
+                </button>
+            @endcan
+
+            @can('viewAny', App\Models\Item::class)
+                <button wire:click="print" type="button"
+                        class="ml-3 inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Print
+                </button>
+            @endcan
         </div>
 
     </x-content-header-section>
@@ -70,10 +75,15 @@
                         {{ $item->current_qty }}
                     </x-td>
                     <x-td>
-                        <button type="button" wire:click="$emit('editItem', {{ $item->id }})"
-                                class="text-primary hover:text-blue-900">Edit</button>
-                        <button type="button" wire:click="$emit('deleteItem', {{ $item->id }})"
-                                class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @can('update', $item)
+                            <button type="button" wire:click="$emit('editItem', {{ $item->id }})"
+                                    class="text-primary hover:text-blue-900">Edit</button>
+                        @endcan
+
+                        @can('delete', $item)
+                            <button type="button" wire:click="$emit('deleteItem', {{ $item->id }})"
+                                    class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @endcan
                     </x-td>
                 </tr>
             @endforeach

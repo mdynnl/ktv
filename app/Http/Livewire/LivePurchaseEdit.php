@@ -6,10 +6,12 @@ use App\Models\Item;
 use App\Models\PaymentType;
 use App\Models\Purchase;
 use App\Models\Supplier;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LivePurchaseEdit extends Component
 {
+    use AuthorizesRequests;
     // Purchase fills
     public $purchase_id;
     public $purchase_date;
@@ -168,6 +170,8 @@ class LivePurchaseEdit extends Component
 
     public function editPurchase(Purchase $purchase)
     {
+        $this->authorize('update', $purchase);
+
         $this->resetValidation();
         $this->reset();
 

@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\RoomType;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveRoomTypeEdit extends Component
 {
+    use AuthorizesRequests;
+
     public $roomType;
     public $showRoomTypeEditForm = false;
 
@@ -32,6 +35,7 @@ class LiveRoomTypeEdit extends Component
 
     public function editRoomType(RoomType $roomType)
     {
+        $this->authorize('update', $roomType);
         $this->resetValidation();
         $this->reset();
 

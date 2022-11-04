@@ -41,7 +41,9 @@ class RoomPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add room')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +55,9 @@ class RoomPolicy
      */
     public function update(User $user, Room $room)
     {
-        //
+        if ($user->can('edit room')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +69,9 @@ class RoomPolicy
      */
     public function delete(User $user, Room $room)
     {
-        //
+        if ($user->can('delete room')) {
+            return true;
+        }
     }
 
     /**

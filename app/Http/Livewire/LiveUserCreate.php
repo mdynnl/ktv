@@ -72,7 +72,7 @@ class LiveUserCreate extends Component
 
     public function createUser()
     {
-        $this->authorize('add user');
+        $this->authorize('create', User::class);
 
         $this->resetValidation();
         $this->reset();

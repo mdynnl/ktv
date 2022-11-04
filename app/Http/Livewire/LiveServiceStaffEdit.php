@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Models\ServiceStaff;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
@@ -10,6 +11,7 @@ use Livewire\WithFileUploads;
 
 class LiveServiceStaffEdit extends Component
 {
+    use AuthorizesRequests;
     use WithFileUploads;
 
     public $serviceStaff;
@@ -37,11 +39,11 @@ class LiveServiceStaffEdit extends Component
             'new_profile_image' => 'nullable|image|max:512',
             'new_full_size_image' => 'nullable|image|max:1024',
             'name_on_nrc' => 'required|string',
-            'nick_name' => 'nullable|string',
+            'nick_name' => 'required|string',
             'nrc' => 'nullable|string|unique:service_staff,nrc,'.$this->service_staff_id,
             'dob' => 'nullable|date',
             'address' => 'nullable|string',
-            'phone' => 'required|string',
+            'phone' => 'nullable|string',
             'isActive' => 'required|boolean',
         ];
     }
@@ -72,6 +74,7 @@ class LiveServiceStaffEdit extends Component
 
     public function editServiceStaff(ServiceStaff $serviceStaff)
     {
+        $this->authorize('update', $serviceStaff);
         $this->resetValidation();
         $this->reset();
         $this->serviceStaff = $serviceStaff;

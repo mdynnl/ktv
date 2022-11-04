@@ -30,7 +30,9 @@ class ServiceStaffPolicy
      */
     public function view(User $user, ServiceStaff $serviceStaff)
     {
-        //
+        if (($user->can('view service staffs'))) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +43,9 @@ class ServiceStaffPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add service staff')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +57,9 @@ class ServiceStaffPolicy
      */
     public function update(User $user, ServiceStaff $serviceStaff)
     {
-        //
+        if ($user->can('edit service staff')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +71,9 @@ class ServiceStaffPolicy
      */
     public function delete(User $user, ServiceStaff $serviceStaff)
     {
-        //
+        if ($user->can('delete service staff')) {
+            return true;
+        }
     }
 
     /**

@@ -18,7 +18,9 @@ class ItemPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user->can('view items')) {
+            return true;
+        }
     }
 
     /**
@@ -30,7 +32,9 @@ class ItemPolicy
      */
     public function view(User $user, Item $item)
     {
-        //
+        if ($user->can('view items')) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +45,9 @@ class ItemPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add item')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +59,9 @@ class ItemPolicy
      */
     public function update(User $user, Item $item)
     {
-        //
+        if ($user->can('edit item')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +73,9 @@ class ItemPolicy
      */
     public function delete(User $user, Item $item)
     {
-        //
+        if ($user->can('delete item')) {
+            return true;
+        }
     }
 
     /**

@@ -37,7 +37,9 @@ class LiveFoodEdit extends Component
         $this->validate();
 
         if ($this->image) {
-            Storage::delete($this->food->food_image);
+            if ($this->food->food_image) {
+                Storage::delete($this->food->food_image);
+            }
             $this->food->food_image = $this->image->store('fnb');
         }
         $this->food->update();

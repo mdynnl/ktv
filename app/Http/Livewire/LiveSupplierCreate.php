@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Supplier;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveSupplierCreate extends Component
 {
+    use AuthorizesRequests;
+
     public $supplier;
 
     public $showSupplierCreateForm = false;
@@ -37,6 +40,8 @@ class LiveSupplierCreate extends Component
 
     public function createSupplier()
     {
+        $this->authorize('create', Supplier::class);
+
         $this->resetValidation();
         $this->reset();
 

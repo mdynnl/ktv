@@ -18,6 +18,7 @@ return new class () extends Migration {
             $table->foreignId('food_type_id');
             $table->string('food_name');
             $table->float('price');
+            $table->float('food_cost')->nullable();
             $table->unsignedInteger('created_user_id');
             $table->unsignedInteger('updated_user_id')->nullable();
             $table->timestamps();

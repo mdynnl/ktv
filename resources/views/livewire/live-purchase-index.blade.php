@@ -1,6 +1,5 @@
 <x-page-layout>
     <x-slot:staticSidebarContent>
-        {{-- Some Content --}}
     </x-slot:staticSidebarContent>
 
 
@@ -21,10 +20,12 @@
         </div>
 
         <div class="sm:ml-16 sm:flex-none">
-            <button wire:click="$emit('createPurchase')" type="button"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Purchase
-            </button>
+            @can('create', App\Models\Purchase::class)
+                <button wire:click="$emit('createPurchase')" type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Purchase
+                </button>
+            @endcan
         </div>
 
     </x-content-header-section>
@@ -43,7 +44,6 @@
                 <x-th width="150px" align="center">Tax</x-th>
                 <x-th width="150px" align="center">Total</x-th>
                 <x-th width="200px"></x-th>
-
             </tr>
         </thead>
         <tbody class="bg-white">
@@ -60,10 +60,15 @@
                     <x-td align="right">{{ $purchase->tax }}</x-td>
                     <x-td align="right">{{ $purchase->total }}</x-td>
                     <x-td>
-                        <button type="button" wire:click="$emit('editPurchase', {{ $purchase->id }})"
-                                class="text-primary hover:text-blue-900">Edit</button>
-                        <button type="button" wire:click="$emit('deletePurchase', {{ $purchase->id }})"
-                                class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @can('update', $purchase)
+                            <button type="button" wire:click="$emit('editPurchase', {{ $purchase->id }})"
+                                    class="text-primary hover:text-blue-900">Edit</button>
+                        @endcan
+
+                        @can('delete', $purchase)
+                            <button type="button" wire:click="$emit('deletePurchase', {{ $purchase->id }})"
+                                    class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @endcan
                     </x-td>
                 </tr>
             @endforeach

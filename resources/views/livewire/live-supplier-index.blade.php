@@ -1,6 +1,5 @@
 <x-page-layout>
     <x-slot:staticSidebarContent>
-        {{-- <x-finance-page-links /> --}}
     </x-slot:staticSidebarContent>
 
 
@@ -23,10 +22,12 @@
         </div>
 
         <div class="sm:ml-16 sm:flex-none">
-            <button wire:click="$emit('createSupplier')" type="button"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Supplier
-            </button>
+            @can('create', App\Models\Supplier::class)
+                <button wire:click="$emit('createSupplier')" type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Supplier
+                </button>
+            @endcan
         </div>
 
     </x-content-header-section>
@@ -57,10 +58,15 @@
                     <x-td>{{ $supplier->email }}</x-td>
                     <x-td>{{ $supplier->address }}</x-td>
                     <x-td>
-                        <button type="button" wire:click="$emit('editSupplier', {{ $supplier->id }})"
-                                class="text-primary hover:text-blue-900">Edit</button>
-                        <button type="button" wire:click="$emit('deleteSupplier', {{ $supplier->id }})"
-                                class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @can('update', $supplier)
+                            <button type="button" wire:click="$emit('editSupplier', {{ $supplier->id }})"
+                                    class="text-primary hover:text-blue-900">Edit</button>
+                        @endcan
+
+                        @can('delete', $supplier)
+                            <button type="button" wire:click="$emit('deleteSupplier', {{ $supplier->id }})"
+                                    class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @endcan
                     </x-td>
                 </tr>
             @endforeach
@@ -70,7 +76,4 @@
     <livewire:live-supplier-create />
     <livewire:live-supplier-edit />
     <livewire:live-supplier-delete />
-    {{-- <livewire:live-item-create />
-    <livewire:live-item-edit />
-    <livewire:live-item-delete /> --}}
 </x-page-layout>

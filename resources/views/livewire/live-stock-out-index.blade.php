@@ -21,10 +21,13 @@
         </div>
 
         <div class="sm:ml-16 sm:flex-none">
-            <button wire:click="$emit('createStockout')" type="button"
-                    class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
-                Add Stockout
-            </button>
+            @can('create', App\Models\StockOut::class)
+                <button wire:click="$emit('createStockout')" type="button"
+                        class="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
+                    Add Stockout
+                </button>
+            @endcan
+
         </div>
 
     </x-content-header-section>
@@ -38,6 +41,8 @@
                 <x-th width="150px">Date</x-th>
                 <x-th width="150px">Item</x-th>
                 <x-th width="80px" align="center">Qty</x-th>
+                <x-th width="80px" align="center">Price</x-th>
+                <x-th width="80px" align="center">Amount</x-th>
                 <x-th width="150px">Stockout Type</x-th>
                 <x-th width="150px" align="center">Remark</x-th>
                 <x-th width="200px"></x-th>
@@ -53,13 +58,21 @@
                     <x-td>{{ $stockout->stock_out_date }}</x-td>
                     <x-td>{{ $stockout->item->item_name }}</x-td>
                     <x-td-slim-with-align align="center">{{ $stockout->qty }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="right">{{ number_format($stockout->price, 0, '.', ',') }}</x-td-slim-with-align>
+                    <x-td-slim-with-align align="right">{{ number_format($stockout->price * $stockout->qty, 0, '.', ',') }}
+                    </x-td-slim-with-align>
                     <x-td>{{ $stockout->stockOutType->stock_out_type_name }}</x-td>
                     <x-td>{{ $stockout->remark }}</x-td>
                     <x-td>
-                        <button type="button" wire:click="$emit('editStockout', {{ $stockout->id }})"
-                                class="text-primary hover:text-blue-900">Edit</button>
-                        <button type="button" wire:click="$emit('deleteStockout', {{ $stockout->id }})"
-                                class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @can('update', $stockout)
+                            <button type="button" wire:click="$emit('editStockout', {{ $stockout->id }})"
+                                    class="text-primary hover:text-blue-900">Edit</button>
+                        @endcan
+
+                        @can('delete', $stockout)
+                            <button type="button" wire:click="$emit('deleteStockout', {{ $stockout->id }})"
+                                    class="ml-3 text-primary hover:text-blue-900">Delete</button>
+                        @endcan
                     </x-td>
                 </tr>
             @endforeach

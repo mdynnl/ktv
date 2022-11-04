@@ -4,10 +4,13 @@ namespace App\Http\Livewire;
 
 use App\Models\Supplier;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveSupplierDelete extends Component
 {
+    use AuthorizesRequests;
+
     public $supplier;
     public $showSupplierDeleteModal = false;
 
@@ -30,6 +33,8 @@ class LiveSupplierDelete extends Component
 
     public function deleteSupplier(Supplier $supplier)
     {
+        $this->authorize('delete', $supplier);
+
         $this->supplier = $supplier;
         $this->showSupplierDeleteModal = true;
     }

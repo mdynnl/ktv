@@ -34,6 +34,7 @@ class LiveModalSearchAddServiceStaff extends Component
 
     public function searchAddStaff($caller)
     {
+        $this->reset();
         $this->caller = $caller;
         $this->showSearchAddServiceStaff = true;
     }

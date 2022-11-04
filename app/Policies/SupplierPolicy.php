@@ -18,7 +18,9 @@ class SupplierPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        if ($user->can('view suppliers')) {
+            return true;
+        }
     }
 
     /**
@@ -41,7 +43,9 @@ class SupplierPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->can('add supplier')) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +57,9 @@ class SupplierPolicy
      */
     public function update(User $user, Supplier $supplier)
     {
-        //
+        if ($user->can('edit supplier')) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +71,9 @@ class SupplierPolicy
      */
     public function delete(User $user, Supplier $supplier)
     {
-        //
+        if ($user->can('delete supplier')) {
+            return true;
+        }
     }
 
     /**

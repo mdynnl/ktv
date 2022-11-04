@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\PurchaseDetail;
 use App\Traits\WithPrinting;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LivePurchaseDetailReport extends Component
 {
+    use AuthorizesRequests;
     use WithPrinting;
 
     public $purchaseDetails;
@@ -26,6 +28,7 @@ class LivePurchaseDetailReport extends Component
 
     public function mount()
     {
+        $this->authorize('view reports');
         $this->dateFrom = today()->subDay()->toDateString();
         $this->dateTo = today()->toDateString();
     }

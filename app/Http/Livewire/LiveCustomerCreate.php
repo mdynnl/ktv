@@ -3,10 +3,13 @@
 namespace App\Http\Livewire;
 
 use App\Models\Customer;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveCustomerCreate extends Component
 {
+    use AuthorizesRequests;
+
     public $customer;
     public $showCustomerCreateForm = false;
 
@@ -33,8 +36,11 @@ class LiveCustomerCreate extends Component
 
     public function createCustomer()
     {
+        $this->authorize('create', Customer::class);
+
         $this->resetValidation();
         $this->reset();
+
         $this->customer = new Customer();
         $this->customer->created_user_id = auth()->id();
 

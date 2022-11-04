@@ -77,8 +77,11 @@ return new class () extends Migration {
 				inhouse_id as inhouse_id,
 				'Adjustment' as description,
 				concat(transactions.transaction_name, ' - ', remark) as reference,
-			null as price,
-			null as qty,
+			case
+				when transactions.isAddition = false then amount * -1
+				else amount
+			end as price,
+			1 as qty,
 			case
 				when transactions.isAddition = false then amount * -1
 				else amount

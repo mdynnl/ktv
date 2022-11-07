@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Livewire\LiveCustomerView;
+use App\Http\Livewire\LiveDashboard;
 use App\Http\Livewire\LiveExpenseDetailReport;
 use App\Http\Livewire\LiveExpenseIndex;
 use App\Http\Livewire\LiveExpenseSummaryReport;
@@ -34,6 +35,7 @@ use App\Models\Food;
 use App\Models\Inhouse;
 use App\Models\Room;
 use App\Models\ServiceStaff;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -57,7 +59,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/stockout', LiveStockOutIndex::class)->name('stockout.index')->middleware('permission:view stockouts');
 
     Route::group(['middleware' => ['permission:view reports']], function () {
-        Route::get('/reports', LiveSalesDetailReport::class)->name('report.sales-detail');
+        // Route::get('/dashboard', LiveDashboard::class)->name('report.dashboard');
+        // Route::get('/reports', LiveSalesDetailReport::class)->name('report.sales-detail');
+        Route::get('/reports', LiveDashboard::class)->name('report.dashboard');
+        Route::get('/reports/sales-details', LiveSalesDetailReport::class)->name('report.sales-detail');
         Route::get('/reports/sales-summary', LiveSalesSummaryReport::class)->name('report.sales-summary');
         Route::get('/reports/purchase-details', LivePurchaseDetailReport::class)->name('report.purchase-details');
         Route::get('/reports/purchase-summary', LivePurchaseSummaryReport::class)->name('report.purchase-summary');
@@ -82,11 +87,26 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/test', function () {
-    // return ExpenseType::withSum('expenses', )->get();
-    return ExpenseType::with(['expenses' => function ($query) {
-        $query->select('id', 'expense_type_id', DB::raw('price * qty as amount'));
-    }])
+    return Carbon::parse('2022')->format('M-d');
+    return Inhouse::select('operation_date', DB::raw('sum(total) as amount'))
+    ->whereDate('operation_date', '>=', '2022-10-28')
+    ->whereDate('operation_date', '<=', '2022-11-06')
+    ->groupBy('operation_date')
+    ->orderBy('operation_date')
     ->get();
+
+    return Expense::select('expense_date', DB::raw('sum(price * qty) as amount'))
+    ->whereDate('expense_date', '>=', '2022-10-28')
+    ->whereDate('expense_date', '<=', '2022-11-06')
+    ->groupBy('expense_date')
+    ->orderBy('expense_datej')
+    ->get();
+
+    // return ExpenseType::withSum('expenses', )->get();
+    // return ExpenseType::with(['expenses' => function ($query) {
+    //     $query->select('id', 'expense_type_id', DB::raw('price * qty as amount'));
+    // }])
+    // ->get();
 });
 
 

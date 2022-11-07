@@ -18,6 +18,8 @@
     "dependencies": {
         "@alpinejs/focus": "^3.10.5",
         "@alpinejs/persist": "^3.10.4",
+        "apexcharts": "^3.36.1",
+        "echarts": "^5.4.0",
         "flatpickr": "^4.6.13"
     }
 }

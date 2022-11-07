@@ -83,7 +83,7 @@
         </div>
 
         <div class="flex flex-col flex-grow overflow-y-auto">
-            <div class="py-6 flex-1 flex flex-col">
+            <div class="py-3 flex-1 flex flex-col">
                 <div class="flex-1 px-2 pb-4">
                     @if (isset($staticSidebarContent))
                         {{ $staticSidebarContent }}

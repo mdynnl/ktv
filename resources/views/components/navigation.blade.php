@@ -35,7 +35,7 @@
     @endcan
 
     @can('view reports')
-        <x-nav-link :href="route('report.sales-detail')" :active="request()->routeIs('report.sales-detail') || request()->routeIs('report.*')">Reports</x-nav-link>
+        <x-nav-link :href="route('report.dashboard')" :active="request()->routeIs('report.dashboard') || request()->routeIs('report.*')">Reports</x-nav-link>
     @endcan
 
     @can('view any users')

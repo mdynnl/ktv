@@ -23,6 +23,7 @@
     {{ $slot }}
 
     <livewire:scripts />
+    @livewireChartsScripts
 </body>
 
 </html>

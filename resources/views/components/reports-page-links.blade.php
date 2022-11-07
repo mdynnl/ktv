@@ -1,5 +1,6 @@
-<x-desktop-sidebar-section>
+<x-desktop-sidebar-section title="">
     <div wire:ignore class="space-y-5">
+        <x-nav-sidebar-link :href="route('report.dashboard')" :active="request()->routeIs('report.dashboard')">Dashboard</x-nav-sidebar-link>
         <x-nav-sidebar-link :href="route('report.sales-detail')" :active="request()->routeIs('report.sales-detail')">Sales Detail</x-nav-sidebar-link>
         <x-nav-sidebar-link :href="route('report.sales-summary')" :active="request()->routeIs('report.sales-summary')">Sales Summary</x-nav-sidebar-link>
         <x-nav-sidebar-link :href="route('report.purchase-details')" :active="request()->routeIs('report.purchase-details')">Purchase Detail</x-nav-sidebar-link>

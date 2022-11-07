@@ -115,11 +115,10 @@ class LiveDashboard extends Component
 
         $top10ServiceStaffColumnChartModel = $this->top10ServiceStaffs->reduce(
             function ($columnChartModel, $data) {
-                $type = $data->type;
                 $name = $data->nick_name;
                 $value = $data->popularity;
 
-                return $columnChartModel->addSeriesColumn('Session', $name, $value, $this->colors[$type]);
+                return $columnChartModel->addSeriesColumn('Session', $name, $value);
             },
             LivewireCharts::columnChartModel()
             ->setHorizontal(true)
@@ -445,7 +444,6 @@ class LiveDashboard extends Component
     {
         $this->top10ServiceStaffs = collect(DB::select(
             "SELECT
-				'service_staff' as type,
 				service_staff_id,
 				nick_name,
 				count(*) as popularity
@@ -455,7 +453,7 @@ class LiveDashboard extends Component
 
 			where operation_date >= '$this->fromDate' and operation_date <= '$this->toDate'
 
-			group by service_staff_id
+			group by service_staff_id, nick_name
 			order by popularity desc
 			limit 10
 			"

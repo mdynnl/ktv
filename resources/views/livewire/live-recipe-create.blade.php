@@ -134,11 +134,14 @@
                             Item: {{ $editingRecipeItem['item_name'] }}
                         @endisset
                     </div>
-                    <div class="flex-1 px-4 py-5 text-sm">
+                    <div class="flex flex-1 gap-x-3 px-4 py-5 text-sm">
+                        @isset($editingRecipeItem['recipe_unit'])
+                            <x-display-info-comp class="w-full" label="Unit"
+                                                 displayValue="{{ ucwords($editingRecipeItem['recipe_unit']) }}" />
+                        @endisset
 
                         <x-form-input-comp class="w-full" wire:model="editingRecipeQty" label="Qty" for="editingRecipeQty"
                                            type="text" />
-
                     </div>
 
                     <div class="py-3 bg-gray-200 px-6">

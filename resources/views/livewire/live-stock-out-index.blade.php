@@ -41,7 +41,7 @@
                 <x-th width="150px">Date</x-th>
                 <x-th width="150px">Item</x-th>
                 <x-th width="80px" align="center">Qty</x-th>
-                <x-th width="80px" align="center">Price</x-th>
+                <x-th width="80px" align="center">Cost</x-th>
                 <x-th width="80px" align="center">Amount</x-th>
                 <x-th width="150px">Stockout Type</x-th>
                 <x-th width="150px" align="center">Remark</x-th>

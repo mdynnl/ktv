@@ -49,7 +49,6 @@
                 </div>
 
                 <div class="flex-shrink-0 flex items-center justify-center px-4 h-16">
-                    {{-- <h1 class="text-white text-lg">KTV POS System</h1> --}}
                     <h1 class="text-white text-lg">{{ config('app.name') }}</h1>
                 </div>
 

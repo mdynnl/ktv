@@ -446,7 +446,7 @@ class LiveDashboard extends Component
             "SELECT
 				service_staff_id,
 				nick_name,
-				count(*) as popularity
+				sum(session_hours) as popularity
 			from
 			inhouse_services
 			left join service_staff on service_staff.id = inhouse_services.service_staff_id

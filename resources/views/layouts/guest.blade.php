@@ -17,9 +17,7 @@
 </head>
 
 <body class="h-full font-sans">
-    {{-- <div class="font-sans text-gray-900 antialiased"> --}}
     {{ $slot }}
-    {{-- </div> --}}
 </body>
 
 </html>

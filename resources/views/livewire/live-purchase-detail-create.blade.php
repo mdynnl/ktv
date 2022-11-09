@@ -12,9 +12,6 @@
                                 isDisabled="{{ false }}"
                                 optionDisplay="item_name" label="Select an Item*" for="item_id" />
 
-            <x-form-disabled-comp class="col-span-1" wire:model.defer="recipe_unit" label="Recipe Unit"
-                                  for="recipe_unit"
-                                  type="text" />
 
             <x-form-input-comp class="col-span-1" wire:model.defer="invoice_unit" label="Invoice Unit*"
                                for="invoice_unit"
@@ -28,6 +25,9 @@
                                for="qty"
                                type="text" />
 
+            <x-form-disabled-comp class="col-span-1" wire:model.defer="recipe_unit" label="Recipe Unit"
+                                  for="recipe_unit"
+                                  type="text" />
             <x-form-input-comp class="col-span-1" wire:model.defer="recipe_qty" label="Recipe Qty*"
                                for="recipe_qty"
                                type="text" />

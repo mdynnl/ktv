@@ -76,9 +76,8 @@ class LiveProfitSummaryReport extends Component
     {
         $this->incomes = DB::select(
             "SELECT
-			operation_date,
 			income,
-			amount
+			sum(amount) as amount
 			from
 			(
 				select
@@ -131,9 +130,7 @@ class LiveProfitSummaryReport extends Component
 			) x
 			where operation_date >= '$this->fromDate' and operation_date <= '$this->toDate'
 			group by
-				operation_date,
-				income,
-				amount
+				income
 		"
         );
     }

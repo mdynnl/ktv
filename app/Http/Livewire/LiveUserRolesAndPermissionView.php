@@ -4,10 +4,12 @@ namespace App\Http\Livewire;
 
 use App\Models\Permission;
 use App\Models\Role;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Livewire\Component;
 
 class LiveUserRolesAndPermissionView extends Component
 {
+    use AuthorizesRequests;
     public $roles;
     public $selectedRole;
     public $selectedRolePermissions = [];
@@ -16,6 +18,7 @@ class LiveUserRolesAndPermissionView extends Component
 
     public function mount()
     {
+        $this->authorize('view roles');
         $this->roles = Role::with('permissions')->get();
         $this->selectedRole = $this->roles->first()->id;
     }

@@ -245,7 +245,7 @@
         </x-slot> --}}
 
         <x-slot name="modalAction">
-            <button {{ $isDirty ? '' : 'disabled' }} type="button" wire:click="placeOrder"
+            <button {{ $isDirty ? '' : 'disabled' }} type="button" @click="$wire.placeOrder().then(open)"
                     class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md disabled:text-gray-400 disabled:bg-gray-300 enabled:text-white enabled:bg-primary enabled:hover:bg-blue-900 focus:outline-none">
                 Place Order
             </button>

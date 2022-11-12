@@ -38,6 +38,7 @@ use App\Models\ServiceStaff;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', LiveRoomInfo::class)->name('home')->middleware('permission:view inhouses');
@@ -86,7 +87,13 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::get('/download/{file}', function ($file) {
-        return response()->file(storage_path("app/$file"))->deleteFileAfterSend();
+        $path = storage_path("app/$file");
+        
+        if (file_exists($path)) {
+            return response()->file($path)->deleteFileAfterSend();
+        } else {
+            abort(404);
+        }
     })->name('pdf');
 });
 

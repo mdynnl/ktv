@@ -5,6 +5,7 @@
      aria-modal="true">
     <div
          x-show="show"
+         x-trap.noscroll="show"
          x-cloak
          x-transition:enter="ease-out duration-300"
          x-transition:enter-start="opacity-0"

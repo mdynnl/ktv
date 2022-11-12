@@ -74,7 +74,7 @@ class LiveInhouseEdit extends Component
     protected $listeners = [
             'editInhouse',
             'inhouseServiceStaffAdded',
-            'inhouseEditAddServiceStaffs',
+            // 'inhouseEditAddServiceStaffs',
             'orderPlaced',
             'incomeTransactionAdded',
             'checkOutPaymentsSettled',
@@ -93,6 +93,7 @@ class LiveInhouseEdit extends Component
 
     public function inhouseServiceStaffAdded()
     {
+        $this->staffs = [];
         $inhouseServices = $this->inhouse->inhouseServices->load('serviceStaff');
         foreach ($inhouseServices as $service) {
             array_push($this->staffs, [
@@ -273,34 +274,34 @@ class LiveInhouseEdit extends Component
     }
 
 
-    public function inhouseEditAddServiceStaffs($staffs)
-    {
-        if ($this->isPaid) {
-            return;
-        }
-        $staffs = ServiceStaff::whereIn('id', $staffs)->get();
-        foreach ($staffs as $staff) {
-            $exists = array_search($staff->id, array_column($this->staffs, 'id'));
-            if (is_bool($exists)) {
-                $departure = Carbon::parse($this->departureDate.' '.$this->departureTime)->format('Y-m-d g:i A');
-                $sessions = round(now()->diffInMinutes($this->departureTime) / 60, 1);
-                array_push($this->staffs, [
-                    'id' => $staff->id,
-                    'inhouse_service_id' => null,
-                    'nick_name' => $staff->nick_name,
-                    'arrival' => now()->format('Y-m-d g:i A'),
-                    'departure' => $departure,
-                    'sessions' => $sessions,
-                    'service_staff_rate' => app('ServiceStaffRates')->service_staff_rate,
-                    'service_staff_commission_rate' => app('ServiceStaffRates')->service_staff_commission_rate,
-                ]);
+    // public function inhouseEditAddServiceStaffs($staffs)
+    // {
+    //     if ($this->isPaid) {
+    //         return;
+    //     }
+    //     $staffs = ServiceStaff::whereIn('id', $staffs)->get();
+    //     foreach ($staffs as $staff) {
+    //         $exists = array_search($staff->id, array_column($this->staffs, 'id'));
+    //         if (is_bool($exists)) {
+    //             $departure = Carbon::parse($this->departureDate.' '.$this->departureTime)->format('Y-m-d g:i A');
+    //             $sessions = round(now()->diffInMinutes($this->departureTime) / 60, 1);
+    //             array_push($this->staffs, [
+    //                 'id' => $staff->id,
+    //                 'inhouse_service_id' => null,
+    //                 'nick_name' => $staff->nick_name,
+    //                 'arrival' => now()->format('Y-m-d g:i A'),
+    //                 'departure' => $departure,
+    //                 'sessions' => $sessions,
+    //                 'service_staff_rate' => app('ServiceStaffRates')->service_staff_rate,
+    //                 'service_staff_commission_rate' => app('ServiceStaffRates')->service_staff_commission_rate,
+    //             ]);
 
-                // $this->isStaffListDirty = true;
-                // $this->isDirty = true;
-            }
-        }
-        $this->update();
-    }
+    //             // $this->isStaffListDirty = true;
+    //             // $this->isDirty = true;
+    //         }
+    //     }
+    //     $this->update();
+    // }
 
     public function changeStaffSessionHours($isAddition = true)
     {
@@ -441,6 +442,7 @@ class LiveInhouseEdit extends Component
         $this->incomeTransactions = $this->inhouse->incomeTransactions;
 
 
+        $this->staffs = [];
         $inhouseServices = $this->inhouse->inhouseServices->load('serviceStaff');
         foreach ($inhouseServices as $service) {
             array_push($this->staffs, [

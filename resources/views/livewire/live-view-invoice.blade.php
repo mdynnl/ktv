@@ -87,13 +87,13 @@
 
 
                                 <div class="flex space-x-3">
-                                    <x-custom-wire-box-button wire:click="printInvoice"
+                                    <x-custom-wire-box-button @click="$wire.printInvoice().then(open)"
                                                               label="Invoice"
                                                               isDisabled="{{ !$payments->count() > 0 }}" />
                                     {{-- <x-custom-wire-box-button wire:click="$emit('makePayments', {{ $inhouse_id }})"
                                                               label="Payment"
                                                               isDisabled="{{ !$payments->count() > 0 || $checkout_payment_done }}" /> --}}
-                                    {{-- <x-custom-wire-box-button wire:click="printFolio"
+                                    {{-- <x-custom-wire-box-button @click="$wire.printFolio().then(open)"
                                                               label="Folio"
                                                               isDisabled="{{ !$payments->count() > 0 || !$inhouse->checkout_payment_done }}" /> --}}
                                 </div>

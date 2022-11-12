@@ -219,7 +219,7 @@
                 </svg>
             </button>
 
-            <button {{ isset($order_id) ? '' : 'disabled' }} type="button" wire:click="printPreBill"
+            <button {{ isset($order_id) ? '' : 'disabled' }} type="button" @click="$wire.printPreBill().then(open)"
                     class="ml-3 inline-flex items-center rounded-md border border-transparent disabled:text-gray-400 disabled:bg-gray-300 enabled:text-white enabled:bg-primary enabled:hover:bg-blue-900 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none ">
                 Pre Bill
                 <!-- Heroicon name: mini/printer -->
@@ -231,7 +231,7 @@
                 </svg>
             </button>
 
-            <button {{ isset($order_id) ? '' : 'disabled' }} type="button" wire:click="printBill"
+            <button {{ isset($order_id) ? '' : 'disabled' }} type="button" @click="$wire.printBill().then(open)"
                     class="ml-3 inline-flex items-center rounded-md border border-transparent disabled:text-gray-400 disabled:bg-gray-300 enabled:text-white enabled:bg-primary enabled:hover:bg-blue-900 px-4 py-2 text-sm font-medium  shadow-sm focus:outline-none ">
                 Bill
                 <!-- Heroicon name: mini/printer -->
@@ -470,7 +470,7 @@
                                     class="inline-flex items-center rounded border border-gray-300 bg-white px-2.5 py-1.5 text-xs font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none">
                                 Cancel
                             </button>
-                            <button wire:click="printSelectedKitchenPrintTypeOrders" type="button"
+                            <button @click="$wire.printSelectedKitchenPrintTypeOrders().then(open)" type="button"
                                     class="inline-flex items-center rounded border border-transparent bg-primary px-2.5 py-1.5 text-xs font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none">
                                 Print
                             </button>

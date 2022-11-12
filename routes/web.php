@@ -84,6 +84,10 @@ Route::middleware('auth')->group(function () {
     Route::group(['middleware' => ['permission:view user']], function () {
         Route::get('/profile/{user}/change-password', LiveUserPasswordChange::class)->name('profile.change-password');
     });
+
+    Route::get('/download/{file}', function ($file) {
+        return response()->file(storage_path("app/$file"))->deleteFileAfterSend();
+    })->name('pdf');
 });
 
 Route::get('/test', function () {

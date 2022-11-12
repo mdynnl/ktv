@@ -29,7 +29,7 @@
             @endcan
 
             @can('viewAny', App\Models\Expense::class)
-                <button wire:click="print" type="button"
+                <button @click="$wire.print().then(open)" type="button"
                         class="ml-3 inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 sm:w-auto">
                     Print
                 </button>

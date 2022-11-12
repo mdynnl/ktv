@@ -11,9 +11,10 @@ trait WithPrinting
             'orientation' => $orientation,
             'use_kwt' => true
         ]);
-        return response()->streamDownload(
-            fn () => $pdf->stream(),
-            "{$printOutTime}_$name.pdf"
-        );
+
+        $name = "{$printOutTime}_$name.pdf";
+        $pdf->save(storage_path("app/$name"));
+
+        return route('pdf', $name);
     }
 }

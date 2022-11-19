@@ -35,7 +35,7 @@
                      'max-w-5xl' => $size == 'xl',
                      'max-w-7xl' => $size == 'xxl',
                  ])>
-                <div class="bg-white  shadow overflow-hidden sm:rounded-lg ">
+                <div class="bg-white  shadow overflow-hidden sm:rounded-lg" x-trap.noscroll="show">
 
                     <div class="bg-primary flex items-center justify-between px-6 py-4 text-white">
                         @isset($modalHeader)

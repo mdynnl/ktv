@@ -2,12 +2,14 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\InhouseService;
 use App\Models\ServiceStaff;
 use Livewire\Component;
 
 class LiveModalSearchAddServiceStaff extends Component
 {
     public $search = '';
+    public $staffs = [];
     public $showSearchAddServiceStaff = false;
     public $selectedStaff = [];
     public $caller;
@@ -41,11 +43,17 @@ class LiveModalSearchAddServiceStaff extends Component
 
     public function render()
     {
-        return view('livewire.live-modal-search-add-service-staff', [
-            'staffs' => ServiceStaff::when(strlen($this->search) >= 2 ? $this->search : false, function ($query, $search) {
+        if ($this->showSearchAddServiceStaff) {
+            $inSessionStaffs = InhouseService::select('service_staff_id')->where('is_checked_out', false)->get()->pluck('service_staff_id');
+
+            $this->staffs = ServiceStaff::when(strlen($this->search) >= 2 ? $this->search : false, function ($query, $search) {
                 $query->where('nick_name', 'like', '%'.$search.'%');
                 // ->orWhere('nick_name', 'like', '%'.$search.'%');
-            })->where('isActive', true)->orderBy('nick_name')->get(),
-        ]);
+            })
+            ->where('isActive', true)
+            ->whereNotIn('id', $inSessionStaffs)
+            ->orderBy('nick_name')->get();
+        }
+        return view('livewire.live-modal-search-add-service-staff');
     }
 }

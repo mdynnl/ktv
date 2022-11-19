@@ -102,6 +102,7 @@ class LiveInhouseEdit extends Component
                 'inhouse_service_id' => $service->id,
                 'nick_name' => $service->serviceStaff->nick_name,
                 'arrival' => $service->checkin_time->format('Y-m-d g:i A'),
+                'is_checked_out' => $service->is_checked_out,
                 'departure' => $service->checkout_time->format('Y-m-d g:i A'),
                 'sessions' => $service->session_hours,
                 'service_staff_rate' => $service->service_staff_rate,

@@ -42,6 +42,7 @@ class LiveInhouseEdit extends Component
     public $editingStaffMin;
     public $editingStaffMax;
     public $editingStaffName;
+    public $editingStaffIsCheckedOut;
     public $editingStaffId;
     public $editingStaffArrival;
     public $editingStaffDeparture;
@@ -120,6 +121,11 @@ class LiveInhouseEdit extends Component
             'checked_out' => true
         ]);
 
+        foreach ($this->inhouse->inhouseServices as $service) {
+            $service->update(['is_checked_out' => true]);
+        }
+
+
         $this->emit('roomCheckedOut');
         $this->showInhouseEditForm = false;
     }
@@ -154,6 +160,7 @@ class LiveInhouseEdit extends Component
                     'checkin_time' => $service['arrival'],
                     'checkout_time' => $service['departure'],
                     'session_hours' => $service['sessions'],
+                    'is_checked_out' => $service['is_checked_out'],
                 ]);
             }
         }
@@ -329,12 +336,24 @@ class LiveInhouseEdit extends Component
         $this->showStaffTimeAdjustmentModal = false;
     }
 
+    public function serviceStaffCheckout()
+    {
+        $this->staffs[$this->editingStaffIndex]['arrival'] = Carbon::parse($this->editingStaffArrivalDate.' '.$this->editingStaffArrivalTime)->format('Y-m-d g:i A');
+        $this->staffs[$this->editingStaffIndex]['departure'] = Carbon::parse($this->editingStaffDepartureDate.' '.$this->editingStaffDepartureTime)->format('Y-m-d g:i A');
+        $this->staffs[$this->editingStaffIndex]['sessions'] = $this->editingStaffSessionHours;
+        $this->staffs[$this->editingStaffIndex]['is_checked_out'] = true;
+        $this->update();
+
+        $this->showStaffTimeAdjustmentModal = false;
+    }
+
     public function editServiceStaff($index)
     {
         $this->editingStaff = true;
         $this->editingStaffIndex = $index;
         $this->editingStaffId = $this->staffs[$index]['id'];
         $this->editingStaffName = $this->staffs[$index]['nick_name'];
+        $this->editingStaffIsCheckedOut = $this->staffs[$index]['is_checked_out'];
 
         $this->editingStaffSessionHours = $this->staffs[$index]['sessions'];
 
@@ -451,6 +470,7 @@ class LiveInhouseEdit extends Component
                 'nick_name' => $service->serviceStaff->nick_name,
                 'arrival' => $service->checkin_time->format('Y-m-d g:i A'),
                 'departure' => $service->checkout_time->format('Y-m-d g:i A'),
+                'is_checked_out' => $service->is_checked_out,
                 'sessions' => $service->session_hours,
                 'service_staff_rate' => $service->service_staff_rate,
                 'service_staff_commission_rate' => $service->service_staff_commission_rate,

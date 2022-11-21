@@ -40,13 +40,14 @@ class LiveUserCreate extends Component
         // 'image' => 'nullable|image|max:512',
         'name' => 'required|string',
         'username' => 'required|string',
-        'gender' => 'required|string',
-        'nrc' => 'required|string',
+        'gender' => 'nullable|string',
+        'role' => 'required|string',
+        'nrc' => 'nullable|string',
         'dob' => 'nullable|date',
-        'email' => 'required|email|unique:users,email',
-        'phone' => 'required|string',
+        'email' => 'nullable|email|unique:users,email',
+        'phone' => 'nullable|string',
         'address' => 'nullable|string',
-        'password' => 'required|string',
+        'password' => 'required|string|min:8',
         'created_user_id' => 'required|integer'
     ];
 
@@ -54,6 +55,7 @@ class LiveUserCreate extends Component
     public function create()
     {
         $validated = $this->validate();
+        unset($validated['role']);
         $validated['password'] = bcrypt($validated['password']);
 
         DB::transaction(function () use ($validated) {

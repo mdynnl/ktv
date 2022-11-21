@@ -13,7 +13,7 @@
                         <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
                             <x-form-input-comp class="col-span-4" wire:model.defer="name" label="Name*"
-                                               for="user.name"
+                                               for="name"
                                                type="text" />
 
                             <x-form-select-comp class="col-span-2" wire:model.defer="role" :options="$roles"
